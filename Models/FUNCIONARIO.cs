@@ -64,7 +64,6 @@ namespace ProjetoExtensionista.Models
         [Required]
         public bool USUARIO_ATIVO { get; set; } = false;
 
-
         [Required]
         public DateTime DATA_CRIADO { get; set; }
 

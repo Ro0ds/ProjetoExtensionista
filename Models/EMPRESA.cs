@@ -24,7 +24,7 @@ namespace ProjetoExtensionista.Models
         [Required]
         [Display(Name = "CNPJ")]
         [DataType(DataType.Text, ErrorMessage = "Campo {} é obrigatório.")]
-        [MaxLength(255)]
+        [MaxLength(15)]
         public string CNPJ { get; set; } = string.Empty;
 
         [Required]
