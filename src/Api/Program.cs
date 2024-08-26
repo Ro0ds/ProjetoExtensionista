@@ -1,11 +1,21 @@
+using Api.Dados;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+var configuration = builder.Configuration;
 
-// Add services to the container.
+services.AddControllers();
+services.AddEndpointsApiExplorer();
+services.AddSwaggerGen();
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+var stringConexao = configuration.GetConnectionString("ConexaoPadrao");
+
+// pegando conexão de string do appSettings.json
+services.AddDbContext<ApiDbContext>(opt =>
+{
+    opt.UseMySql(stringConexao, ServerVersion.AutoDetect(stringConexao));
+});
 
 var app = builder.Build();
 
