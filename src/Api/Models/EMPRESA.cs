@@ -27,8 +27,9 @@ namespace Api.Models
         [MaxLength(15)]
         public string CNPJ { get; set; } = string.Empty;
 
-        [Required]
-        public ENDERECO ENDERECO { get; set; } = new();
+        [ForeignKey(nameof(ENDERECO))]
+        public int ENDERECO_ID { get; set; }
+        public ENDERECO? ENDERECO { get; set; }
 
         [Display(Name = "Telefone")]
         [DataType(DataType.PhoneNumber)]

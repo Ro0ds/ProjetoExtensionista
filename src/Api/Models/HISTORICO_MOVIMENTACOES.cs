@@ -10,14 +10,17 @@ namespace Api.Models
         [Key]
         public int ID { get; set; }
 
-        public PRODUTO? PRODUTO { get; set; }
+        [ForeignKey(nameof(PRODUTO))]
         public int PRODUTO_ID { get; set; }
-        
-        public USUARIO? USUARIO { get; set; }
-        public int USUARIO_ID { get; set; }
+        public PRODUTO? PRODUTO { get; set; }
 
-        public FUNCIONARIO? FUNCIONARIO { get; set; }
+        [ForeignKey(nameof(USUARIO))]
+        public int USUARIO_ID { get; set; }
+        public USUARIO? USUARIO { get; set; }
+
+        [ForeignKey(nameof(FUNCIONARIO))]
         public int FUNCIONARIO_ID { get; set; }
+        public FUNCIONARIO? FUNCIONARIO { get; set; }
 
         [Display(Name = "Quantidade")]
         [DataType(DataType.Custom)]

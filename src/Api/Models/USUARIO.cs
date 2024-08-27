@@ -1,9 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Api.Models
 {
     [Table("USUARIO")]
+    [PrimaryKey(nameof(ID))]
+    [Index(nameof(EMAIL), IsUnique = true)]
     public class USUARIO
     {
         [Key]
@@ -46,14 +49,17 @@ namespace Api.Models
         [DataType(DataType.PhoneNumber)]
         public string TELEFONE { get; set; } = string.Empty;
 
-        [Required]
-        public SENHA SENHA { get; set; } = new();
-        
-        [Required]
-        public ENDERECO ENDERECO { get; set; } = new();
+        [ForeignKey(nameof(SENHA))]
+        public int SENHA_ID { get; set; }
+        public SENHA? SENHA { get; set; }
 
-        [Required]
-        public PERMISSAO PERMISSAO { get; set; } = new();
+        [ForeignKey(nameof(ENDERECO))]
+        public int ENDERECO_ID { get; set; }
+        public ENDERECO? ENDERECO { get; set; }
+
+        [ForeignKey(nameof(PERMISSAO))]
+        public int PERMISSAO_ID { get; set; }
+        public PERMISSAO? PERMISSAO { get; set; }
 
         [Required]
         public bool USUARIO_ATIVO { get; set; } = false;
@@ -61,7 +67,8 @@ namespace Api.Models
         [Required]
         public DateTime DATA_CRIADO { get; set; }
 
-        public EMPRESA? EMPRESA { get; set; }
+        [ForeignKey(nameof(FUNCIONARIO))]
+        public int? FUNCIONARIO_ID { get; set; }
         public FUNCIONARIO? FUNCIONARIO { get; set; }
     }
 }

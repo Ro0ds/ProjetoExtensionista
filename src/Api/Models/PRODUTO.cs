@@ -36,14 +36,17 @@ namespace Api.Models
         [DataType(DataType.Custom, ErrorMessage = "Campo {} é obrigatório.")]
         public int ATIVO { get; set; }
 
-        public CATEGORIA? CATEGORIA { get; set; }
+        [ForeignKey(nameof(CATEGORIA))]
         public int CATEGORIA_ID { get; set; }
+        public CATEGORIA? CATEGORIA { get; set; }
 
-        public EMPRESA? EMPRESA { get; set; }
+        [ForeignKey(nameof(EMPRESA))]
         public int EMPRESA_ID { get; set; }
+        public EMPRESA? EMPRESA { get; set; }
 
-        public USUARIO? USUARIO { get; set; }
+        [ForeignKey(nameof(USUARIO))]
         public int USUARIO_ID { get; set; }
+        public USUARIO? USUARIO { get; set; }
 
     }
 }

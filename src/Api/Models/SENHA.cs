@@ -17,11 +17,5 @@ namespace Api.Models
 
         public string HASH { get; set; } = string.Empty;
         public byte[] SALT { get; set; } = new byte[512];
-
-        public USUARIO? USUARIO { get; set; }
-        public int USUARIO_ID { get; set; }
-
-        public FUNCIONARIO? FUNCIONARIO { get; set; }
-        public int FUNCIONARIO_ID { get; set; }
     }
 }

@@ -26,10 +26,12 @@ namespace Api.Models
         [DataType(DataType.DateTime, ErrorMessage = "Campo {} é obrigatório.")]
         public DateTime DATA_CRIACAO { get; set; }
 
-        public USUARIO? USUARIO { get; set; }
+        [ForeignKey(nameof(USUARIO))]
         public int USUARIO_ID { get; set; }
+        public USUARIO? USUARIO { get; set; }
 
-        public EMPRESA? EMPRESA { get; set; }
+        [ForeignKey(nameof(EMPRESA))]
         public int EMPRESA_ID { get; set; }
+        public EMPRESA? EMPRESA { get; set; }
     }
 }
