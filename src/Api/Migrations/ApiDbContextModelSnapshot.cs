@@ -55,7 +55,7 @@ namespace Api.Migrations
 
                     b.HasIndex("USUARIO_ID");
 
-                    b.ToTable("CATEGORIA");
+                    b.ToTable("CATEGORIA", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.EMPRESA", b =>
@@ -106,7 +106,7 @@ namespace Api.Migrations
 
                     b.HasIndex("ENDERECO_ID");
 
-                    b.ToTable("EMPRESA");
+                    b.ToTable("EMPRESA", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.ENDERECO", b =>
@@ -152,7 +152,7 @@ namespace Api.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ENDERECO");
+                    b.ToTable("ENDERECO", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.FUNCIONARIO", b =>
@@ -233,7 +233,7 @@ namespace Api.Migrations
 
                     b.HasIndex("SENHA_ID");
 
-                    b.ToTable("FUNCIONARIO");
+                    b.ToTable("FUNCIONARIO", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.HISTORICO_MOVIMENTACOES", b =>
@@ -275,7 +275,7 @@ namespace Api.Migrations
 
                     b.HasIndex("USUARIO_ID");
 
-                    b.ToTable("HISTORICO_MOVIMENTACOES");
+                    b.ToTable("HISTORICO_MOVIMENTACOES", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.PERMISSAO", b =>
@@ -298,7 +298,7 @@ namespace Api.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("PERMISSAO");
+                    b.ToTable("PERMISSAO", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.PRODUTO", b =>
@@ -345,7 +345,7 @@ namespace Api.Migrations
 
                     b.HasIndex("USUARIO_ID");
 
-                    b.ToTable("PRODUTO");
+                    b.ToTable("PRODUTO", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.SENHA", b =>
@@ -370,7 +370,7 @@ namespace Api.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SENHA");
+                    b.ToTable("SENHA", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.USUARIO", b =>
@@ -445,7 +445,7 @@ namespace Api.Migrations
 
                     b.HasIndex("SENHA_ID");
 
-                    b.ToTable("USUARIO");
+                    b.ToTable("USUARIO", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.CATEGORIA", b =>
