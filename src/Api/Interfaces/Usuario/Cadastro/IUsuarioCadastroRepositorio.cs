@@ -3,8 +3,8 @@ using Api.DTO.Resposta.Usuario.Cadastro;
 
 namespace Api.Interfaces.Usuario.Cadastro
 {
-    public interface IUsuarioCadastro
+    public interface IUsuarioCadastroRepositorio
     {
-        Task<UsuarioCadastroResposta> Cadastrar(UsuarioCadastroRequisicao requisicao);
+        Task<UsuarioCadastroResposta> Adicionar(UsuarioCadastroRequisicao user);
     }
 }

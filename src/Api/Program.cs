@@ -1,4 +1,7 @@
 using Api.Dados;
+using Api.Interfaces.Usuario.Cadastro;
+using Api.Repositorio.Usuario.Cadastro;
+using Api.Servicos.Usuario.Cadastro;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,9 +12,12 @@ services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
+//services.AddScoped<UsuarioCadastroServico, UsuarioCadastroRepositorio>();
+services.AddScoped<IUsuarioCadastroRepositorio, UsuarioCadastroRepositorio>();
+
 var stringConexao = configuration.GetConnectionString("ConexaoPadrao");
 
-// pegando conexão de string do appSettings.json
+// pegando conexï¿½o de string do appSettings.json
 services.AddDbContext<ApiDbContext>(opt =>
 {
     opt.UseMySql(stringConexao, ServerVersion.AutoDetect(stringConexao));
