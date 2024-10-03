@@ -10,45 +10,43 @@ namespace Api.DTO.Requisicao.Usuario.Cadastro
         [Display(Name = "Nome")]
         [DataType(DataType.Text, ErrorMessage = "Campo {} é obrigatório.")]
         [MaxLength(100)]
-        public string NOME { get; set; } = string.Empty;
+        public string NOME { get; set; }
 
         [Display(Name = "Sobrenome")]
         [DataType(DataType.Text)]
         [MaxLength(100)]
-        public string SOBRENOME { get; set; } = string.Empty;
+        public string SOBRENOME { get; set; }
 
         [Display(Name = "Nome Social")]
         [DataType(DataType.Text)]
         [MaxLength(100)]
-        public string NOME_SOCIAL { get; set; } = string.Empty;
+        public string NOME_SOCIAL { get; set; }
 
         [Required]
         [Display(Name = "E-mail")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Campo {} é obrigatório.")]
         [EmailAddress]
         [MaxLength(50)]
-        public string EMAIL { get; set; } = string.Empty;
+        public string EMAIL { get; set; }
 
         [Display(Name = "Foto")]
-        [DataType(DataType.ImageUrl)]
-        public string FOTO { get; set; } = string.Empty;
+        [DataType(DataType.Text)]
+        public string FOTO { get; set; }
 
         [Required]
         [Display(Name = "CPF")]
         [DataType(DataType.Text, ErrorMessage = "Campo {} é obrigatório.")]
         [MaxLength(11)]
-        public string CPF { get; set; } = string.Empty;
+        public string CPF { get; set; } 
 
         [Display(Name = "Telefone")]
         [DataType(DataType.PhoneNumber)]
-        public string TELEFONE { get; set; } = string.Empty;
+        public string TELEFONE { get; set; }
 
         public string CONFIRMACAO_SENHA { get; set; } = string.Empty;
 
-        public int ENDERECO_ID { get; set; }
         public ENDERECO? ENDERECO { get; set; }
 
-        public int PERMISSAO_ID { get; set; }
         public PERMISSAO? PERMISSAO { get; set; }
 
         [Required]
@@ -56,8 +54,6 @@ namespace Api.DTO.Requisicao.Usuario.Cadastro
 
         [Required]
         public DateTime DATA_CRIADO { get; set; }
-
-        public FUNCIONARIO? FUNCIONARIO { get; set; }
 
         public bool SUCESSO { get; set; }
         public List<string> ERROS { get; set; } = [];
@@ -105,8 +101,7 @@ namespace Api.DTO.Requisicao.Usuario.Cadastro
                 ENDERECO = this.ENDERECO,
                 PERMISSAO = this.PERMISSAO,
                 USUARIO_ATIVO = this.USUARIO_ATIVO,
-                DATA_CRIADO = this.DATA_CRIADO,
-                FUNCIONARIO = this.FUNCIONARIO != null ? this.FUNCIONARIO : null,
+                DATA_CRIADO = DateTime.Now
             };
         }
     }

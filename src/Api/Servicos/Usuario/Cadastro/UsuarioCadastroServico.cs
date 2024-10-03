@@ -9,10 +9,12 @@ namespace Api.Servicos.Usuario.Cadastro
     // service é a classe que aplica todas as regras de negocio e verificações
     public class UsuarioCadastroServico : IUsuarioCadastroServico
     {
-        private readonly UsuarioCadastroRepositorio _usuarioRepositorio;
+        private readonly IUsuarioCadastroRepositorio _usuarioRepositorio;
 
-        public UsuarioCadastroServico(UsuarioCadastroRepositorio usuarioRepositorio)
-            => _usuarioRepositorio = usuarioRepositorio;
+        public UsuarioCadastroServico(IUsuarioCadastroRepositorio usuarioRepositorio)
+        {
+            _usuarioRepositorio = usuarioRepositorio;
+        }
 
         public async Task<UsuarioCadastroResposta> CadastrarUsuario(UsuarioCadastroRequisicao user)
         {
@@ -24,7 +26,7 @@ namespace Api.Servicos.Usuario.Cadastro
                     ERROS = ["Cadastro não pode ser vazio."]
                 };
             }
-            else if(!ValidaDadosBasicos(user))
+            else if(!ValidaDadosBasicos(user)) 
             {
                 user.AdicionarErro("Dados básicos não preenchidos corretamente");
                 user.SUCESSO = false;

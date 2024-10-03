@@ -36,7 +36,7 @@ namespace Api.Models
         public string EMAIL { get; set; } = string.Empty;
 
         [Display(Name = "Foto")]
-        [DataType(DataType.ImageUrl)]
+        [DataType(DataType.Text)]
         public string FOTO { get; set; } = string.Empty;
 
         [Required]

@@ -12,7 +12,12 @@ namespace Api.DTO.Resposta.Usuario.Cadastro
         {
             ERROS = new List<string>();
             
-            SUCESSO = _USUARIO != null;
+            SUCESSO = usuario != null;
+
+            if(SUCESSO)
+            {
+                AdicionarUsuario(usuario!);
+            }
 
             if(!SUCESSO && _USUARIO == null)
             {

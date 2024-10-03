@@ -23,7 +23,6 @@ namespace Api.Models
 
         [Required]
         [Display(Name = "Número")]
-        [DataType(DataType.Custom, ErrorMessage = "Campo {} é obrigatório.")]
         public int NUMERO { get; set; }
 
         [Required]

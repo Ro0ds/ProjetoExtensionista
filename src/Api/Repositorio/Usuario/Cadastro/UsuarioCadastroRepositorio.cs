@@ -11,7 +11,9 @@ namespace Api.Repositorio.Usuario.Cadastro
         private readonly ApiDbContext _dbContext;
 
         public UsuarioCadastroRepositorio(ApiDbContext dbContext)
-            => _dbContext = dbContext;
+        {
+            _dbContext = dbContext;
+        } 
 
         public async Task<UsuarioCadastroResposta> Adicionar(UsuarioCadastroRequisicao user)
         {
