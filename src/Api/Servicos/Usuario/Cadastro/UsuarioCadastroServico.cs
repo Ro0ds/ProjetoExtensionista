@@ -57,7 +57,6 @@ namespace Api.Servicos.Usuario.Cadastro
         {
             return 
                 !string.IsNullOrWhiteSpace(user.NOME) &&
-                !string.IsNullOrWhiteSpace(user.SOBRENOME) &&
                 !string.IsNullOrWhiteSpace(user.EMAIL) &&
                 !string.IsNullOrWhiteSpace(user.CPF) &&
                 !string.IsNullOrWhiteSpace(user.CONFIRMACAO_SENHA);

@@ -10,38 +10,38 @@ namespace Api.DTO.Requisicao.Usuario.Cadastro
         [Display(Name = "Nome")]
         [DataType(DataType.Text, ErrorMessage = "Campo {} é obrigatório.")]
         [MaxLength(100)]
-        public string NOME { get; set; }
+        public string NOME { get; set; } = string.Empty;
 
         [Display(Name = "Sobrenome")]
         [DataType(DataType.Text)]
         [MaxLength(100)]
-        public string SOBRENOME { get; set; }
+        public string SOBRENOME { get; set; } = string.Empty;
 
         [Display(Name = "Nome Social")]
         [DataType(DataType.Text)]
         [MaxLength(100)]
-        public string NOME_SOCIAL { get; set; }
+        public string NOME_SOCIAL { get; set; } = string.Empty;
 
         [Required]
         [Display(Name = "E-mail")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Campo {} é obrigatório.")]
         [EmailAddress]
         [MaxLength(50)]
-        public string EMAIL { get; set; }
+        public string EMAIL { get; set; } = string.Empty;
 
         [Display(Name = "Foto")]
-        [DataType(DataType.Text)]
-        public string FOTO { get; set; }
+        [DataType(DataType.ImageUrl)]
+        public string FOTO { get; set; } = string.Empty;
 
         [Required]
         [Display(Name = "CPF")]
         [DataType(DataType.Text, ErrorMessage = "Campo {} é obrigatório.")]
         [MaxLength(11)]
-        public string CPF { get; set; } 
+        public string CPF { get; set; } = string.Empty;
 
         [Display(Name = "Telefone")]
         [DataType(DataType.PhoneNumber)]
-        public string TELEFONE { get; set; }
+        public string TELEFONE { get; set; } = string.Empty;
 
         public string CONFIRMACAO_SENHA { get; set; } = string.Empty;
 

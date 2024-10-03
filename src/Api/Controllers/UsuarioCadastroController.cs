@@ -4,7 +4,7 @@ using Api.Interfaces.Usuario.Cadastro;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyApp.Namespace
+namespace Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -16,11 +16,9 @@ namespace MyApp.Namespace
         {
             _usuarioServico = usuarioServico;
         }
-        
-        // HTTP - POST, GET, PUT, DELETE
-        
+
         [HttpPost("CadastrarUsuario")]  
-        public async Task<ActionResult<UsuarioCadastroResposta>> Cadastrar(UsuarioCadastroRequisicao requisicao)
+        public async Task<ActionResult<UsuarioCadastroResposta>> Cadastrar([FromBody] UsuarioCadastroRequisicao requisicao)
         {
             var resposta = await _usuarioServico.CadastrarUsuario(requisicao);
 
