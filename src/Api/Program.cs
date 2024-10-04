@@ -6,7 +6,6 @@ var configuration = builder.Configuration;
 
 services.ConfiguraConexaoBD(configuration);
 services.AdicionaInjecoesDependencias();
-
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
@@ -21,11 +20,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
