@@ -18,14 +18,19 @@ namespace Api.Repositorio.Usuario.Operacoes
 
         public async Task<List<UsuarioOperacoesConsulta>> Listar()
         {
-            List<USUARIO> usuarios = await _dbContext.USUARIO.ToListAsync();
+            List<USUARIO> usuarios = 
+                await _dbContext.USUARIO
+                .Include(e => e.ENDERECO)
+                .Include(p => p.PERMISSAO)
+                .ToListAsync();
+
             List<UsuarioOperacoesConsulta> usuariosMontados = new List<UsuarioOperacoesConsulta>();
 
             if(usuarios.Count > 0)
             {
                 foreach(var usuario in usuarios)
                 {
-                    usuariosMontados.Add(MontarUsuario(usuario));
+                    usuariosMontados.Add(MontarUsuario(usuario: usuario, sucesso: true));
                 }
             }
 
@@ -34,23 +39,37 @@ namespace Api.Repositorio.Usuario.Operacoes
 
         public async Task<UsuarioOperacoesConsulta> ListarPorID(int usuarioID)
         {
-            var usuario = await _dbContext.USUARIO.Where(u => u.ID == usuarioID).SingleOrDefaultAsync();
-            return MontarUsuario(usuario!);
+            var usuario = 
+                await _dbContext.USUARIO
+                .Where(u => u.ID == usuarioID)
+                .Include(e => e.ENDERECO)
+                .Include(p => p.PERMISSAO)
+                .SingleOrDefaultAsync();
+
+            return MontarUsuario(usuario!, sucesso: true);
         }
 
         public async Task<UsuarioOperacoesConsulta> Atualizar(USUARIO usuario)
         {
+            _dbContext.Entry(usuario).State = EntityState.Modified;
             _dbContext.USUARIO.Update(usuario);
             await _dbContext.SaveChangesAsync();
-            return MontarUsuario(usuario);
+
+            return MontarUsuario(usuario, sucesso: true);
         }
 
         public async Task<bool> Deletar(int usuarioID)
         {
-            var usuario = await _dbContext.USUARIO.Where(u => u.ID == usuarioID).SingleOrDefaultAsync();
-
+            var usuario = 
+                await _dbContext.USUARIO
+                    .Where(u => u.ID == usuarioID)
+                    .Include(e => e.ENDERECO)
+                    .Include(p => p.PERMISSAO)
+                    .SingleOrDefaultAsync();
             try
             {
+                _dbContext.ENDERECO.Remove(usuario!.ENDERECO!);
+                _dbContext.PERMISSAO.Remove(usuario!.PERMISSAO!);
                 _dbContext.USUARIO.Remove(usuario!);
                 await _dbContext.SaveChangesAsync();
                 return true;

@@ -1,6 +1,7 @@
 ﻿using Api.DTO.Requisicao.Usuario.Operacoes;
 using Api.Interfaces.Usuario.Operacoes;
 using Api.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Servicos.Usuario.Operacoes
 {
@@ -17,30 +18,31 @@ namespace Api.Servicos.Usuario.Operacoes
         {
             if(usuario != null)
             {
-                if(usuario.USUARIO_ATIVO)
-                {
-                    var resposta = await _repositorio.Atualizar(usuario);
+                var resposta = await _repositorio.Atualizar(usuario);
 
-                    if(resposta.SUCESSO)
-                    {
-                        return resposta;
-                    }
-                    throw new Exception("Não foi possível atualizar o usuário.");
+                if(resposta.SUCESSO)
+                {
+                    return resposta;
                 }
-                throw new Exception("Usuário inativo.");
+                throw new Exception("Não foi possível atualizar o usuário.");
             }
             throw new Exception("Usuário não existe.");
         }
 
         public async Task<bool> DeletarUsuario(int usuarioID)
         {
-            var resposta = await _repositorio.ListarPorID(usuarioID);
+            var usuario = await _repositorio.ListarPorID(usuarioID);
 
-            if(resposta.SUCESSO)
+            if(usuario.SUCESSO && usuario.USUARIO_ATIVO == false)
             {
-                return true;
-            }
+                var sucesso = await _repositorio.Deletar(usuarioID);
 
+                if(sucesso)
+                {
+                    return true;
+                }
+                return false;
+            }
             return false;
         }
 
