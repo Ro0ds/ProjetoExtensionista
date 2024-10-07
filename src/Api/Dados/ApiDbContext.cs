@@ -18,6 +18,5 @@ namespace Api.Dados
         public DbSet<ENDERECO> ENDERECO {  get; set; }
         public DbSet<HISTORICO_MOVIMENTACOES> HISTORICO_MOVIMENTACOES {  get; set; }
         public DbSet<PERMISSAO> PERMISSAO {  get; set; }
-
     }
 }
