@@ -29,7 +29,7 @@ namespace Api.Controllers
         }
 
         [HttpPut("atualizar")]
-        public async Task<ActionResult<UsuarioOperacoesConsulta>> AtualizarUsuario([FromBody] USUARIO usuario)
+        public async Task<ActionResult<UsuarioOperacoesConsulta>> AtualizarUsuario(USUARIO usuario)
         {
             // return await _usuarioOperacoesServico.AtualizarUsuario(usuario);
             // necessário arrumar
