@@ -1,7 +1,9 @@
-﻿using Api.Dados;
+﻿using System.Reflection.Metadata.Ecma335;
+using Api.Dados;
 using Api.DTO.Requisicao.Usuario.Operacoes;
 using Api.Interfaces.Usuario.Operacoes;
 using Api.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Repositorio.Usuario.Operacoes
@@ -49,13 +51,29 @@ namespace Api.Repositorio.Usuario.Operacoes
             return MontarUsuario(usuario!, sucesso: true);
         }
 
-        public async Task<UsuarioOperacoesConsulta> Atualizar(USUARIO usuario)
+        public async Task<USUARIO> ListarBrutoPorID(int usuarioID)
+        {
+            var usuario = await _dbContext.USUARIO
+                .Where(u => u.ID == usuarioID)
+                .Include(e => e.ENDERECO)
+                .Include(p => p.PERMISSAO)
+                .SingleOrDefaultAsync();
+
+            if(usuario != null)
+            {
+                return usuario;
+            }
+
+            return new USUARIO();
+        }
+
+        public async Task<UsuarioOperacoesConsulta> Atualizar([FromBody] USUARIO usuario)
         {
             _dbContext.Entry(usuario).State = EntityState.Modified;
             _dbContext.USUARIO.Update(usuario);
             await _dbContext.SaveChangesAsync();
 
-            return MontarUsuario(usuario, sucesso: true);
+            return await ListarPorID(usuario.ID);
         }
 
         public async Task<bool> Deletar(int usuarioID)

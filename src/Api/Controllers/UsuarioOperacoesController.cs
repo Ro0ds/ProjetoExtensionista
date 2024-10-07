@@ -19,31 +19,25 @@ namespace Api.Controllers
         [HttpGet("listar")]
         public async Task<ActionResult<List<UsuarioOperacoesConsulta>>> ListarUsuarios()
         {
-            return await _usuarioOperacoesServico.BuscarUsuarios();
+            return Ok(await _usuarioOperacoesServico.BuscarUsuarios());
         }
 
         [HttpGet("listarPorId/{id}")]
         public async Task<ActionResult<UsuarioOperacoesConsulta>> ListarUsuarioPorId(int id)
         {
-            return await _usuarioOperacoesServico.BuscarUsuarioPorID(id);
+            return Ok(await _usuarioOperacoesServico.BuscarUsuarioPorID(id));
         }
 
         [HttpPut("atualizar")]
         public async Task<ActionResult<UsuarioOperacoesConsulta>> AtualizarUsuario(USUARIO usuario)
         {
-            // return await _usuarioOperacoesServico.AtualizarUsuario(usuario);
-            // necessário arrumar
-
-            return Ok();
+            return Ok(await _usuarioOperacoesServico.AtualizarUsuario(usuario));
         }
 
         [HttpDelete("deletar/{id}")]
         public async Task<ActionResult<bool>> DeletarUsuario(int id)
         {
-            // return await _usuarioOperacoesServico.DeletarUsuario(id);
-            // necessário arrumar, não está funcionando
-
-            return Ok();
+            return Ok(await _usuarioOperacoesServico.DeletarUsuario(id));
         }
     }
 }

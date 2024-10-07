@@ -13,13 +13,16 @@ namespace Api.DTO.Requisicao.Usuario.Operacoes
         public required string TELEFONE { get; set; } = string.Empty;
         public required ENDERECO ENDERECO { get; set; }
         public required PERMISSAO PERMISSAO { get; set; }
-        public bool USUARIO_ATIVO { get; set; }
+        public bool USUARIO_ATIVO { get; set; } = true;
         public DateTime DATA_CRIADO { get; set; }
 
         public bool SUCESSO { get; set; } = false;
         public List<string> ERROS { get; set; } = [];
 
         public void AdicionarErro(string erro)
-            => ERROS.Add(erro);
+        {
+            ERROS.Add(erro);
+            SUCESSO = false;
+        } 
     }
 }

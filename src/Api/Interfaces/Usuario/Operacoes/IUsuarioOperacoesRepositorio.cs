@@ -7,7 +7,8 @@ namespace Api.Interfaces.Usuario.Operacoes
     {
         Task<List<UsuarioOperacoesConsulta>> Listar();
         Task<UsuarioOperacoesConsulta> ListarPorID(int usuarioID);
-        Task<UsuarioOperacoesConsulta> Atualizar(USUARIO usuario);
+        Task<USUARIO> ListarBrutoPorID(int usuarioID);
+        Task<UsuarioOperacoesConsulta> Atualizar(USUARIO usuarioID);
         Task<bool> Deletar(int usuarioID);
         UsuarioOperacoesConsulta MontarUsuario(USUARIO usuario, List<string> erros = null!, bool sucesso = false);
     }

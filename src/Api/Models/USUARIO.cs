@@ -62,7 +62,7 @@ namespace Api.Models
         public PERMISSAO? PERMISSAO { get; set; }
 
         [Required]
-        public bool USUARIO_ATIVO { get; set; } = false;
+        public bool USUARIO_ATIVO { get; set; } = true;
 
         [Required]
         public DateTime DATA_CRIADO { get; set; }

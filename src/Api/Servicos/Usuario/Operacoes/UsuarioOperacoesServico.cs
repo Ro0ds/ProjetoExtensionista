@@ -31,17 +31,11 @@ namespace Api.Servicos.Usuario.Operacoes
 
         public async Task<bool> DeletarUsuario(int usuarioID)
         {
-            var usuario = await _repositorio.ListarPorID(usuarioID);
+            var usuario = await _repositorio.ListarBrutoPorID(usuarioID);
 
-            if(usuario.SUCESSO && usuario.USUARIO_ATIVO == false)
+            if(usuario != null)
             {
-                var sucesso = await _repositorio.Deletar(usuarioID);
-
-                if(sucesso)
-                {
-                    return true;
-                }
-                return false;
+                return await _repositorio.Deletar(usuarioID);
             }
             return false;
         }
@@ -54,6 +48,18 @@ namespace Api.Servicos.Usuario.Operacoes
         public async Task<UsuarioOperacoesConsulta> BuscarUsuarioPorID(int usuarioID)
         {
             var resposta = await _repositorio.ListarPorID(usuarioID);
+
+            if(resposta != null)
+            {
+                return resposta;
+            }
+
+            throw new Exception("Não foi possível encontrar usuário");
+        }
+
+        public async Task<USUARIO> BuscarUsuarioBrutoPorID(int usuarioID)
+        {
+            var resposta = await _repositorio.ListarBrutoPorID(usuarioID);
 
             if(resposta != null)
             {
