@@ -18,5 +18,14 @@ namespace Api.Dados
         public DbSet<ENDERECO> ENDERECO {  get; set; }
         public DbSet<HISTORICO_MOVIMENTACOES> HISTORICO_MOVIMENTACOES {  get; set; }
         public DbSet<PERMISSAO> PERMISSAO {  get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            InicializacaoPermissoes permissoes = new InicializacaoPermissoes(modelBuilder);
+
+            permissoes.Seed();
+        }
     }
 }

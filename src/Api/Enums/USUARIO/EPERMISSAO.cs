@@ -1,19 +1,24 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Api.Enums.Usuario
 {
     public enum EPERMISSAO
     {
-        [Display(Name = "Administrador", Description = "Usuário com permissões administrativas do sistema inteiro.")]        
+        [Display(Name = "Administrador")]
+        [Description("Usuário com permissões administrativas do sistema inteiro.")]
         ADMINISTRADOR = 1,
 
-        [Display(Name = "Usuário", Description = "Usuário com permissões básicas do sistema inteiro.")]
+        [Display(Name = "Usuário")]
+        [Description("Usuário com permissões básicas do sistema inteiro.")]
         USUARIO,
 
-        [Display(Name = "Responsável", Description = "Usuário com permissões administrativas dentro de uma empresa.")]
+        [Display(Name = "Responsável")]
+        [Description("Usuário com permissões administrativas dentro de uma empresa.")]
         RESPONSAVEL,
 
-        [Display(Name = "Funcionário", Description = "Usuário com permissões básicas dentro de uma empresa.")]
+        [Display(Name = "Funcionário")]
+        [Description("Usuário com permissões básicas dentro de uma empresa.")]
         FUNCIONARIO
     }
 }
