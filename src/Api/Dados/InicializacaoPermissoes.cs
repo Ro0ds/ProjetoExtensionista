@@ -19,6 +19,8 @@ namespace Api.Dados
         {
             var enums = Enum.GetValues<EPERMISSAO>();
 
+            List<PERMISSAO> permissaoSeed = new List<PERMISSAO>();
+            int permissaoId = 1;
             string[] names = new string[enums.Length];
             string[] descriptions = new string[enums.Length];
             int index = 0;
@@ -30,12 +32,20 @@ namespace Api.Dados
                 index++;
             }
 
+            for(int i = 0; i < enums.Length; i++)
+            {
+                permissaoSeed.Add(new PERMISSAO 
+                {
+                    ID = permissaoId,
+                    NOME_PERMISSAO = names[i],
+                    DESCRICAO = descriptions[i]
+                });
+
+                permissaoId++;
+            }
+
             _modelBuilder.Entity<PERMISSAO>()
-                .HasData(
-                    
-                    names, 
-                    descriptions
-                );
+                .HasData(permissaoSeed);
         }
     }
 }
