@@ -32,11 +32,7 @@ namespace Api.Tests.Usuario.Cadastro
                     ESTADO = "São Paulo",
                     PAIS = "Brasil"
                 },
-                PERMISSAO = new PERMISSAO
-                {
-                    NOME_PERMISSAO = "USUARIO",
-                    DESCRICAO = "Usuário com permissões comuns para visualizar o sistema."
-                },
+                PERMISSAO_ID = 2,
                 USUARIO_ATIVO = true,
                 DATA_CRIADO = DateTime.Now,
                 SUCESSO = true

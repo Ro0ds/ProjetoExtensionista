@@ -29,11 +29,7 @@ namespace Api.Tests.Dados.Usuario.Cadastro
                            ESTADO = "São Paulo",
                            PAIS = "Brasil"
                        },
-                       PERMISSAO = new PERMISSAO
-                       {
-                           NOME_PERMISSAO = "ADMINISTRADOR",
-                           DESCRICAO = "Permissões administrativas completas."
-                       },
+                       PERMISSAO_ID = 2,
                        USUARIO_ATIVO = true,
                        DATA_CRIADO = DateTime.Now,
                        SUCESSO = true
@@ -59,11 +55,7 @@ namespace Api.Tests.Dados.Usuario.Cadastro
                             ESTADO = "Rio de Janeiro",
                             PAIS = "Brasil"
                         },
-                        PERMISSAO = new PERMISSAO
-                        {
-                            NOME_PERMISSAO = "MODERADOR",
-                            DESCRICAO = "Usuário com permissões de moderação."
-                        },
+                        PERMISSAO_ID = 2,
                         USUARIO_ATIVO = false,
                         DATA_CRIADO = DateTime.Now.AddDays(-30),
                         SUCESSO = true
@@ -89,11 +81,7 @@ namespace Api.Tests.Dados.Usuario.Cadastro
                            ESTADO = "São Paulo",
                            PAIS = "Brasil"
                        },
-                       PERMISSAO = new PERMISSAO
-                       {
-                           NOME_PERMISSAO = "USUARIO",
-                           DESCRICAO = "Permissões comuns para visualização."
-                       },
+                       PERMISSAO_ID = 2,
                        USUARIO_ATIVO = true,
                        DATA_CRIADO = DateTime.Now.AddMonths(-3),
                        SUCESSO = true
@@ -119,11 +107,7 @@ namespace Api.Tests.Dados.Usuario.Cadastro
                            ESTADO = "Minas Gerais",
                            PAIS = "Brasil"
                        },
-                       PERMISSAO = new PERMISSAO
-                       {
-                           NOME_PERMISSAO = "USUARIO",
-                           DESCRICAO = "Usuário padrão com permissões limitadas."
-                       },
+                       PERMISSAO_ID = 2,
                        USUARIO_ATIVO = true,
                        DATA_CRIADO = DateTime.Now.AddYears(-1),
                        SUCESSO = true
@@ -149,11 +133,7 @@ namespace Api.Tests.Dados.Usuario.Cadastro
                            ESTADO = "Bahia",
                            PAIS = "Brasil"
                        },
-                       PERMISSAO = new PERMISSAO
-                       {
-                           NOME_PERMISSAO = "ADMINISTRADOR",
-                           DESCRICAO = "Administrador com permissões completas."
-                       },
+                       PERMISSAO_ID = 2,
                        USUARIO_ATIVO = true,
                        DATA_CRIADO = DateTime.Now.AddDays(-15),
                        SUCESSO = true

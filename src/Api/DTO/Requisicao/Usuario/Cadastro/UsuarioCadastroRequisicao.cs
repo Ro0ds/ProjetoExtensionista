@@ -46,7 +46,7 @@ namespace Api.DTO.Requisicao.Usuario.Cadastro
 
         public ENDERECO? ENDERECO { get; set; }
 
-        public PERMISSAO? PERMISSAO { get; set; }
+        public int PERMISSAO_ID { get; set; }
 
         [Required]
         public bool USUARIO_ATIVO { get; set; } = false;
@@ -98,7 +98,7 @@ namespace Api.DTO.Requisicao.Usuario.Cadastro
                     SALT = retrieveSaltBytes
                 },
                 ENDERECO = this.ENDERECO,
-                PERMISSAO = this.PERMISSAO,
+                PERMISSAO_ID = this.PERMISSAO_ID,
                 USUARIO_ATIVO = this.USUARIO_ATIVO,
                 DATA_CRIADO = DateTime.Now
             };

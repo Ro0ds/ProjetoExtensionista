@@ -3,6 +3,16 @@ import React, {useState} from 'react'
 import axios from 'axios';
 
 function Cadastro(){
+    const [enderecoFormData, setEnderecoFormData] = useState({
+        cep: '',
+        rua: '',
+        numero: 0,
+        bairro: '',
+        cidade: '',
+        estado: '',
+        pais: ''
+      });
+
     const [formData, setFormData] = useState({
         nome: '',
         sobrenome: '',
@@ -12,45 +22,56 @@ function Cadastro(){
         cpf: '',
         telefone: '',
         confirmacao_senha: '',
-        cep: '',
-        rua: '',
-        numero: 0,
-        bairro: '',
-        cidade: '',
-        estado: '',
-        pais: '',
-        permissao: 2,
-        data_criado: '',
+        endereco: enderecoFormData,
+        permissao_id: 2,
+        data_criado: new Date().toISOString(),
       });
+
+      const handleEnderecoInputChange = (e) => {
+          const { name, value } = e.target;
+          setEnderecoFormData({
+              ...enderecoFormData,
+              [name]: value, // Atualiza o campo correto
+            });
+        };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({
-          ...formData,
-          [name]: value, // Atualiza o campo correto
-        });
-    };
-
+            ...formData,
+            [name]: value, // Atualiza o campo correto
+            });
+        };
+        
     const handleSubmit = (event) => {
         event.preventDefault();
         
         axios.defaults.headers.post['Content-Type'] ='application/json';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
+        setEnderecoFormData({
+            ...enderecoFormData
+        });
+
         setFormData({
             ...formData,
-            data_criado: new Date().toLocaleDateString(),
+            endereco: enderecoFormData
         });
 
-        axios.post('http://localhost:5205/api/UsuarioCadastro/CadastrarUsuario', formData)
+        axios.post('http://localhost:5205/api/usuario/cadastro/CadastrarUsuario', formData)
         .then(function (response) {
-            console.log(response);
+            var dados = response.data;
+
+            if(dados.sucesso){
+                console.log(`usuario ${dados._USUARIO.nome} cadastrado com sucesso`);
+                console.log(`email: ${dados._USUARIO.email}`);
+            }
         })
         .catch(function (error) {
-            console.error(error);
-        });
+            var erro = error.data;
 
-        console.log('parou o submit');
+            console.error(erro.erros);
+        });
     };
 
     return(
@@ -61,7 +82,7 @@ function Cadastro(){
 
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label for="nome">Nome:</label>
+                    <label>Nome:</label>
                     <input 
                         type="text" 
                         name="nome" 
@@ -71,7 +92,7 @@ function Cadastro(){
                 </div>
                 
                 <div>
-                    <label for="sobrenome">Sobrenome:</label>
+                    <label>Sobrenome:</label>
                     <input 
                         type="text" 
                         name="sobrenome" 
@@ -81,7 +102,7 @@ function Cadastro(){
                 </div>
 
                 <div>
-                    <label for="nome_social">Nome Social:</label>
+                    <label>Nome Social:</label>
                     <input 
                         type="text" 
                         name="nome_social"
@@ -90,7 +111,7 @@ function Cadastro(){
                 </div>
 
                 <div>
-                    <label for="email">Email:</label>
+                    <label>Email:</label>
                     <input 
                     type="text" 
                     name="email" 
@@ -100,7 +121,7 @@ function Cadastro(){
                 </div>
 
                 <div>
-                    <label for="cpf">CPF: </label>
+                    <label>CPF: </label>
                     <input 
                     type="text" 
                     name="cpf" 
@@ -110,7 +131,7 @@ function Cadastro(){
                 </div>
 
                 <div>
-                    <label for="telefone">Telefone:</label>
+                    <label>Telefone:</label>
                     <input 
                     type="tel" 
                     name="telefone" 
@@ -120,7 +141,7 @@ function Cadastro(){
                 </div>
 
                 <div>
-                    <label for="confirmacao_senha">Senha:</label>
+                    <label>Senha:</label>
                     <input 
                     type="password" 
                     name="confirmacao_senha" 
@@ -133,77 +154,77 @@ function Cadastro(){
                 <label>Endereço</label> 
                 <br /> <br />
                 <div>
-                    <label for="cep">Cep:</label>
+                    <label>Cep:</label>
                     <input 
                     type="text"
                     name="cep"
-                    value={formData.cep}
-                    onChange={handleInputChange} 
+                    value={enderecoFormData.cep}
+                    onChange={handleEnderecoInputChange} 
                     required />
                 </div>
 
                 <div>
-                    <label for="rua">Rua:</label>
+                    <label>Rua:</label>
                     <input 
                     type="text" 
                     name="rua" 
-                    value={formData.rua}
-                    onChange={handleInputChange}
+                    value={enderecoFormData.rua}
+                    onChange={handleEnderecoInputChange}
                     required />
                 </div>
 
                 <div>
-                    <label for="numero">Número:</label>
+                    <label>Número:</label>
                     <input 
-                    type="number" 
+                    type="text" 
                     name="numero" 
-                    value={formData.numero}
-                    onChange={handleInputChange}
+                    value={enderecoFormData.numero}
+                    onChange={handleEnderecoInputChange}
                     required />
                 </div>
 
                 <div>
-                    <label for="bairro">Bairro:</label>
+                    <label>Bairro:</label>
                     <input 
                     type="text" 
                     name="bairro" 
-                    value={formData.bairro}
-                    onChange={handleInputChange}
+                    value={enderecoFormData.bairro}
+                    onChange={handleEnderecoInputChange}
                     required />
                 </div>
 
                 <div>
-                    <label for="cidade">Cidade:</label>
+                    <label>Cidade:</label>
                     <input 
                     type="text" 
                     name="cidade" 
-                    value={formData.cidade}
-                    onChange={handleInputChange}
+                    value={enderecoFormData.cidade}
+                    onChange={handleEnderecoInputChange}
                     required />
                 </div>
 
                 <div>
-                    <label for="estado">Estado:</label>
+                    <label>Estado:</label>
                     <input 
                     type="text" 
                     name="estado" 
-                    value={formData.estado}
-                    onChange={handleInputChange}
+                    value={enderecoFormData.estado}
+                    onChange={handleEnderecoInputChange}
                     required />
                 </div>
 
                 <div>
-                    <label for="pais">País:</label>
+                    <label>País:</label>
                     <input 
                     type="text" 
                     name="pais" 
-                    value={formData.pais}
-                    onChange={handleInputChange}
+                    value={enderecoFormData.pais}
+                    onChange={handleEnderecoInputChange}
                     required />
                 </div>
 
                 <div>
-                    <label for="foto">Foto:</label>
+                    <label>Foto:</label>
                     <input 
                     type="text" 
                     name="foto" 
@@ -213,10 +234,10 @@ function Cadastro(){
                 </div>
 
                 <div>
-                    <label for="permissao">Permissão:</label>
+                    <label>Permissão:</label>
                     <input 
                     type="number" 
-                    name="permissao" 
+                    name="permissao_id" 
                     value='2'
                     onChange={handleInputChange}
                     required />

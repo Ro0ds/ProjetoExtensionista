@@ -1,8 +1,6 @@
-﻿using Api.Models;
-using Api.DTO.Requisicao.Usuario.Cadastro;
+﻿using Api.DTO.Requisicao.Usuario.Cadastro;
 using Api.DTO.Resposta.Usuario.Cadastro;
 using Api.Interfaces.Usuario.Cadastro;
-using Api.Repositorio.Usuario.Cadastro;
 
 namespace Api.Servicos.Usuario.Cadastro
 {
@@ -37,7 +35,7 @@ namespace Api.Servicos.Usuario.Cadastro
                     ERROS = user.ERROS
                 };
             }
-            else if(!ValidaEndereco(user.ENDERECO!))
+            else if(!ValidaEndereco(user))
             {
                 user.AdicionarErro("Endereço não pode ser vazio.");
                 user.SUCESSO = false;
@@ -62,16 +60,16 @@ namespace Api.Servicos.Usuario.Cadastro
                 !string.IsNullOrWhiteSpace(user.CONFIRMACAO_SENHA);
         }
 
-        private bool ValidaEndereco(ENDERECO endereco)
+        private bool ValidaEndereco(UsuarioCadastroRequisicao user)
         {
             return 
-                endereco.NUMERO >= 0 &&
-                !string.IsNullOrWhiteSpace(endereco.CEP) &&
-                !string.IsNullOrWhiteSpace(endereco.RUA) &&
-                !string.IsNullOrWhiteSpace(endereco.BAIRRO) &&
-                !string.IsNullOrWhiteSpace(endereco.CIDADE) &&
-                !string.IsNullOrWhiteSpace(endereco.ESTADO) &&
-                !string.IsNullOrWhiteSpace(endereco.PAIS);
+                user.ENDERECO!.NUMERO > 0 &&
+                !string.IsNullOrWhiteSpace(user.ENDERECO!.CEP) &&
+                !string.IsNullOrWhiteSpace(user.ENDERECO!.RUA) &&
+                !string.IsNullOrWhiteSpace(user.ENDERECO!.BAIRRO) &&
+                !string.IsNullOrWhiteSpace(user.ENDERECO!.CIDADE) &&
+                !string.IsNullOrWhiteSpace(user.ENDERECO!.ESTADO) &&
+                !string.IsNullOrWhiteSpace(user.ENDERECO!.PAIS);
         }
     }
 }
