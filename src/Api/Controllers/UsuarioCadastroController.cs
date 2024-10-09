@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/usuario/cadastro")]
     [ApiController]
     public class UsuarioCadastroController : ControllerBase
     {

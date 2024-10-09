@@ -25,7 +25,6 @@ namespace Api.DTO.Requisicao.Usuario.Cadastro
         [Required]
         [Display(Name = "E-mail")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Campo {} é obrigatório.")]
-        [EmailAddress]
         [MaxLength(50)]
         public string EMAIL { get; set; } = string.Empty;
 
