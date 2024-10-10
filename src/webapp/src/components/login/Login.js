@@ -1,5 +1,6 @@
 import './Login.css'
 import React, {useState} from 'react'
+import Cadastro from '../cadastro/Cadastro';
 
 function Login(){
     const [email, setEmail] = useState('');
@@ -39,7 +40,16 @@ function Login(){
                 </div>
 
                 <button type='submit'>Entrar</button>
-                <button type='submit'>Cadastrar</button>
+                <a href='#'>Esqueceu a senha?</a>
+                
+                <button type='submit'> <a href='#'></a>Cadastrar</button>
+                
+                <div className='cadastro-link'>
+                    <p>Não tem uma conta?
+                        <button> <a href='/cadastro/Cadastro'>REGISTRAR</a></button>
+                    </p>
+                </div>
+
             </form>
         </>
     );

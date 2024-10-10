@@ -2,7 +2,7 @@ import './Cadastro.css'
 import React, {useState} from 'react'
 import axios from 'axios';
 
-function Cadastro(){
+function Cadastro (){
     const [enderecoFormData, setEnderecoFormData] = useState({
         cep: '',
         rua: '',
@@ -78,8 +78,9 @@ function Cadastro(){
         <>
             <div>
                 <h1>Cadastro</h1>
+                
             </div>
-
+        
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Nome:</label>
@@ -244,6 +245,7 @@ function Cadastro(){
                 </div>
 
                 <button type="submit">Cadastrar</button>
+                <button type="link"> </button>
             </form>
         </>
     );
