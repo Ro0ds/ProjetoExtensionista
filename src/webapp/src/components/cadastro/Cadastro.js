@@ -2,7 +2,7 @@ import './Cadastro.css'
 import React, {useState} from 'react'
 import axios from 'axios';
 
-function Cadastro (){
+function Cadastro(){
     const [enderecoFormData, setEnderecoFormData] = useState({
         cep: '',
         rua: '',
@@ -22,41 +22,45 @@ function Cadastro (){
         cpf: '',
         telefone: '',
         confirmacao_senha: '',
-        endereco: enderecoFormData,
+        endereco: {
+            cep: '',
+            rua: '',
+            numero: 0,
+            bairro: '',
+            cidade: '',
+            estado: '',
+            pais: '',
+        },
         permissao_id: 2,
         data_criado: new Date().toISOString(),
-      });
+    });
 
-      const handleEnderecoInputChange = (e) => {
-          const { name, value } = e.target;
-          setEnderecoFormData({
-              ...enderecoFormData,
-              [name]: value, // Atualiza o campo correto
-            });
-        };
-
+    // Função para lidar com as mudanças nos campos de dados pessoais
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value, // Atualiza o campo correto
-            });
-        };
+        setFormData((prevState) => ({
+        ...prevState,
+        [name]: value, // Atualiza o campo correto
+        }));
+    };
+
+    // Função para lidar com as mudanças nos campos de endereço
+    const handleEnderecoInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevState) => ({
+        ...prevState,
+        endereco: {
+            ...prevState.endereco, // Mantém os outros campos de endereço
+            [name]: value, // Atualiza apenas o campo do endereço que foi alterado
+        },
+        }));
+    };
         
     const handleSubmit = (event) => {
         event.preventDefault();
         
         axios.defaults.headers.post['Content-Type'] ='application/json';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-
-        setEnderecoFormData({
-            ...enderecoFormData
-        });
-
-        setFormData({
-            ...formData,
-            endereco: enderecoFormData
-        });
 
         axios.post('http://localhost:5205/api/usuario/cadastro/CadastrarUsuario', formData)
         .then(function (response) {
@@ -68,9 +72,7 @@ function Cadastro (){
             }
         })
         .catch(function (error) {
-            var erro = error.data;
-
-            console.error(erro.erros);
+            console.error(error);
         });
     };
 
@@ -114,134 +116,131 @@ function Cadastro (){
                 <div>
                     <label>Email:</label>
                     <input 
-                    type="text" 
-                    name="email" 
-                    value={formData.email}
-                    onChange={handleInputChange} 
-                    required />
+                        type="text" 
+                        name="email" 
+                        value={formData.email}
+                        onChange={handleInputChange} 
+                        required />
                 </div>
 
                 <div>
                     <label>CPF: </label>
                     <input 
-                    type="text" 
-                    name="cpf" 
-                    value={formData.cpf}
-                    onChange={handleInputChange}
-                    required />
+                        type="text" 
+                        name="cpf" 
+                        value={formData.cpf}
+                        onChange={handleInputChange}
+                        required />
                 </div>
 
                 <div>
                     <label>Telefone:</label>
                     <input 
-                    type="tel" 
-                    name="telefone" 
-                    value={formData.telefone}
-                    onChange={handleInputChange} 
-                    required />
+                        type="tel" 
+                        name="telefone" 
+                        value={formData.telefone}
+                        onChange={handleInputChange} 
+                        required />
                 </div>
 
                 <div>
                     <label>Senha:</label>
                     <input 
-                    type="password" 
-                    name="confirmacao_senha" 
-                    value={formData.confirmacao_senha}
-                    onChange={handleInputChange}
-                    required />
+                        type="password" 
+                        name="confirmacao_senha" 
+                        value={formData.confirmacao_senha}
+                        onChange={handleInputChange}
+                        required />
                 </div>
-                <br />
-                <hr />
-                <label>Endereço</label> 
-                <br /> <br />
+
                 <div>
                     <label>Cep:</label>
                     <input 
-                    type="text"
-                    name="cep"
-                    value={enderecoFormData.cep}
-                    onChange={handleEnderecoInputChange} 
-                    required />
+                        type="text"
+                        name="cep"
+                        value={formData.endereco.cep}
+                        onChange={handleEnderecoInputChange} 
+                        required />
                 </div>
 
                 <div>
                     <label>Rua:</label>
                     <input 
-                    type="text" 
-                    name="rua" 
-                    value={enderecoFormData.rua}
-                    onChange={handleEnderecoInputChange}
-                    required />
+                        type="text" 
+                        name="rua" 
+                        value={formData.endereco.rua}
+                        onChange={handleEnderecoInputChange}
+                        required />
                 </div>
 
                 <div>
                     <label>Número:</label>
                     <input 
-                    type="text" 
-                    name="numero" 
-                    value={enderecoFormData.numero}
-                    onChange={handleEnderecoInputChange}
-                    required />
+                        type="text" 
+                        name="numero" 
+                        value={formData.endereco.numero}
+                        onChange={handleEnderecoInputChange}
+                        required />
                 </div>
 
                 <div>
                     <label>Bairro:</label>
                     <input 
-                    type="text" 
-                    name="bairro" 
-                    value={enderecoFormData.bairro}
-                    onChange={handleEnderecoInputChange}
-                    required />
+                        type="text" 
+                        name="bairro" 
+                        value={formData.endereco.bairro}
+                        onChange={handleEnderecoInputChange}
+                        required />
                 </div>
 
                 <div>
                     <label>Cidade:</label>
                     <input 
-                    type="text" 
-                    name="cidade" 
-                    value={enderecoFormData.cidade}
-                    onChange={handleEnderecoInputChange}
-                    required />
+                        type="text" 
+                        name="cidade" 
+                        value={formData.endereco.cidade}
+                        onChange={handleEnderecoInputChange}
+                        required />
                 </div>
 
                 <div>
                     <label>Estado:</label>
                     <input 
-                    type="text" 
-                    name="estado" 
-                    value={enderecoFormData.estado}
-                    onChange={handleEnderecoInputChange}
-                    required />
+                        type="text" 
+                        name="estado" 
+                        value={formData.endereco.estado}
+                        onChange={handleEnderecoInputChange}
+                        required />
                 </div>
 
                 <div>
                     <label>País:</label>
                     <input 
-                    type="text" 
-                    name="pais" 
-                    value={enderecoFormData.pais}
-                    onChange={handleEnderecoInputChange}
-                    required />
+                        type="text" 
+                        name="pais" 
+                        value={formData.endereco.pais}
+                        onChange={handleEnderecoInputChange}
+                        required />
                 </div>
 
                 <div>
                     <label>Foto:</label>
                     <input 
-                    type="text" 
-                    name="foto" 
-                    value={formData.foto}
-                    onChange={handleInputChange} 
-                    required />
+                        type="text" 
+                        name="foto" 
+                        value={formData.foto}
+                        onChange={handleInputChange} 
+                        required />
                 </div>
 
                 <div>
                     <label>Permissão:</label>
                     <input 
-                    type="number" 
-                    name="permissao_id" 
-                    value='2'
-                    onChange={handleInputChange}
-                    required />
+                        type="number" 
+                        name="permissao_id" 
+                        value='2'
+                        onChange={handleInputChange}
+                        required />
                 </div>
 
                 <button type="submit">Cadastrar</button>
