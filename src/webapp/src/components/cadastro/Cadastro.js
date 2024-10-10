@@ -3,16 +3,6 @@ import React, {useState} from 'react'
 import axios from 'axios';
 
 function Cadastro(){
-    const [enderecoFormData, setEnderecoFormData] = useState({
-        cep: '',
-        rua: '',
-        numero: 0,
-        bairro: '',
-        cidade: '',
-        estado: '',
-        pais: ''
-      });
-
     const [formData, setFormData] = useState({
         nome: '',
         sobrenome: '',
@@ -80,9 +70,8 @@ function Cadastro(){
         <>
             <div>
                 <h1>Cadastro</h1>
-                
             </div>
-        
+
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Nome:</label>
@@ -244,7 +233,6 @@ function Cadastro(){
                 </div>
 
                 <button type="submit">Cadastrar</button>
-                <button type="link"> </button>
             </form>
         </>
     );

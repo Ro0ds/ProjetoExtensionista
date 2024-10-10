@@ -1,3 +1,5 @@
+/*
+
 body {
     background-color: #b8b2b2b0;
     font-family: Arial, sans-serif;
@@ -6,7 +8,7 @@ body {
     
 }
 
-/* Container principal */
+/* Container principal 
 div > h1 {
     background-color: #d6d2d2;
     font-size: 50px;
@@ -16,7 +18,7 @@ div > h1 {
 
 }
 
-/* Formulário */
+/* Formulário 
 form {
     
     background-image: url(../../imagens/colorido.jpg);
@@ -31,7 +33,7 @@ form {
 }
 
 
-/* Campos do formulário */
+/* Campos do formulário 
 form > div {
     margin-bottom: 15px;
 }
@@ -49,7 +51,7 @@ form > div > input {
     box-sizing: border-box;
 }
 
-/* Botão de envio */
+/* Botão de envio 
 form > button {
     padding: 10px;
     background-color: #007bff;
@@ -62,3 +64,6 @@ form > button {
 form > button:hover {
     background-color: #0056b3;
 }
+
+comentei pra nao dar conflito entre os codigos
+*/
