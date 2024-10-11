@@ -1,6 +1,5 @@
 import './Login.css';
 import React, { useState } from 'react';
-import Cadastro from '../cadastro/Cadastro';
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -15,10 +14,10 @@ function Login() {
     return (
         <div className="login-container">
             <div className="logo-container">
-                <img src="./imagens/logo01-inovarjunto.png" alt="Logo" className="logo" />
+                <img src="src/components/login/logo01-inovarjunto.png" alt="Logo" className="logo" />
             </div>
             <div className="login-form-container">
-                <h1>Seja bem vindo </h1>
+                <h1>Seja bem vindo</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label>Email: </label>

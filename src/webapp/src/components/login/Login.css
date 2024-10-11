@@ -1,5 +1,7 @@
 body {
-    background-image: url(../../imagens/funcio.escura.png);
+    background-size: 100%;
+    background-color: #b9bbbe90;
+    background-image: url(../../imagens/Homepage-Illustration@2000x.png);
 }
 
 .login-container {
@@ -24,7 +26,7 @@ body {
 }
 
 .login-form-container {
-    background-color: #eae8e895;
+    background-color: #eae8e8be;
     flex: 1;
     display: flex;
     flex-direction: column;

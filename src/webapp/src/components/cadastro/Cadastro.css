@@ -8,7 +8,7 @@ body {
     
 }
 
-/* Container principal 
+/* 
 div > h1 {
     background-color: #d6d2d2;
     font-size: 50px;
@@ -33,7 +33,7 @@ form {
 }
 
 
-/* Campos do formulário 
+
 form > div {
     margin-bottom: 15px;
 }
@@ -51,7 +51,7 @@ form > div > input {
     box-sizing: border-box;
 }
 
-/* Botão de envio 
+
 form > button {
     padding: 10px;
     background-color: #007bff;
