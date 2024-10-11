@@ -43,7 +43,7 @@ namespace Api.Helpers.Enums
         /// </summary>
         public static string GetEnumDescription(Enum value)
         {
-            FieldInfo fi = value.GetType().GetField(value.ToString());
+            FieldInfo fi = value.GetType().GetField(value.ToString())!;
             DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
             if(attributes != null && attributes.Length > 0)
             {
@@ -223,7 +223,7 @@ namespace Api.Helpers.Enums
             Type enumType = typeof(T);
             foreach(T value in Enum.GetValues(enumType))
             {
-                FieldInfo fi = enumType.GetField(value.ToString());
+                FieldInfo fi = enumType.GetField(value.ToString()!)!;
                 DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
                 if(attributes != null && attributes.Length > 0)
                 {
@@ -232,7 +232,7 @@ namespace Api.Helpers.Enums
                 }
                 else
                 {
-                    sortedList.Add(value.ToInt32(CultureInfo.CurrentCulture.NumberFormat), value.ToString());
+                    sortedList.Add(value.ToInt32(CultureInfo.CurrentCulture.NumberFormat), value.ToString()!);
                 }
             }
 
@@ -297,7 +297,7 @@ namespace Api.Helpers.Enums
         }
         public static bool TryParse(Type enumType, string value, out object objectEnum)
         {
-            objectEnum = null;
+            objectEnum = null!;
             try
             {
                 objectEnum = Enum.Parse(enumType, value);
