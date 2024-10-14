@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Api.DTO.Requisicao.Usuario.Login;
 using Api.DTO.Resposta.Usuario.Login;
+using Api.Enums.Usuario;
 using Api.Interfaces.Usuario.Login;
 using Api.JWT;
 using Microsoft.AspNetCore.Authorization;
@@ -33,8 +34,11 @@ namespace Api.Controllers
 
             if(resposta.SUCESSO)
             {
+                var usuarioID = await _loginServico.BuscarUsuario(requisicao.EMAIL, requisicao.SENHA);
+
                 var token = GerarTokenJWT(
                     secretKey: ChaveJWT.PegarChaveSecreta(_configuration), 
+                    userId: usuarioID,
                     issuer: "InovarJuntoAPI",
                     audience: "InovarJuntoFrontend",
                     expireInMinutes: 60 
@@ -48,35 +52,16 @@ namespace Api.Controllers
             return Ok();
         }
 
-        [Authorize]
-        [HttpGet("teste")]
-        public ActionResult<string> TesteAutorizacao()
-        {
-            //var token = Request.Headers.Authorization.ToString().Replace("Bearer", "");
-
-            return Ok("autorizado");
-        }
-
-        private static string GerarTokenJWT(string secretKey, int expireInMinutes, string issuer, string audience)
+        private static string GerarTokenJWT(string secretKey, int expireInMinutes, string issuer, string audience, int userId)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-
-            //var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-            //var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
             var claims = new[]
             {
+                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Sub, "subject"),
-                new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer64)
+                new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer64),
+                new Claim(ClaimTypes.Role, EPERMISSAO.USUARIO.ToString())
             };
-
-            // var token = new JwtSecurityToken(
-            //     issuer: issuer,
-            //     audience: audience,
-            //     claims: claims,
-            //     expires: DateTime.UtcNow.AddMinutes(expireInMinutes),
-            //     signingCredentials: credentials);
 
             var tokenDecriptor = new SecurityTokenDescriptor
             {
