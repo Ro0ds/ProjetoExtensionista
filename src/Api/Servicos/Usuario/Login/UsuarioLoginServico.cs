@@ -14,6 +14,18 @@ namespace Api.Servicos.Usuario.Login
             _loginRepositorio = loginRepositorio;
         }
 
+        public async Task<int> BuscarUsuario(string email, string senha)
+        {
+            var usuario = await _loginRepositorio.BuscarUsuario(email, senha);
+
+            if(usuario != null)
+            {
+                return usuario.ID;
+            }
+
+            return 0;
+        }
+
         public async Task<UsuarioLoginResposta> Logar(UsuarioLoginRequisicao requisicao)
         {
             if(requisicao == null)
