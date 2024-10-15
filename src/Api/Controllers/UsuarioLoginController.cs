@@ -41,15 +41,15 @@ namespace Api.Controllers
                     userId: usuarioID,
                     issuer: "InovarJuntoAPI",
                     audience: "InovarJuntoFrontend",
-                    expireInMinutes: 60 
+                    expireInMinutes: 120 
                     );
 
                 resposta.TOKEN = token;
 
-                return resposta;
+                return Ok(resposta);
             }
 
-            return Ok();
+            return BadRequest();
         }
 
         private static string GerarTokenJWT(string secretKey, int expireInMinutes, string issuer, string audience, int userId)
