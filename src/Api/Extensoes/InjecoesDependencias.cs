@@ -4,6 +4,9 @@ using Api.Repositorio.Usuario.Operacoes;
 using Api.Repositorio.Usuario.Cadastro;
 using Api.Servicos.Usuario.Cadastro;
 using Api.Servicos.Usuario.Operacoes;
+using Api.Interfaces.Usuario.Login;
+using Api.Repositorio.Usuario.Login;
+using Api.Servicos.Usuario.Login;
 
 namespace Api.Extensoes
 {
@@ -15,6 +18,9 @@ namespace Api.Extensoes
             services.AddScoped<IUsuarioCadastroServico, UsuarioCadastroServico>();
             services.AddScoped<IUsuarioOperacoesRepositorio, UsuarioOperacoesRepositorio>();
             services.AddScoped<IUsuarioOperacoesServico, UsuarioOperacoesServico>();
+
+            services.AddScoped<IUsuarioLoginRepositorio, UsuarioLoginRepositorio>();
+            services.AddScoped<IUsuarioLoginServico, UsuarioLoginServico>();
         }
     }
 }

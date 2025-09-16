@@ -1,0 +1,69 @@
+/*
+
+body {
+    background-color: #b8b2b2b0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    
+}
+
+/* 
+div > h1 {
+    background-color: #d6d2d2;
+    font-size: 50px;
+    text-align: center;
+    color: #05011b;
+    
+
+}
+
+/* Formulário 
+form {
+    
+    background-image: url(../../imagens/colorido.jpg);
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+
+
+form > div {
+    margin-bottom: 15px;
+}
+
+form > div > label {
+    margin-bottom: 5px;
+    color: #555;
+}
+
+form > div > input {
+    padding: 10px;
+    border: 1px solid #333131;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+form > button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form > button:hover {
+    background-color: #0056b3;
+}
+
+comentei pra nao dar conflito entre os codigos
+*/

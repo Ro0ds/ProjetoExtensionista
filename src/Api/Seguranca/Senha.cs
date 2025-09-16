@@ -2,7 +2,6 @@
 using Api.Models;
 using System.Security.Cryptography;
 using System.Text;
-using Api.DTO.Requisicao.Usuario.Cadastro;
 
 namespace Api.Seguranca
 {
@@ -42,11 +41,11 @@ namespace Api.Seguranca
             }
         }
 
-        public bool SenhaEstaCorreta(USUARIO usuario, UsuarioCadastroRequisicao usuarioRequisicao)
+        public bool SenhaEstaCorreta(USUARIO usuario, string senhaDigitada)
         {
             string storedHashedPassword = usuario.SENHA!.HASH;
             byte[] storedSaltBytes = usuario.SENHA!.SALT;
-            string enteredPassword = usuarioRequisicao.CONFIRMACAO_SENHA;
+            string enteredPassword = senhaDigitada;
 
             byte[] enteredPasswordBytes = Encoding.UTF8.GetBytes(enteredPassword);
 
