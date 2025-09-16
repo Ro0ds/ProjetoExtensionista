@@ -23,7 +23,7 @@ services.AddCors(options =>
 services.AddAuthorization();
 
 services.ConfiguraJWT(configuration);
-services.ConfiguraConexaoBD(configuration);
+services.ConfiguraConexaoBD();
 services.AdicionaInjecoesDependencias();
 services.AddControllers();
 services.AddEndpointsApiExplorer();

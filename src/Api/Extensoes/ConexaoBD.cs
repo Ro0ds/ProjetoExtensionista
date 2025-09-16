@@ -5,9 +5,9 @@ namespace Api.Extensoes
 {
     public static class ConexaoBD
     {
-        public static void ConfiguraConexaoBD(this IServiceCollection services, IConfiguration configuration)
+        public static void ConfiguraConexaoBD(this IServiceCollection services)
         {
-            var stringConexao = configuration.GetConnectionString("ConexaoPadrao");
+            var stringConexao = Environment.GetEnvironmentVariable("INOVARJUNTOCONFIG", EnvironmentVariableTarget.User);
 
             // pegando conexão de string do appSettings.json
             services.AddDbContext<ApiDbContext>(opt =>
