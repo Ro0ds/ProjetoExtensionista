@@ -1,8 +1,8 @@
 ﻿//using Microsoft.OpenApi.Extensions;
 using Api.Helpers.Enums;
 using Microsoft.EntityFrameworkCore;
-using Api.Enums.Usuario;
-using Api.Models;
+using Common.Enums.USUARIO;
+using Common.Models;
 
 namespace Api.Dados
 {

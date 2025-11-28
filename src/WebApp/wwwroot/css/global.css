@@ -1,0 +1,20 @@
+﻿.btn-login {
+    background-color: #6366F1;
+    color: #ffffff;
+    border: none;
+}
+.btn-login:hover {
+    background-color: #4f46e5;
+    color: #ffffff;
+}
+
+.btn-register {
+    background-color: #10B981; /* Verde */
+    color: #ffffff;
+    border: none;
+}
+
+.btn-register:hover {
+    background-color: #059669; /* Verde mais escuro */
+    color: #ffffff;
+}

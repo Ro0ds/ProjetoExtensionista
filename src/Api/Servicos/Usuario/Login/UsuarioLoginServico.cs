@@ -1,7 +1,7 @@
-﻿using Api.DTO.Requisicao.Usuario.Login;
-using Api.DTO.Resposta.Usuario.Login;
+﻿using Common.DTO.Requisicao.Usuario.Login;
 using Api.Interfaces.Usuario.Login;
-using Api.Seguranca;
+using Common.Seguranca;
+using Common.DTO.Resposta.Usuario.Login;
 
 namespace Api.Servicos.Usuario.Login
 {

@@ -1,7 +1,7 @@
 ﻿using Api.Dados;
-using Api.DTO.Requisicao.Usuario.Cadastro;
-using Api.DTO.Resposta.Usuario.Cadastro;
+using Common.DTO.Requisicao.Usuario.Cadastro;
 using Api.Interfaces.Usuario.Cadastro;
+using Common.DTO.Resposta.Usuario.Cadastro;
 
 namespace Api.Repositorio.Usuario.Cadastro
 {

@@ -1,14 +1,14 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Api.DTO.Requisicao.Usuario.Login;
-using Api.DTO.Resposta.Usuario.Login;
-using Api.Enums.Usuario;
+using Common.DTO.Requisicao.Usuario.Login;
+using Common.Enums.USUARIO;
 using Api.Interfaces.Usuario.Login;
 using Api.JWT;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Common.DTO.Resposta.Usuario.Login;
 
 namespace Api.Controllers
 {
@@ -49,7 +49,7 @@ namespace Api.Controllers
                 return Ok(resposta);
             }
 
-            return BadRequest();
+            return Unauthorized();
         }
 
         private static string GerarTokenJWT(string secretKey, int expireInMinutes, string issuer, string audience, int userId)

@@ -1,8 +1,8 @@
 ﻿using System.Reflection.Metadata.Ecma335;
 using Api.Dados;
-using Api.DTO.Requisicao.Usuario.Operacoes;
+using Common.DTO.Requisicao.Usuario.Operacoes;
 using Api.Interfaces.Usuario.Operacoes;
-using Api.Models;
+using Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
