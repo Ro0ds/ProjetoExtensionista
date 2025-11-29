@@ -20,7 +20,7 @@ public class TokenConfig
             Id = int.Parse(jsonToken.GetClaim("sub")?.Value!),
             TokenId = Guid.Parse(jsonToken.GetClaim("jti")?.Value!),
             DataCriacao = dataCriacao,
-            Permissao = jsonToken.GetClaim("role")?.Value!,
+            Permissao = jsonToken.GetClaim("roleId")?.Value!,
             Expira = dataExp
         };
     }

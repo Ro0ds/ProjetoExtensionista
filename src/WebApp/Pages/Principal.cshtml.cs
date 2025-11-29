@@ -6,6 +6,7 @@ using WebApp.Interfaces;
 using WebApp.JWT;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using WebApp.Pages.Account;
 
 namespace WebApp.Pages;
 
@@ -49,5 +50,13 @@ public class PrincipalModel : PageModel
         }
 
         return Page();
+    }
+
+    public IActionResult OnPost()
+    {
+        Usuario = null;
+        Token = string.Empty;
+
+        return RedirectToPage("/Account/Login");
     }
 }
