@@ -1,6 +1,7 @@
 ﻿using Common.DTO.Requisicao.Usuario.Cadastro;
 using Api.Interfaces.Usuario.Cadastro;
 using Common.DTO.Resposta.Usuario.Cadastro;
+using Api.Interfaces.Endereco.Cadastro;
 
 namespace Api.Servicos.Usuario.Cadastro
 {
@@ -8,10 +9,12 @@ namespace Api.Servicos.Usuario.Cadastro
     public class UsuarioCadastroServico : IUsuarioCadastroServico
     {
         private readonly IUsuarioCadastroRepositorio _usuarioRepositorio;
+        private readonly IEnderecoCadastroServico _enderecoServico;
 
-        public UsuarioCadastroServico(IUsuarioCadastroRepositorio usuarioRepositorio)
+        public UsuarioCadastroServico(IUsuarioCadastroRepositorio usuarioRepositorio, IEnderecoCadastroServico enderecoServico)
         {
             _usuarioRepositorio = usuarioRepositorio;
+            _enderecoServico = enderecoServico;
         }
 
         public async Task<UsuarioCadastroResposta> CadastrarUsuario(UsuarioCadastroRequisicao user)

@@ -27,9 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Servicos\" />
-    <Folder Include="Repositorio\" />
+    <Folder Include="Interfaces\Empresa\Operacoes\" />
+    <Folder Include="Repositorio\Empresa\Operacoes\" />
+    <Folder Include="Servicos\Empresa\Operacoes\" />
   </ItemGroup>
 
   <ItemGroup>

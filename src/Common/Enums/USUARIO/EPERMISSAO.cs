@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Common.Enums.USUARIO
 {
-    public enum EPERMISSAO
+    public enum EPermissao
     {
         [Display(Name = "Administrador")]
         [Description("Usuário com permissões administrativas do sistema inteiro.")]

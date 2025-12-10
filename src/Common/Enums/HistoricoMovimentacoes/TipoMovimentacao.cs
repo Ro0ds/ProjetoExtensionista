@@ -1,6 +1,6 @@
 ﻿namespace Common.Enums.HistoricoMovimentacoes
 {
-    public enum TIPO_MOVIMENTACAO
+    public enum TipoMovimentacao
     {
         ENTRADA = 1,
         SAIDA

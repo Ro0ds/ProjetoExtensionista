@@ -7,6 +7,8 @@ namespace Common.Models
     [Table("HISTORICO_MOVIMENTACOES")]
     public class HISTORICO_MOVIMENTACOES
     {
+        // TODO: ao criar DTO, copiar esses campos pra ela e deletar todos os DataAnnotations aqui
+
         [Key]
         public int ID { get; set; }
 
@@ -28,7 +30,7 @@ namespace Common.Models
 
         [Display(Name = "Tipo movimentação")]
         [DataType(DataType.Custom)]
-        public TIPO_MOVIMENTACAO TIPO_MOVIMENTACAO { get; set; }
+        public TipoMovimentacao TIPO_MOVIMENTACAO { get; set; }
 
         [Display(Name = "Data movimentação")]
         [DataType(DataType.DateTime)]

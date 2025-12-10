@@ -17,7 +17,7 @@ namespace Api.Dados
 
         public void Seed()
         {
-            var enums = Enum.GetValues<EPERMISSAO>();
+            var enums = Enum.GetValues<EPermissao>();
 
             List<PERMISSAO> permissaoSeed = new List<PERMISSAO>();
             int permissaoId = 1;

@@ -6,6 +6,8 @@ namespace Common.Models
     [Table("CATEGORIA")]
     public class CATEGORIA
     {
+        // TODO: ao criar DTO, copiar esses campos pra ela e deletar todos os DataAnnotations aqui
+
         [Key]
         public int ID { get; set; }
 
