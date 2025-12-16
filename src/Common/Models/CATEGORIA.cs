@@ -29,11 +29,11 @@ namespace Common.Models
         public DateTime DATA_CRIACAO { get; set; }
 
         [ForeignKey(nameof(USUARIO))]
-        public int USUARIO_ID { get; set; }
+        public int USUARIOID { get; set; }
         public USUARIO? USUARIO { get; set; }
 
         [ForeignKey(nameof(EMPRESA))]
-        public int EMPRESA_ID { get; set; }
+        public int EMPRESAID { get; set; }
         public EMPRESA? EMPRESA { get; set; }
     }
 }

@@ -49,7 +49,7 @@ public class EmpresaCadastroServico : IEmpresaCadastroServico
             NOME_FANTASIA = requisicao.NomeFantasia,
             RAZAO_SOCIAL = requisicao.RazaoSocial,
             CNPJ = requisicao.CNPJ,
-            ENDERECO_ID = requisicao.EnderecoId,
+            ENDERECOID = requisicao.EnderecoId,
             TELEFONE = requisicao.Telefone,
             EMAIL = requisicao.Email,
             DATA_CRIACAO_EMPRESA = requisicao.DataCriacaoEmpresa,

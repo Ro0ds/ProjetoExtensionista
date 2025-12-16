@@ -98,7 +98,7 @@ namespace Common.DTO.Requisicao.Usuario.Cadastro
                     SALT = retrieveSaltBytes
                 },
                 ENDERECO = this.ENDERECO,
-                PERMISSAO_ID = this.PERMISSAO_ID,
+                PERMISSAOID = this.PERMISSAO_ID,
                 USUARIO_ATIVO = this.USUARIO_ATIVO,
                 DATA_CRIADO = DateTime.Now
             };

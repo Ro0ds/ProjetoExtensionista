@@ -46,7 +46,7 @@ namespace Api.Controllers
                     issuer: "InovarJuntoAPI",
                     audience: "InovarJuntoFrontend",
                     expireInMinutes: 120,
-                    permissaoId: usuario.PERMISSAO_ID
+                    permissaoId: usuario.PERMISSAOID
                     );
 
                 resposta.TOKEN = token;

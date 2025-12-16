@@ -4,10 +4,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Api.Migrations
 {
     /// <inheritdoc />
-    public partial class MigracaoInicial : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,18 +23,18 @@ namespace Api.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    CEP = table.Column<string>(type: "varchar(8)", maxLength: 8, nullable: false)
+                    CEP = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    RUA = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    RUA = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NUMERO = table.Column<int>(type: "int", nullable: false),
-                    BAIRRO = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                    BAIRRO = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CIDADE = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    CIDADE = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ESTADO = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+                    ESTADO = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    PAIS = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false)
+                    PAIS = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -82,16 +84,16 @@ namespace Api.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    NOME_FANTASIA = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    NOME_FANTASIA = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    RAZAO_SOCIAL = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    RAZAO_SOCIAL = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CNPJ = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
+                    CNPJ = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ENDERECO_ID = table.Column<int>(type: "int", nullable: false),
+                    ENDERECOID = table.Column<int>(type: "int", nullable: false),
                     TELEFONE = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    EMAIL = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                    EMAIL = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     DATA_CRIACAO_EMPRESA = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     DATA_CRIACAO_CADASTRO = table.Column<DateTime>(type: "datetime(6)", nullable: false),
@@ -101,8 +103,8 @@ namespace Api.Migrations
                 {
                     table.PrimaryKey("PK_EMPRESA", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_EMPRESA_ENDERECO_ENDERECO_ID",
-                        column: x => x.ENDERECO_ID,
+                        name: "FK_EMPRESA_ENDERECO_ENDERECOID",
+                        column: x => x.ENDERECOID,
                         principalTable: "ENDERECO",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -129,11 +131,11 @@ namespace Api.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     TELEFONE = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    SENHA_ID = table.Column<int>(type: "int", nullable: false),
+                    SENHAID = table.Column<int>(type: "int", nullable: false),
                     CARGO = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ENDERECO_ID = table.Column<int>(type: "int", nullable: false),
-                    PERMISSAO_ID = table.Column<int>(type: "int", nullable: false),
+                    ENDERECOID = table.Column<int>(type: "int", nullable: false),
+                    PERMISSAOID = table.Column<int>(type: "int", nullable: false),
                     USUARIO_ATIVO = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     DATA_CRIADO = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     DATA_ADMISSAO = table.Column<DateTime>(type: "datetime(6)", nullable: false),
@@ -143,20 +145,20 @@ namespace Api.Migrations
                 {
                     table.PrimaryKey("PK_FUNCIONARIO", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_FUNCIONARIO_ENDERECO_ENDERECO_ID",
-                        column: x => x.ENDERECO_ID,
+                        name: "FK_FUNCIONARIO_ENDERECO_ENDERECOID",
+                        column: x => x.ENDERECOID,
                         principalTable: "ENDERECO",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_FUNCIONARIO_PERMISSAO_PERMISSAO_ID",
-                        column: x => x.PERMISSAO_ID,
+                        name: "FK_FUNCIONARIO_PERMISSAO_PERMISSAOID",
+                        column: x => x.PERMISSAOID,
                         principalTable: "PERMISSAO",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_FUNCIONARIO_SENHA_SENHA_ID",
-                        column: x => x.SENHA_ID,
+                        name: "FK_FUNCIONARIO_SENHA_SENHAID",
+                        column: x => x.SENHAID,
                         principalTable: "SENHA",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -169,50 +171,50 @@ namespace Api.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    NOME = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    NOME = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    SOBRENOME = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    SOBRENOME = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    NOME_SOCIAL = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    NOME_SOCIAL = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    EMAIL = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                    EMAIL = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     FOTO = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CPF = table.Column<string>(type: "varchar(11)", maxLength: 11, nullable: false)
+                    CPF = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     TELEFONE = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    SENHA_ID = table.Column<int>(type: "int", nullable: false),
-                    ENDERECO_ID = table.Column<int>(type: "int", nullable: false),
-                    PERMISSAO_ID = table.Column<int>(type: "int", nullable: false),
                     USUARIO_ATIVO = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     DATA_CRIADO = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    FUNCIONARIO_ID = table.Column<int>(type: "int", nullable: true)
+                    SENHAID = table.Column<int>(type: "int", nullable: false),
+                    ENDERECOID = table.Column<int>(type: "int", nullable: false),
+                    PERMISSAOID = table.Column<int>(type: "int", nullable: false),
+                    FUNCIONARIOID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_USUARIO", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_USUARIO_ENDERECO_ENDERECO_ID",
-                        column: x => x.ENDERECO_ID,
+                        name: "FK_USUARIO_ENDERECO_ENDERECOID",
+                        column: x => x.ENDERECOID,
                         principalTable: "ENDERECO",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_USUARIO_FUNCIONARIO_FUNCIONARIO_ID",
-                        column: x => x.FUNCIONARIO_ID,
+                        name: "FK_USUARIO_FUNCIONARIO_FUNCIONARIOID",
+                        column: x => x.FUNCIONARIOID,
                         principalTable: "FUNCIONARIO",
                         principalColumn: "ID");
                     table.ForeignKey(
-                        name: "FK_USUARIO_PERMISSAO_PERMISSAO_ID",
-                        column: x => x.PERMISSAO_ID,
+                        name: "FK_USUARIO_PERMISSAO_PERMISSAOID",
+                        column: x => x.PERMISSAOID,
                         principalTable: "PERMISSAO",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_USUARIO_SENHA_SENHA_ID",
-                        column: x => x.SENHA_ID,
+                        name: "FK_USUARIO_SENHA_SENHAID",
+                        column: x => x.SENHAID,
                         principalTable: "SENHA",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -230,21 +232,21 @@ namespace Api.Migrations
                     DESCRICAO = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     DATA_CRIACAO = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    USUARIO_ID = table.Column<int>(type: "int", nullable: false),
-                    EMPRESA_ID = table.Column<int>(type: "int", nullable: false)
+                    USUARIOID = table.Column<int>(type: "int", nullable: false),
+                    EMPRESAID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CATEGORIA", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_CATEGORIA_EMPRESA_EMPRESA_ID",
-                        column: x => x.EMPRESA_ID,
+                        name: "FK_CATEGORIA_EMPRESA_EMPRESAID",
+                        column: x => x.EMPRESAID,
                         principalTable: "EMPRESA",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CATEGORIA_USUARIO_USUARIO_ID",
-                        column: x => x.USUARIO_ID,
+                        name: "FK_CATEGORIA_USUARIO_USUARIOID",
+                        column: x => x.USUARIOID,
                         principalTable: "USUARIO",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -264,28 +266,28 @@ namespace Api.Migrations
                     PRECO = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
                     DATA_CRIACAO = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     ATIVO = table.Column<int>(type: "int", nullable: false),
-                    CATEGORIA_ID = table.Column<int>(type: "int", nullable: false),
-                    EMPRESA_ID = table.Column<int>(type: "int", nullable: false),
-                    USUARIO_ID = table.Column<int>(type: "int", nullable: false)
+                    CATEGORIAID = table.Column<int>(type: "int", nullable: false),
+                    EMPRESAID = table.Column<int>(type: "int", nullable: false),
+                    USUARIOID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PRODUTO", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_PRODUTO_CATEGORIA_CATEGORIA_ID",
-                        column: x => x.CATEGORIA_ID,
+                        name: "FK_PRODUTO_CATEGORIA_CATEGORIAID",
+                        column: x => x.CATEGORIAID,
                         principalTable: "CATEGORIA",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PRODUTO_EMPRESA_EMPRESA_ID",
-                        column: x => x.EMPRESA_ID,
+                        name: "FK_PRODUTO_EMPRESA_EMPRESAID",
+                        column: x => x.EMPRESAID,
                         principalTable: "EMPRESA",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PRODUTO_USUARIO_USUARIO_ID",
-                        column: x => x.USUARIO_ID,
+                        name: "FK_PRODUTO_USUARIO_USUARIOID",
+                        column: x => x.USUARIOID,
                         principalTable: "USUARIO",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -298,9 +300,9 @@ namespace Api.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    PRODUTO_ID = table.Column<int>(type: "int", nullable: false),
-                    USUARIO_ID = table.Column<int>(type: "int", nullable: false),
-                    FUNCIONARIO_ID = table.Column<int>(type: "int", nullable: false),
+                    PRODUTOID = table.Column<int>(type: "int", nullable: false),
+                    USUARIOID = table.Column<int>(type: "int", nullable: false),
+                    FUNCIONARIOID = table.Column<int>(type: "int", nullable: false),
                     QUANTIDADE = table.Column<int>(type: "int", nullable: false),
                     TIPO_MOVIMENTACAO = table.Column<int>(type: "int", nullable: false),
                     DATA_MOVIMENTACAO = table.Column<DateTime>(type: "datetime(6)", nullable: false),
@@ -311,40 +313,51 @@ namespace Api.Migrations
                 {
                     table.PrimaryKey("PK_HISTORICO_MOVIMENTACOES", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_HISTORICO_MOVIMENTACOES_FUNCIONARIO_FUNCIONARIO_ID",
-                        column: x => x.FUNCIONARIO_ID,
+                        name: "FK_HISTORICO_MOVIMENTACOES_FUNCIONARIO_FUNCIONARIOID",
+                        column: x => x.FUNCIONARIOID,
                         principalTable: "FUNCIONARIO",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_HISTORICO_MOVIMENTACOES_PRODUTO_PRODUTO_ID",
-                        column: x => x.PRODUTO_ID,
+                        name: "FK_HISTORICO_MOVIMENTACOES_PRODUTO_PRODUTOID",
+                        column: x => x.PRODUTOID,
                         principalTable: "PRODUTO",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_HISTORICO_MOVIMENTACOES_USUARIO_USUARIO_ID",
-                        column: x => x.USUARIO_ID,
+                        name: "FK_HISTORICO_MOVIMENTACOES_USUARIO_USUARIOID",
+                        column: x => x.USUARIOID,
                         principalTable: "USUARIO",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_CATEGORIA_EMPRESA_ID",
-                table: "CATEGORIA",
-                column: "EMPRESA_ID");
+            migrationBuilder.InsertData(
+                table: "PERMISSAO",
+                columns: new[] { "ID", "DESCRICAO", "NOME_PERMISSAO" },
+                values: new object[,]
+                {
+                    { 1, "Usuário com permissões administrativas do sistema inteiro.", "Administrador" },
+                    { 2, "Usuário com permissões básicas do sistema inteiro.", "Usuário" },
+                    { 3, "Usuário com permissões administrativas dentro de uma empresa.", "Responsável" },
+                    { 4, "Usuário com permissões básicas dentro de uma empresa.", "Funcionário" }
+                });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CATEGORIA_USUARIO_ID",
+                name: "IX_CATEGORIA_EMPRESAID",
                 table: "CATEGORIA",
-                column: "USUARIO_ID");
+                column: "EMPRESAID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EMPRESA_ENDERECO_ID",
+                name: "IX_CATEGORIA_USUARIOID",
+                table: "CATEGORIA",
+                column: "USUARIOID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EMPRESA_ENDERECOID",
                 table: "EMPRESA",
-                column: "ENDERECO_ID");
+                column: "ENDERECOID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FUNCIONARIO_EMAIL",
@@ -353,49 +366,49 @@ namespace Api.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_FUNCIONARIO_ENDERECO_ID",
+                name: "IX_FUNCIONARIO_ENDERECOID",
                 table: "FUNCIONARIO",
-                column: "ENDERECO_ID");
+                column: "ENDERECOID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FUNCIONARIO_PERMISSAO_ID",
+                name: "IX_FUNCIONARIO_PERMISSAOID",
                 table: "FUNCIONARIO",
-                column: "PERMISSAO_ID");
+                column: "PERMISSAOID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FUNCIONARIO_SENHA_ID",
+                name: "IX_FUNCIONARIO_SENHAID",
                 table: "FUNCIONARIO",
-                column: "SENHA_ID");
+                column: "SENHAID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HISTORICO_MOVIMENTACOES_FUNCIONARIO_ID",
+                name: "IX_HISTORICO_MOVIMENTACOES_FUNCIONARIOID",
                 table: "HISTORICO_MOVIMENTACOES",
-                column: "FUNCIONARIO_ID");
+                column: "FUNCIONARIOID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HISTORICO_MOVIMENTACOES_PRODUTO_ID",
+                name: "IX_HISTORICO_MOVIMENTACOES_PRODUTOID",
                 table: "HISTORICO_MOVIMENTACOES",
-                column: "PRODUTO_ID");
+                column: "PRODUTOID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HISTORICO_MOVIMENTACOES_USUARIO_ID",
+                name: "IX_HISTORICO_MOVIMENTACOES_USUARIOID",
                 table: "HISTORICO_MOVIMENTACOES",
-                column: "USUARIO_ID");
+                column: "USUARIOID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PRODUTO_CATEGORIA_ID",
+                name: "IX_PRODUTO_CATEGORIAID",
                 table: "PRODUTO",
-                column: "CATEGORIA_ID");
+                column: "CATEGORIAID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PRODUTO_EMPRESA_ID",
+                name: "IX_PRODUTO_EMPRESAID",
                 table: "PRODUTO",
-                column: "EMPRESA_ID");
+                column: "EMPRESAID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PRODUTO_USUARIO_ID",
+                name: "IX_PRODUTO_USUARIOID",
                 table: "PRODUTO",
-                column: "USUARIO_ID");
+                column: "USUARIOID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_USUARIO_EMAIL",
@@ -404,24 +417,24 @@ namespace Api.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_USUARIO_ENDERECO_ID",
+                name: "IX_USUARIO_ENDERECOID",
                 table: "USUARIO",
-                column: "ENDERECO_ID");
+                column: "ENDERECOID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_USUARIO_FUNCIONARIO_ID",
+                name: "IX_USUARIO_FUNCIONARIOID",
                 table: "USUARIO",
-                column: "FUNCIONARIO_ID");
+                column: "FUNCIONARIOID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_USUARIO_PERMISSAO_ID",
+                name: "IX_USUARIO_PERMISSAOID",
                 table: "USUARIO",
-                column: "PERMISSAO_ID");
+                column: "PERMISSAOID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_USUARIO_SENHA_ID",
+                name: "IX_USUARIO_SENHAID",
                 table: "USUARIO",
-                column: "SENHA_ID");
+                column: "SENHAID");
         }
 
         /// <inheritdoc />

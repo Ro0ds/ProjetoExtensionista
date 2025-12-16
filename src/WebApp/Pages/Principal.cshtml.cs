@@ -6,7 +6,6 @@ using WebApp.Interfaces;
 using WebApp.JWT;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
-using WebApp.Pages.Account;
 
 namespace WebApp.Pages;
 

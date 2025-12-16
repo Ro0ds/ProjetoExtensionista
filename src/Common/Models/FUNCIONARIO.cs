@@ -52,7 +52,7 @@ namespace Common.Models
         public string TELEFONE { get; set; } = string.Empty;
 
         [ForeignKey(nameof(SENHA))]
-        public int SENHA_ID { get; set; }
+        public int SENHAID { get; set; }
         public SENHA? SENHA { get; set; }
 
         [Required]
@@ -62,11 +62,11 @@ namespace Common.Models
         public string CARGO { get; set; } = string.Empty;
 
         [ForeignKey(nameof(ENDERECO))]
-        public int ENDERECO_ID { get; set; }
+        public int ENDERECOID { get; set; }
         public ENDERECO? ENDERECO { get; set; }
 
         [ForeignKey(nameof(PERMISSAO))]
-        public int PERMISSAO_ID { get; set; }
+        public int PERMISSAOID { get; set; }
         public PERMISSAO? PERMISSAO { get; set; }
 
         [Required]

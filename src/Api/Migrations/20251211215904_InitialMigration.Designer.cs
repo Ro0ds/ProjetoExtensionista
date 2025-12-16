@@ -12,20 +12,20 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20241008125622_PermissaoSeed")]
-    partial class PermissaoSeed
+    [Migration("20251211215904_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("Api.Models.CATEGORIA", b =>
+            modelBuilder.Entity("Common.Models.CATEGORIA", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -41,7 +41,7 @@ namespace Api.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int>("EMPRESA_ID")
+                    b.Property<int>("EMPRESAID")
                         .HasColumnType("int");
 
                     b.Property<string>("NOME")
@@ -49,19 +49,19 @@ namespace Api.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("USUARIO_ID")
+                    b.Property<int>("USUARIOID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("EMPRESA_ID");
+                    b.HasIndex("EMPRESAID");
 
-                    b.HasIndex("USUARIO_ID");
+                    b.HasIndex("USUARIOID");
 
                     b.ToTable("CATEGORIA");
                 });
 
-            modelBuilder.Entity("Api.Models.EMPRESA", b =>
+            modelBuilder.Entity("Common.Models.EMPRESA", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -71,8 +71,7 @@ namespace Api.Migrations
 
                     b.Property<string>("CNPJ")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("varchar(15)");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("DATA_CRIACAO_CADASTRO")
                         .HasColumnType("datetime(6)");
@@ -82,24 +81,21 @@ namespace Api.Migrations
 
                     b.Property<string>("EMAIL")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("EMPRESA_ATIVA")
                         .HasColumnType("int");
 
-                    b.Property<int>("ENDERECO_ID")
+                    b.Property<int>("ENDERECOID")
                         .HasColumnType("int");
 
                     b.Property<string>("NOME_FANTASIA")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("RAZAO_SOCIAL")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("TELEFONE")
                         .IsRequired()
@@ -107,12 +103,12 @@ namespace Api.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ENDERECO_ID");
+                    b.HasIndex("ENDERECOID");
 
                     b.ToTable("EMPRESA");
                 });
 
-            modelBuilder.Entity("Api.Models.ENDERECO", b =>
+            modelBuilder.Entity("Common.Models.ENDERECO", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -122,43 +118,37 @@ namespace Api.Migrations
 
                     b.Property<string>("BAIRRO")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("CEP")
                         .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("varchar(8)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("CIDADE")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("ESTADO")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("NUMERO")
                         .HasColumnType("int");
 
                     b.Property<string>("PAIS")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("RUA")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("ID");
 
                     b.ToTable("ENDERECO");
                 });
 
-            modelBuilder.Entity("Api.Models.FUNCIONARIO", b =>
+            modelBuilder.Entity("Common.Models.FUNCIONARIO", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -190,7 +180,7 @@ namespace Api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int>("ENDERECO_ID")
+                    b.Property<int>("ENDERECOID")
                         .HasColumnType("int");
 
                     b.Property<string>("FOTO")
@@ -207,10 +197,10 @@ namespace Api.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("PERMISSAO_ID")
+                    b.Property<int>("PERMISSAOID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SENHA_ID")
+                    b.Property<int>("SENHAID")
                         .HasColumnType("int");
 
                     b.Property<string>("SOBRENOME")
@@ -230,16 +220,16 @@ namespace Api.Migrations
                     b.HasIndex("EMAIL")
                         .IsUnique();
 
-                    b.HasIndex("ENDERECO_ID");
+                    b.HasIndex("ENDERECOID");
 
-                    b.HasIndex("PERMISSAO_ID");
+                    b.HasIndex("PERMISSAOID");
 
-                    b.HasIndex("SENHA_ID");
+                    b.HasIndex("SENHAID");
 
                     b.ToTable("FUNCIONARIO");
                 });
 
-            modelBuilder.Entity("Api.Models.HISTORICO_MOVIMENTACOES", b =>
+            modelBuilder.Entity("Common.Models.HISTORICO_MOVIMENTACOES", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -255,10 +245,10 @@ namespace Api.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int>("FUNCIONARIO_ID")
+                    b.Property<int>("FUNCIONARIOID")
                         .HasColumnType("int");
 
-                    b.Property<int>("PRODUTO_ID")
+                    b.Property<int>("PRODUTOID")
                         .HasColumnType("int");
 
                     b.Property<int>("QUANTIDADE")
@@ -267,21 +257,21 @@ namespace Api.Migrations
                     b.Property<int>("TIPO_MOVIMENTACAO")
                         .HasColumnType("int");
 
-                    b.Property<int>("USUARIO_ID")
+                    b.Property<int>("USUARIOID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("FUNCIONARIO_ID");
+                    b.HasIndex("FUNCIONARIOID");
 
-                    b.HasIndex("PRODUTO_ID");
+                    b.HasIndex("PRODUTOID");
 
-                    b.HasIndex("USUARIO_ID");
+                    b.HasIndex("USUARIOID");
 
                     b.ToTable("HISTORICO_MOVIMENTACOES");
                 });
 
-            modelBuilder.Entity("Api.Models.PERMISSAO", b =>
+            modelBuilder.Entity("Common.Models.PERMISSAO", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -330,7 +320,7 @@ namespace Api.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Api.Models.PRODUTO", b =>
+            modelBuilder.Entity("Common.Models.PRODUTO", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -341,7 +331,7 @@ namespace Api.Migrations
                     b.Property<int>("ATIVO")
                         .HasColumnType("int");
 
-                    b.Property<int>("CATEGORIA_ID")
+                    b.Property<int>("CATEGORIAID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DATA_CRIACAO")
@@ -352,7 +342,7 @@ namespace Api.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int>("EMPRESA_ID")
+                    b.Property<int>("EMPRESAID")
                         .HasColumnType("int");
 
                     b.Property<string>("NOME")
@@ -363,21 +353,21 @@ namespace Api.Migrations
                     b.Property<decimal>("PRECO")
                         .HasColumnType("decimal(65,30)");
 
-                    b.Property<int>("USUARIO_ID")
+                    b.Property<int>("USUARIOID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("CATEGORIA_ID");
+                    b.HasIndex("CATEGORIAID");
 
-                    b.HasIndex("EMPRESA_ID");
+                    b.HasIndex("EMPRESAID");
 
-                    b.HasIndex("USUARIO_ID");
+                    b.HasIndex("USUARIOID");
 
                     b.ToTable("PRODUTO");
                 });
 
-            modelBuilder.Entity("Api.Models.SENHA", b =>
+            modelBuilder.Entity("Common.Models.SENHA", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -402,7 +392,7 @@ namespace Api.Migrations
                     b.ToTable("SENHA");
                 });
 
-            modelBuilder.Entity("Api.Models.USUARIO", b =>
+            modelBuilder.Entity("Common.Models.USUARIO", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -412,47 +402,42 @@ namespace Api.Migrations
 
                     b.Property<string>("CPF")
                         .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("varchar(11)");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("DATA_CRIADO")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("EMAIL")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(255)");
 
-                    b.Property<int>("ENDERECO_ID")
+                    b.Property<int>("ENDERECOID")
                         .HasColumnType("int");
 
                     b.Property<string>("FOTO")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("FUNCIONARIO_ID")
+                    b.Property<int?>("FUNCIONARIOID")
                         .HasColumnType("int");
 
                     b.Property<string>("NOME")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("NOME_SOCIAL")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("longtext");
 
-                    b.Property<int>("PERMISSAO_ID")
+                    b.Property<int>("PERMISSAOID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SENHA_ID")
+                    b.Property<int>("SENHAID")
                         .HasColumnType("int");
 
                     b.Property<string>("SOBRENOME")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("TELEFONE")
                         .IsRequired()
@@ -466,28 +451,28 @@ namespace Api.Migrations
                     b.HasIndex("EMAIL")
                         .IsUnique();
 
-                    b.HasIndex("ENDERECO_ID");
+                    b.HasIndex("ENDERECOID");
 
-                    b.HasIndex("FUNCIONARIO_ID");
+                    b.HasIndex("FUNCIONARIOID");
 
-                    b.HasIndex("PERMISSAO_ID");
+                    b.HasIndex("PERMISSAOID");
 
-                    b.HasIndex("SENHA_ID");
+                    b.HasIndex("SENHAID");
 
                     b.ToTable("USUARIO");
                 });
 
-            modelBuilder.Entity("Api.Models.CATEGORIA", b =>
+            modelBuilder.Entity("Common.Models.CATEGORIA", b =>
                 {
-                    b.HasOne("Api.Models.EMPRESA", "EMPRESA")
+                    b.HasOne("Common.Models.EMPRESA", "EMPRESA")
                         .WithMany()
-                        .HasForeignKey("EMPRESA_ID")
+                        .HasForeignKey("EMPRESAID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.Models.USUARIO", "USUARIO")
+                    b.HasOne("Common.Models.USUARIO", "USUARIO")
                         .WithMany()
-                        .HasForeignKey("USUARIO_ID")
+                        .HasForeignKey("USUARIOID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -496,34 +481,34 @@ namespace Api.Migrations
                     b.Navigation("USUARIO");
                 });
 
-            modelBuilder.Entity("Api.Models.EMPRESA", b =>
+            modelBuilder.Entity("Common.Models.EMPRESA", b =>
                 {
-                    b.HasOne("Api.Models.ENDERECO", "ENDERECO")
+                    b.HasOne("Common.Models.ENDERECO", "ENDERECO")
                         .WithMany()
-                        .HasForeignKey("ENDERECO_ID")
+                        .HasForeignKey("ENDERECOID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ENDERECO");
                 });
 
-            modelBuilder.Entity("Api.Models.FUNCIONARIO", b =>
+            modelBuilder.Entity("Common.Models.FUNCIONARIO", b =>
                 {
-                    b.HasOne("Api.Models.ENDERECO", "ENDERECO")
+                    b.HasOne("Common.Models.ENDERECO", "ENDERECO")
                         .WithMany()
-                        .HasForeignKey("ENDERECO_ID")
+                        .HasForeignKey("ENDERECOID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.Models.PERMISSAO", "PERMISSAO")
+                    b.HasOne("Common.Models.PERMISSAO", "PERMISSAO")
                         .WithMany()
-                        .HasForeignKey("PERMISSAO_ID")
+                        .HasForeignKey("PERMISSAOID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.Models.SENHA", "SENHA")
+                    b.HasOne("Common.Models.SENHA", "SENHA")
                         .WithMany()
-                        .HasForeignKey("SENHA_ID")
+                        .HasForeignKey("SENHAID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -534,23 +519,23 @@ namespace Api.Migrations
                     b.Navigation("SENHA");
                 });
 
-            modelBuilder.Entity("Api.Models.HISTORICO_MOVIMENTACOES", b =>
+            modelBuilder.Entity("Common.Models.HISTORICO_MOVIMENTACOES", b =>
                 {
-                    b.HasOne("Api.Models.FUNCIONARIO", "FUNCIONARIO")
+                    b.HasOne("Common.Models.FUNCIONARIO", "FUNCIONARIO")
                         .WithMany()
-                        .HasForeignKey("FUNCIONARIO_ID")
+                        .HasForeignKey("FUNCIONARIOID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.Models.PRODUTO", "PRODUTO")
+                    b.HasOne("Common.Models.PRODUTO", "PRODUTO")
                         .WithMany()
-                        .HasForeignKey("PRODUTO_ID")
+                        .HasForeignKey("PRODUTOID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.Models.USUARIO", "USUARIO")
+                    b.HasOne("Common.Models.USUARIO", "USUARIO")
                         .WithMany()
-                        .HasForeignKey("USUARIO_ID")
+                        .HasForeignKey("USUARIOID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -561,23 +546,23 @@ namespace Api.Migrations
                     b.Navigation("USUARIO");
                 });
 
-            modelBuilder.Entity("Api.Models.PRODUTO", b =>
+            modelBuilder.Entity("Common.Models.PRODUTO", b =>
                 {
-                    b.HasOne("Api.Models.CATEGORIA", "CATEGORIA")
+                    b.HasOne("Common.Models.CATEGORIA", "CATEGORIA")
                         .WithMany()
-                        .HasForeignKey("CATEGORIA_ID")
+                        .HasForeignKey("CATEGORIAID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.Models.EMPRESA", "EMPRESA")
+                    b.HasOne("Common.Models.EMPRESA", "EMPRESA")
                         .WithMany()
-                        .HasForeignKey("EMPRESA_ID")
+                        .HasForeignKey("EMPRESAID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.Models.USUARIO", "USUARIO")
+                    b.HasOne("Common.Models.USUARIO", "USUARIO")
                         .WithMany()
-                        .HasForeignKey("USUARIO_ID")
+                        .HasForeignKey("USUARIOID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -588,27 +573,27 @@ namespace Api.Migrations
                     b.Navigation("USUARIO");
                 });
 
-            modelBuilder.Entity("Api.Models.USUARIO", b =>
+            modelBuilder.Entity("Common.Models.USUARIO", b =>
                 {
-                    b.HasOne("Api.Models.ENDERECO", "ENDERECO")
+                    b.HasOne("Common.Models.ENDERECO", "ENDERECO")
                         .WithMany()
-                        .HasForeignKey("ENDERECO_ID")
+                        .HasForeignKey("ENDERECOID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.Models.FUNCIONARIO", "FUNCIONARIO")
+                    b.HasOne("Common.Models.FUNCIONARIO", "FUNCIONARIO")
                         .WithMany()
-                        .HasForeignKey("FUNCIONARIO_ID");
+                        .HasForeignKey("FUNCIONARIOID");
 
-                    b.HasOne("Api.Models.PERMISSAO", "PERMISSAO")
+                    b.HasOne("Common.Models.PERMISSAO", "PERMISSAO")
                         .WithMany()
-                        .HasForeignKey("PERMISSAO_ID")
+                        .HasForeignKey("PERMISSAOID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.Models.SENHA", "SENHA")
+                    b.HasOne("Common.Models.SENHA", "SENHA")
                         .WithMany()
-                        .HasForeignKey("SENHA_ID")
+                        .HasForeignKey("SENHAID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

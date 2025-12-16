@@ -16,15 +16,15 @@ namespace Common.Models
         public string FOTO { get; set; } = string.Empty;
         public string CPF { get; set; } = string.Empty;
         public string TELEFONE { get; set; } = string.Empty;
-        public int SENHA_ID { get; set; }
-        public SENHA? SENHA { get; set; }
-        public int ENDERECO_ID { get; set; }
-        public ENDERECO? ENDERECO { get; set; }
-        public int PERMISSAO_ID { get; set; }
-        public PERMISSAO? PERMISSAO { get; set; }
         public bool USUARIO_ATIVO { get; set; } = true;
         public DateTime DATA_CRIADO { get; set; }
-        public int? FUNCIONARIO_ID { get; set; }
+        public int SENHAID { get; set; }
+        public SENHA? SENHA { get; set; }
+        public int ENDERECOID { get; set; }
+        public ENDERECO? ENDERECO { get; set; }
+        public int PERMISSAOID { get; set; }
+        public PERMISSAO? PERMISSAO { get; set; }
+        public int? FUNCIONARIOID { get; set; }
         public FUNCIONARIO? FUNCIONARIO { get; set; }
     }
 }

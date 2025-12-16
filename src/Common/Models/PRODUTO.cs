@@ -39,15 +39,15 @@ namespace Common.Models
         public int ATIVO { get; set; }
 
         [ForeignKey(nameof(CATEGORIA))]
-        public int CATEGORIA_ID { get; set; }
+        public int CATEGORIAID { get; set; }
         public CATEGORIA? CATEGORIA { get; set; }
 
         [ForeignKey(nameof(EMPRESA))]
-        public int EMPRESA_ID { get; set; }
+        public int EMPRESAID { get; set; }
         public EMPRESA? EMPRESA { get; set; }
 
         [ForeignKey(nameof(USUARIO))]
-        public int USUARIO_ID { get; set; }
+        public int USUARIOID { get; set; }
         public USUARIO? USUARIO { get; set; }
 
     }
