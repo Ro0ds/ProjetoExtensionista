@@ -1,0 +1,36 @@
+﻿@page
+@model LoginModel
+@{
+	ViewData["Title"] = "Login";
+	Layout = "_LoginLayout";
+}
+
+<div class="d-flex justify-content-center align-items-center">
+	<form method="post">
+		<div asp-validation-summary="All" class="text-danger"></div>
+		<div class="form-group">
+			<label asp-for="@Model.Requisicao.EMAIL">E-mail</label>
+			<input asp-for="@Model.Requisicao.EMAIL" class="form-control" />
+			<span class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.Requisicao.SENHA">Senha</label>
+			<input asp-for="@Model.Requisicao.SENHA" class="form-control" />
+			<span class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<div class="form-check">
+				<input asp-for="@Model.Requisicao.MANTER_LOGADO" class="form-check-input" />
+				<label asp-for="@Model.Requisicao.MANTER_LOGADO" class="form-check-label">Manter logado?</label>
+			</div>
+		</div>
+		<div class="form-group">	
+			<button type="submit" class="btn btn-primary">Login</button>
+		</div>
+		@* <div class="form-group">
+			<p>
+				<a asp-page="./Account/Cadastrar">Registrar-se como um novo usuário</a>
+			</p>
+		</div> *@
+	</form>
+</div>

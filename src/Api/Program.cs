@@ -1,6 +1,8 @@
 using Microsoft.IdentityModel.Logging;
 using Api.Extensoes;
 using Api.JWT;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -21,13 +23,34 @@ services.AddCors(options =>
 });
 
 services.AddAuthorization();
-
 services.ConfiguraJWT(configuration);
 services.ConfiguraConexaoBD();
 services.AdicionaInjecoesDependencias();
 services.AddControllers();
 services.AddEndpointsApiExplorer();
-services.AddSwaggerGen();
+services.AddSwaggerGen(opt =>
+{
+    var jwtSecurityScheme = new OpenApiSecurityScheme
+    {
+        BearerFormat = "JWT",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = JwtBearerDefaults.AuthenticationScheme,
+        Description = "Entre com seu JWT Token",
+        Reference = new OpenApiReference
+        {
+            Id = JwtBearerDefaults.AuthenticationScheme,
+            Type = ReferenceType.SecurityScheme,
+        }
+    };
+
+    opt.AddSecurityDefinition("Bearer", jwtSecurityScheme);
+    opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        { jwtSecurityScheme, Array.Empty<string>() }
+    });
+});
 
 var app = builder.Build();
 

@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Api.Interfaces.Usuario.Operacoes;
-using Api.DTO.Requisicao.Usuario.Operacoes;
-using Api.Models;
+using Common.DTO.Requisicao.Usuario.Operacoes;
+using Common.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Controllers
 {
     [Route("api/usuario")]
     [ApiController]
+    [Authorize]
     public class UsuarioOperacoesController : ControllerBase
     {
         private readonly IUsuarioOperacoesServico _usuarioOperacoesServico;

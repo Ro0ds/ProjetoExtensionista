@@ -1,8 +1,8 @@
 ﻿//using Microsoft.OpenApi.Extensions;
 using Api.Helpers.Enums;
 using Microsoft.EntityFrameworkCore;
-using Api.Enums.Usuario;
-using Api.Models;
+using Common.Enums.USUARIO;
+using Common.Models;
 
 namespace Api.Dados
 {
@@ -17,7 +17,7 @@ namespace Api.Dados
 
         public void Seed()
         {
-            var enums = Enum.GetValues<EPERMISSAO>();
+            var enums = Enum.GetValues<EPermissao>();
 
             List<PERMISSAO> permissaoSeed = new List<PERMISSAO>();
             int permissaoId = 1;

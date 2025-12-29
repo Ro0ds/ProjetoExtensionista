@@ -1,4 +1,4 @@
-﻿using Api.Models;
+﻿using Common.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Dados

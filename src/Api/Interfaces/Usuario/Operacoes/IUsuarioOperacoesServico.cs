@@ -1,5 +1,5 @@
-﻿using Api.DTO.Requisicao.Usuario.Operacoes;
-using Api.Models;
+﻿using Common.DTO.Requisicao.Usuario.Operacoes;
+using Common.Models;
 
 namespace Api.Interfaces.Usuario.Operacoes
 {

@@ -7,20 +7,31 @@ using Api.Servicos.Usuario.Operacoes;
 using Api.Interfaces.Usuario.Login;
 using Api.Repositorio.Usuario.Login;
 using Api.Servicos.Usuario.Login;
+using Api.Interfaces.Empresa.Cadastro;
+using Api.Repositorio.Empresa.Cadastro;
+using Api.Servicos.Empresa.Cadastro;
+using Api.Interfaces.Endereco.Cadastro;
+using Api.Repositorio.Endereco.Cadastro;
+using Api.Servicos.Endereco.Cadastro;
 
-namespace Api.Extensoes
+namespace Api.Extensoes;
+
+public static class InjecoesDependencias
 {
-    public static class InjecoesDependencias
+    public static void AdicionaInjecoesDependencias(this IServiceCollection services)
     {
-        public static void AdicionaInjecoesDependencias(this IServiceCollection services)
-        {
-            services.AddScoped<IUsuarioCadastroRepositorio, UsuarioCadastroRepositorio>();
-            services.AddScoped<IUsuarioCadastroServico, UsuarioCadastroServico>();
-            services.AddScoped<IUsuarioOperacoesRepositorio, UsuarioOperacoesRepositorio>();
-            services.AddScoped<IUsuarioOperacoesServico, UsuarioOperacoesServico>();
+        services.AddScoped<IEnderecoCadastroRepositorio, EnderecoCadastroRepositorio>();
+        services.AddScoped<IEnderecoCadastroServico, EnderecoCadastroServico>();
 
-            services.AddScoped<IUsuarioLoginRepositorio, UsuarioLoginRepositorio>();
-            services.AddScoped<IUsuarioLoginServico, UsuarioLoginServico>();
-        }
+        services.AddScoped<IUsuarioCadastroRepositorio, UsuarioCadastroRepositorio>();
+        services.AddScoped<IUsuarioCadastroServico, UsuarioCadastroServico>();
+        services.AddScoped<IUsuarioOperacoesRepositorio, UsuarioOperacoesRepositorio>();
+        services.AddScoped<IUsuarioOperacoesServico, UsuarioOperacoesServico>();
+
+        services.AddScoped<IUsuarioLoginRepositorio, UsuarioLoginRepositorio>();
+        services.AddScoped<IUsuarioLoginServico, UsuarioLoginServico>();
+
+        services.AddScoped<IEmpresaCadastroRepositorio, EmpresaCadastroRepositorio>();
+        services.AddScoped<IEmpresaCadastroServico, EmpresaCadastroServico>();
     }
 }
