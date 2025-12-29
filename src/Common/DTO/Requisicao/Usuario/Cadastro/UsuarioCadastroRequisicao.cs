@@ -1,4 +1,5 @@
-﻿using Common.Models;
+﻿using Common.DTO.Requisicao.Endereco.Cadastro;
+using Common.Models;
 using Common.Seguranca;
 using System.ComponentModel.DataAnnotations;
 
@@ -6,12 +7,13 @@ namespace Common.DTO.Requisicao.Usuario.Cadastro
 {
     public class UsuarioCadastroRequisicao
     {
-        [Required]
+        [Required(ErrorMessage = "Campo {0} é obrigatório.")]
         [Display(Name = "Nome")]
-        [DataType(DataType.Text, ErrorMessage = "Campo {} é obrigatório.")]
+        [DataType(DataType.Text)]
         [MaxLength(100)]
         public string NOME { get; set; } = string.Empty;
 
+        [Required(ErrorMessage = "Campo {0} é obrigatório.")]
         [Display(Name = "Sobrenome")]
         [DataType(DataType.Text)]
         [MaxLength(100)]
@@ -20,7 +22,7 @@ namespace Common.DTO.Requisicao.Usuario.Cadastro
         [Display(Name = "Nome Social")]
         [DataType(DataType.Text)]
         [MaxLength(100)]
-        public string NOME_SOCIAL { get; set; } = string.Empty;
+        public string? NOME_SOCIAL { get; set; }
 
         [Required]
         [Display(Name = "E-mail")]
@@ -30,21 +32,25 @@ namespace Common.DTO.Requisicao.Usuario.Cadastro
 
         [Display(Name = "Foto")]
         [DataType(DataType.ImageUrl)]
-        public string FOTO { get; set; } = string.Empty;
+        public string? FOTO { get; set; }
 
         [Required]
         [Display(Name = "CPF")]
-        [DataType(DataType.Text, ErrorMessage = "Campo {} é obrigatório.")]
+        [DataType(DataType.Text, ErrorMessage = "Campo {0} é obrigatório.")]
         [MaxLength(11)]
         public string CPF { get; set; } = string.Empty;
 
         [Display(Name = "Telefone")]
         [DataType(DataType.PhoneNumber)]
-        public string TELEFONE { get; set; } = string.Empty;
+        public string? TELEFONE { get; set; }
 
+        [Required]
+        [Display(Name = "Senha")]
+        [DataType(DataType.Password, ErrorMessage = "Campo {0} é obrigatório.")]
+        [MinLength(8)]
         public string CONFIRMACAO_SENHA { get; set; } = string.Empty;
 
-        public ENDERECO? ENDERECO { get; set; }
+        public EnderecoCadastroRequisicao? ENDERECO { get; set; }
 
         public int PERMISSAO_ID { get; set; }
 
@@ -82,6 +88,9 @@ namespace Common.DTO.Requisicao.Usuario.Cadastro
             string base64Salt = Convert.ToBase64String(saltBytes);
             byte[] retrieveSaltBytes = Convert.FromBase64String(base64Salt);
 
+            EnderecoCadastroRequisicao enderecoCadastroRequisicao = new EnderecoCadastroRequisicao();
+            var enderecoMontado = enderecoCadastroRequisicao.MontarEndereco(ENDERECO);
+
             return new USUARIO
             {
                 NOME = this.NOME,
@@ -97,8 +106,8 @@ namespace Common.DTO.Requisicao.Usuario.Cadastro
                     HASH = hashedPassword,
                     SALT = retrieveSaltBytes
                 },
-                ENDERECO = this.ENDERECO,
-                PERMISSAOID = this.PERMISSAO_ID,
+                ENDERECO = enderecoMontado,
+                PERMISSAOID = 2, // usuario padrão
                 USUARIO_ATIVO = this.USUARIO_ATIVO,
                 DATA_CRIADO = DateTime.Now
             };
