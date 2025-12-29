@@ -23,7 +23,6 @@ services.AddCors(options =>
 });
 
 services.AddAuthorization();
-
 services.ConfiguraJWT(configuration);
 services.ConfiguraConexaoBD();
 services.AdicionaInjecoesDependencias();

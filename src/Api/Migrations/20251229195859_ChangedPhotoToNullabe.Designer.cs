@@ -4,6 +4,7 @@ using Api.Dados;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251229195859_ChangedPhotoToNullabe")]
+    partial class ChangedPhotoToNullabe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -422,6 +425,7 @@ namespace Api.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("NOME_SOCIAL")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("PERMISSAOID")
@@ -435,6 +439,7 @@ namespace Api.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("TELEFONE")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<bool>("USUARIO_ATIVO")
