@@ -5,24 +5,108 @@
     Layout = "_CadastroLayout";
 }
 
+@if(Model.ShowSuccessMessage)
+{
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i>
+        <div>
+            Cadastro realizado com sucesso! Redirecionando para o painel...
+            <div class="spinner-border spinner-border-sm ms-2" role="status"></div>
+        </div>
+    </div>
+
+    <!-- Script que só existe se o sucesso for true -->
+    <script>
+        setTimeout(function() {
+            // Redirecionamento via Client-Side
+            // O Razor traduz o caminho corretamente com o Url.Page
+            window.location.href = '@Url.Page("/Admin/Administrativo")';
+        }, 4000); // 2000 milissegundos = 2 segundos
+    </script>
+}
+
 <div class="container">
-    <div class="border border-1 border-info rounded-2 m-4 p-4">
+    <div class="border border-1 border-black border-opacity-25 rounded-2 m-4 p-4">
         <form method="post">
-            <div class="row g-5 justify-content-center">
-                <div class="col-md-5">
-                    <label asp-for="Requisicao.NOME" class="form-label"></label>
-                    <input asp-for="Requisicao.NOME" class="form-control form-control-lg" />
-                    <span asp-validation-for="Requisicao.NOME" class="text-danger"></span>
-                </div>
-                <div class="col-md-5">
-                    <label asp-for="Requisicao.SOBRENOME" class="form-label"></label>
-                    <input asp-for="Requisicao.SOBRENOME" class="form-control form-control-lg" />
-                    <span asp-validation-for="Requisicao.SOBRENOME" class="text-danger"></span>
-                </div>
+            <div class="form-floating mb-4">
+                <input asp-for="Requisicao.NOME" placeholder=" " class="form-control form-control-lg" />
+                <label asp-for="Requisicao.NOME" class="form-label"></label>
+                <span asp-validation-for="Requisicao.NOME" class="text-danger"></span>
             </div>
 
-            <div class="mt-4 text-center">
-                <button type="submit" class="btn btn-primary btn-lg">Cadastrar</button>
+            <div class="form-floating mb-4">
+                <input asp-for="Requisicao.SOBRENOME" placeholder=" " class="form-control form-control-lg" />
+                <label asp-for="Requisicao.SOBRENOME" class="form-label"></label>
+                <span asp-validation-for="Requisicao.SOBRENOME" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-4">
+                <input asp-for="Requisicao.NOME_SOCIAL" placeholder=" " class="form-control form-control-lg" />
+                <label asp-for="Requisicao.NOME_SOCIAL" class="form-label"></label>
+            </div>
+
+            <div class="form-floating mb-4">
+                <input asp-for="Requisicao.CPF" placeholder=" " class="form-control form-control-lg" />
+                <label asp-for="Requisicao.CPF" class="form-label"></label>
+            </div>
+
+            <div class="form-floating mb-4">
+                <input asp-for="Requisicao.TELEFONE" placeholder=" " class="form-control form-control-lg" />
+                <label asp-for="Requisicao.TELEFONE" class="form-label"></label>
+            </div>
+
+            <div class="form-floating mb-4">
+                <input asp-for="Requisicao.EMAIL" placeholder=" " class="form-control form-control-lg" />
+                <label asp-for="Requisicao.EMAIL" class="form-label"></label>
+            </div>
+
+            <div class="form-floating mb-4">
+                <input asp-for="Requisicao.CONFIRMACAO_SENHA" placeholder=" " class="form-control form-control-lg" />
+                <label asp-for="Requisicao.CONFIRMACAO_SENHA" class="form-label"></label>
+            </div>
+
+            <div class="form-floating mb-4">
+                <input asp-for="Requisicao.ENDERECO.CEP" placeholder=" " class="form-control form-control-lg" />
+                <label asp-for="Requisicao.ENDERECO.CEP" class="form-label"></label>
+            </div>
+
+            <div class="form-floating mb-4">
+                <input asp-for="Requisicao.ENDERECO.RUA" placeholder=" " class="form-control form-control-lg" />
+                <label asp-for="Requisicao.ENDERECO.RUA" class="form-label"></label>
+            </div>
+
+            <div class="form-floating mb-4">
+                <input asp-for="Requisicao.ENDERECO.NUMERO" placeholder=" " class="form-control form-control-lg" />
+                <label asp-for="Requisicao.ENDERECO.NUMERO" class="form-label"></label>
+            </div>
+
+            <div class="form-floating mb-4">
+                <input asp-for="Requisicao.ENDERECO.BAIRRO" placeholder=" " class="form-control form-control-lg" />
+                <label asp-for="Requisicao.ENDERECO.BAIRRO" class="form-label"></label>
+            </div>
+
+            <div class="form-floating mb-4">
+                <input asp-for="Requisicao.ENDERECO.CIDADE" placeholder=" " class="form-control form-control-lg" />
+                <label asp-for="Requisicao.ENDERECO.CIDADE" class="form-label"></label>
+            </div>
+
+            <div class="form-floating mb-4">
+                <input asp-for="Requisicao.ENDERECO.ESTADO" placeholder=" " class="form-control form-control-lg" />
+                <label asp-for="Requisicao.ENDERECO.ESTADO" class="form-label"></label>
+            </div>
+
+            <div class="form-floating mb-4">
+                <input asp-for="Requisicao.ENDERECO.PAIS" placeholder=" " class="form-control form-control-lg" />
+                <label asp-for="Requisicao.ENDERECO.PAIS" class="form-label"></label>
+            </div>
+
+            @* foto será enviada para um server separado o arquivo *@
+
+            <div class="mt-4 text-center d-grid gap-2">
+                <button type="submit" class="btn btn-secondary btn-lg">
+                    <i class="bi bi-floppy-fill mx-2"></i>
+                    Cadastrar
+                </button>
             </div>
         </form>
     </div>
@@ -31,4 +115,3 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-    

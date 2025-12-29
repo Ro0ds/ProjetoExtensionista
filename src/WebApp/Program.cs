@@ -1,4 +1,3 @@
-using Common.Infra;
 using WebApp.Interfaces;
 using WebApp.JWT;
 using WebApp.Pages;
@@ -7,6 +6,12 @@ using WebApp.Services;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
+
+services.AddHttpClient("extensionistaAPI", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7071/api/");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
 
 services.AddSession(opt =>
 {

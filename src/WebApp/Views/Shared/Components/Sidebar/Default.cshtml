@@ -1,4 +1,6 @@
-﻿@* sidebar *@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@* sidebar *@
 <div class="sidebar">
 	<nav class="nav flex-column">
 		<a class="nav-link" asp-action="/admin/administrativo">
@@ -14,6 +16,12 @@
 			<span class="description">Cadastros <i class="bi bi-caret-down-fill"></i></span>
 		</a>
 		<div class="sub-menu collapse" id="submenu">
+			<a class="nav-link" asp-page="/account/cadastrar">
+				<span class="icon">
+					<i class="bi bi-person"></i>
+				</span>
+				<span class="description">Usuários</span>
+			</a>
 			<a class="nav-link" href="#">
 				<span class="icon">
 					<i class="bi bi-building-add"></i>
