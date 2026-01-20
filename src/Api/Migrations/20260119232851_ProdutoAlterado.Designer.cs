@@ -4,6 +4,7 @@ using Api.Dados;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260119232851_ProdutoAlterado")]
+    partial class ProdutoAlterado
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,34 +156,75 @@ namespace Api.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<bool>("ATIVO")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<string>("CARGO")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("CPF")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("varchar(11)");
 
                     b.Property<DateTime>("DATA_ADMISSAO")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("DATA_CRIADO")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime?>("DATA_DEMISSAO")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("EMPRESAID")
+                    b.Property<string>("EMAIL")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("ENDERECOID")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("SALARIO")
-                        .HasColumnType("decimal(65,30)");
+                    b.Property<string>("FOTO")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
-                    b.Property<int>("USUARIOID")
+                    b.Property<string>("NOME")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("NOME_SOCIAL")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<int>("PERMISSAOID")
                         .HasColumnType("int");
+
+                    b.Property<int>("SENHAID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SOBRENOME")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("TELEFONE")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("USUARIO_ATIVO")
+                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("EMPRESAID");
-
-                    b.HasIndex("USUARIOID")
+                    b.HasIndex("EMAIL")
                         .IsUnique();
+
+                    b.HasIndex("ENDERECOID");
+
+                    b.HasIndex("PERMISSAOID");
+
+                    b.HasIndex("SENHAID");
 
                     b.ToTable("FUNCIONARIO");
                 });
@@ -409,6 +453,8 @@ namespace Api.Migrations
 
                     b.HasIndex("ENDERECOID");
 
+                    b.HasIndex("FUNCIONARIOID");
+
                     b.HasIndex("PERMISSAOID");
 
                     b.HasIndex("SENHAID");
@@ -448,21 +494,29 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Common.Models.FUNCIONARIO", b =>
                 {
-                    b.HasOne("Common.Models.EMPRESA", "EMPRESA")
+                    b.HasOne("Common.Models.ENDERECO", "ENDERECO")
                         .WithMany()
-                        .HasForeignKey("EMPRESAID")
+                        .HasForeignKey("ENDERECOID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Common.Models.USUARIO", "USUARIO")
-                        .WithOne("FUNCIONARIO")
-                        .HasForeignKey("Common.Models.FUNCIONARIO", "USUARIOID")
+                    b.HasOne("Common.Models.PERMISSAO", "PERMISSAO")
+                        .WithMany()
+                        .HasForeignKey("PERMISSAOID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("EMPRESA");
+                    b.HasOne("Common.Models.SENHA", "SENHA")
+                        .WithMany()
+                        .HasForeignKey("SENHAID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("USUARIO");
+                    b.Navigation("ENDERECO");
+
+                    b.Navigation("PERMISSAO");
+
+                    b.Navigation("SENHA");
                 });
 
             modelBuilder.Entity("Common.Models.HISTORICO_MOVIMENTACOES", b =>
@@ -527,6 +581,10 @@ namespace Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Common.Models.FUNCIONARIO", "FUNCIONARIO")
+                        .WithMany()
+                        .HasForeignKey("FUNCIONARIOID");
+
                     b.HasOne("Common.Models.PERMISSAO", "PERMISSAO")
                         .WithMany()
                         .HasForeignKey("PERMISSAOID")
@@ -541,14 +599,11 @@ namespace Api.Migrations
 
                     b.Navigation("ENDERECO");
 
+                    b.Navigation("FUNCIONARIO");
+
                     b.Navigation("PERMISSAO");
 
                     b.Navigation("SENHA");
-                });
-
-            modelBuilder.Entity("Common.Models.USUARIO", b =>
-                {
-                    b.Navigation("FUNCIONARIO");
                 });
 #pragma warning restore 612, 618
         }
