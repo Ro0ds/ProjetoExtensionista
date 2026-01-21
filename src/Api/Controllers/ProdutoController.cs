@@ -26,7 +26,7 @@ public class ProdutoController : ControllerBase
         var resultado = await _produtoServico.ListarTodos();
 
         if(resultado.Sucesso)
-            return Ok(resultado);
+            return Ok(resultado.Dados);
 
         return BadRequest(resultado);
     }

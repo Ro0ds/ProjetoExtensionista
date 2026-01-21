@@ -25,6 +25,7 @@ services.AddSession(opt =>
 services.AddHttpContextAccessor();
 services.AddScoped<ITokenService, TokenService>();
 services.AddTransient<JwtTokenHandler>();
+services.AddScoped<ProdutoApiService>();
 
 services.AddHttpClient<PrincipalModel>()
     .AddHttpMessageHandler<JwtTokenHandler>();

@@ -1,0 +1,68 @@
+﻿@page
+@model ProdutosModel
+
+<h3>Produtos</h3>
+
+@if(!ModelState.IsValid)
+{
+	<div class="alert alert-danger">
+		@foreach(var error in ModelState.Values.SelectMany(v => v.Errors))
+		{
+			<div>@error.ErrorMessage</div>
+		}
+	</div>
+}
+
+<div>
+	<a asp-page="/ProdutoNovo" class="btn btn-primary mb-3">Novo Produto</a>
+</div>
+
+@if(Model.Produtos == null || !Model.Produtos.Any())
+{
+	<p>Nenhum produto cadastrado</p>
+}
+else
+{
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Nome</th>
+				<th>Descrição</th>
+				<th>Preço</th>
+				<th>Estoque Atual</th>
+				<th>Valor Total</th>
+				<th>Ações</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var p in Model.Produtos)
+			{
+				var valorTotal = p.Preco * p.EstoqueAtual;
+
+				<tr>
+					<td>@p.Nome</td>
+					<td>@p.Descricao</td>
+					<td>@p.Preco.ToString("C")</td>
+					<td>@p.EstoqueAtual</td>
+					<td>@valorTotal.ToString("C")</td>
+					<td>
+						<form method="post" asp-page-handler="Movimentar" class="d-inline">
+							<input type="hidden" name="ProdutoId" value="@p.Id" />
+							<input type="hidden" name="Entrada" value="1" />
+							<input type="number" name="Quantidade" value="1" class="form-control d-inline w-auto" />
+							<input type="hidden" name="Descricao" value="Entada rápida" />
+							<button type="submit" class="btn btn-sm btn-success">+1</button>
+						</form>
+						<form method="post" asp-page-handler="Movimentar" class="d-inline ms-1">
+							<input type="hidden" name="ProdutoId" value="@p.Id" />
+							<input type="hidden" name="Entrada" value="0" />
+							<input type="number" name="Quantidade" value="1" class="form-control d-inline w-auto" />
+							<input type="hidden" name="Descricao" value="Saída rápida" />
+							<button type="submit" class="btn btn-sm btn-danger">-1</button>
+						</form>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
