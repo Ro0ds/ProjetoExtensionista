@@ -1,114 +1,182 @@
 ﻿@page
 @model CadastrarModel
 @{
-    ViewData["Title"] = "Cadastro";
-    Layout = "_CadastroLayout";
+    ViewData["Title"] = "Cadastro de Usuário";
+    Layout = "_CadastroLayout"; // Mantém o seu
 }
 
-@if(Model.ShowSuccessMessage)
-{
-    <div class="alert alert-success d-flex align-items-center" role="alert">
-        <i class="bi bi-check-circle-fill me-2"></i>
-        <div>
-            Cadastro realizado com sucesso! Redirecionando para o painel...
-            <div class="spinner-border spinner-border-sm ms-2" role="status"></div>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-xl-8">
+            <!-- Header -->
+            <div class="text-center mb-5">
+                <h1 class="display-5 fw-bold mb-3">Criar Nova Conta</h1>
+                <p class="lead text-muted">Preencha todos os campos obrigatórios</p>
+            </div>
+
+            <!-- Success Message -->
+            @if(Model.ShowSuccessMessage)
+            {
+                <div class="alert alert-success alert-dismissible fade show d-flex align-items-center mb-4" role="alert">
+                    <i class="bi bi-check-circle-fill me-3 fs-3"></i>
+                    <div class="flex-grow-1">
+                        <strong>Sucesso!</strong> Cadastro realizado. Redirecionando...
+                    </div>
+                    <div class="spinner-border spinner-border-sm ms-3" role="status">
+                        <span class="visually-hidden">Carregando...</span>
+                    </div>
+                    <button type="button" class="btn-close ms-3" data-bs-dismiss="alert"></button>
+                </div>
+
+                <script>
+                    setTimeout(function() {
+                        window.location.href = '@Url.Page("/Admin/Administrativo")';
+                    }, 3000);
+                </script>
+            }
+
+            <!-- Form Card -->
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-5">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4"></div>
+
+                        <!-- Dados Pessoais (Row 1) -->
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="Requisicao.NOME" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.NOME"]?.Errors.Any() == true ? "is-invalid" : "")" />
+                                    <label asp-for="Requisicao.NOME"></label>
+                                    <div asp-validation-for="Requisicao.NOME" class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="Requisicao.SOBRENOME" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.SOBRENOME"]?.Errors.Any() == true ? "is-invalid" : "")" />
+                                    <label asp-for="Requisicao.SOBRENOME"></label>
+                                    <div asp-validation-for="Requisicao.SOBRENOME" class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Nome Social + CPF -->
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="Requisicao.NOME_SOCIAL" class="form-control form-control-lg" />
+                                    <label asp-for="Requisicao.NOME_SOCIAL">Nome Social (opcional)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="Requisicao.CPF" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.CPF"]?.Errors.Any() == true ? "is-invalid" : "")" />
+                                    <label asp-for="Requisicao.CPF">CPF <span class="text-danger">*</span></label>
+                                    <div asp-validation-for="Requisicao.CPF" class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contato -->
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="Requisicao.TELEFONE" class="form-control form-control-lg" />
+                                    <label asp-for="Requisicao.TELEFONE">Telefone (opcional)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="Requisicao.EMAIL" type="email" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.EMAIL"]?.Errors.Any() == true ? "is-invalid" : "")" />
+                                    <label asp-for="Requisicao.EMAIL">E-mail <span class="text-danger">*</span></label>
+                                    <div asp-validation-for="Requisicao.EMAIL" class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Senha -->
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="Requisicao.CONFIRMACAO_SENHA" type="password" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.SENHA"]?.Errors.Any() == true ? "is-invalid" : "")" />
+                                    <label asp-for="Requisicao.CONFIRMACAO_SENHA">Senha <span class="text-danger">*</span></label>
+                                    <div asp-validation-for="Requisicao.SENHA" class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="Requisicao.CONFIRMACAO_SENHA" type="password" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.CONFIRMACAO_SENHA"]?.Errors.Any() == true ? "is-invalid" : "")" />
+                                    <label asp-for="Requisicao.CONFIRMACAO_SENHA">Confirmar Senha <span class="text-danger">*</span></label>
+                                    <div asp-validation-for="Requisicao.CONFIRMACAO_SENHA" class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Endereço (Grid 2x4) -->
+                        <h5 class="fw-bold mb-4 pb-2 border-bottom">
+                            <i class="bi bi-geo-alt me-2 text-primary"></i>Endereço
+                        </h5>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="Requisicao.ENDERECO.CEP" class="form-control form-control-lg" />
+                                    <label asp-for="Requisicao.ENDERECO.CEP">CEP</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="Requisicao.ENDERECO.RUA" class="form-control form-control-lg" />
+                                    <label asp-for="Requisicao.ENDERECO.RUA">Rua</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="Requisicao.ENDERECO.NUMERO" class="form-control form-control-lg" />
+                                    <label asp-for="Requisicao.ENDERECO.NUMERO">Número</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="Requisicao.ENDERECO.BAIRRO" class="form-control form-control-lg" />
+                                    <label asp-for="Requisicao.ENDERECO.BAIRRO">Bairro</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="Requisicao.ENDERECO.CIDADE" class="form-control form-control-lg" />
+                                    <label asp-for="Requisicao.ENDERECO.CIDADE">Cidade</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="Requisicao.ENDERECO.ESTADO" maxlength="2" class="form-control form-control-lg text-uppercase" />
+                                    <label asp-for="Requisicao.ENDERECO.ESTADO">UF</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="Requisicao.ENDERECO.PAIS" class="form-control form-control-lg" />
+                                    <label asp-for="Requisicao.ENDERECO.PAIS">País</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Botões -->
+                        <div class="d-grid gap-3 d-md-flex justify-content-md-between mt-5 pt-4 border-top">
+                            <a asp-page="/Admin/Administrativo" class="btn btn-outline-secondary btn-lg px-4">
+                                <i class="bi bi-arrow-left me-2"></i>Voltar
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg px-5">
+                                <i class="bi bi-check-lg me-2"></i>Cadastrar Usuário
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <!-- Script que só existe se o sucesso for true -->
-    <script>
-        setTimeout(function() {
-            // Redirecionamento via Client-Side
-            // O Razor traduz o caminho corretamente com o Url.Page
-            window.location.href = '@Url.Page("/Admin/Administrativo")';
-        }, 4000); // 2000 milissegundos = 2 segundos
-    </script>
-}
-
-<div class="container">
-    <div class="border border-1 border-black border-opacity-25 rounded-2 m-4 p-4">
-        <form method="post">
-            <div class="form-floating mb-4">
-                <input asp-for="Requisicao.NOME" placeholder=" " class="form-control form-control-lg" />
-                <label asp-for="Requisicao.NOME" class="form-label"></label>
-                <span asp-validation-for="Requisicao.NOME" class="text-danger"></span>
-            </div>
-
-            <div class="form-floating mb-4">
-                <input asp-for="Requisicao.SOBRENOME" placeholder=" " class="form-control form-control-lg" />
-                <label asp-for="Requisicao.SOBRENOME" class="form-label"></label>
-                <span asp-validation-for="Requisicao.SOBRENOME" class="text-danger"></span>
-            </div>
-
-            <div class="form-floating mb-4">
-                <input asp-for="Requisicao.NOME_SOCIAL" placeholder=" " class="form-control form-control-lg" />
-                <label asp-for="Requisicao.NOME_SOCIAL" class="form-label"></label>
-            </div>
-
-            <div class="form-floating mb-4">
-                <input asp-for="Requisicao.CPF" placeholder=" " class="form-control form-control-lg" />
-                <label asp-for="Requisicao.CPF" class="form-label"></label>
-            </div>
-
-            <div class="form-floating mb-4">
-                <input asp-for="Requisicao.TELEFONE" placeholder=" " class="form-control form-control-lg" />
-                <label asp-for="Requisicao.TELEFONE" class="form-label"></label>
-            </div>
-
-            <div class="form-floating mb-4">
-                <input asp-for="Requisicao.EMAIL" placeholder=" " class="form-control form-control-lg" />
-                <label asp-for="Requisicao.EMAIL" class="form-label"></label>
-            </div>
-
-            <div class="form-floating mb-4">
-                <input asp-for="Requisicao.CONFIRMACAO_SENHA" placeholder=" " class="form-control form-control-lg" />
-                <label asp-for="Requisicao.CONFIRMACAO_SENHA" class="form-label"></label>
-            </div>
-
-            <div class="form-floating mb-4">
-                <input asp-for="Requisicao.ENDERECO.CEP" placeholder=" " class="form-control form-control-lg" />
-                <label asp-for="Requisicao.ENDERECO.CEP" class="form-label"></label>
-            </div>
-
-            <div class="form-floating mb-4">
-                <input asp-for="Requisicao.ENDERECO.RUA" placeholder=" " class="form-control form-control-lg" />
-                <label asp-for="Requisicao.ENDERECO.RUA" class="form-label"></label>
-            </div>
-
-            <div class="form-floating mb-4">
-                <input asp-for="Requisicao.ENDERECO.NUMERO" placeholder=" " class="form-control form-control-lg" />
-                <label asp-for="Requisicao.ENDERECO.NUMERO" class="form-label"></label>
-            </div>
-
-            <div class="form-floating mb-4">
-                <input asp-for="Requisicao.ENDERECO.BAIRRO" placeholder=" " class="form-control form-control-lg" />
-                <label asp-for="Requisicao.ENDERECO.BAIRRO" class="form-label"></label>
-            </div>
-
-            <div class="form-floating mb-4">
-                <input asp-for="Requisicao.ENDERECO.CIDADE" placeholder=" " class="form-control form-control-lg" />
-                <label asp-for="Requisicao.ENDERECO.CIDADE" class="form-label"></label>
-            </div>
-
-            <div class="form-floating mb-4">
-                <input asp-for="Requisicao.ENDERECO.ESTADO" placeholder=" " class="form-control form-control-lg" />
-                <label asp-for="Requisicao.ENDERECO.ESTADO" class="form-label"></label>
-            </div>
-
-            <div class="form-floating mb-4">
-                <input asp-for="Requisicao.ENDERECO.PAIS" placeholder=" " class="form-control form-control-lg" />
-                <label asp-for="Requisicao.ENDERECO.PAIS" class="form-label"></label>
-            </div>
-
-            @* foto será enviada para um server separado o arquivo *@
-
-            <div class="mt-4 text-center d-grid gap-2">
-                <button type="submit" class="btn btn-secondary btn-lg">
-                    <i class="bi bi-floppy-fill mx-2"></i>
-                    Cadastrar
-                </button>
-            </div>
-        </form>
     </div>
 </div>
 

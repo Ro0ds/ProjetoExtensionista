@@ -38,11 +38,12 @@ namespace WebApp.Pages.Account
 
                 if(resposta != null)
                 {
-                    _tokenService.ArmazenarToken(resposta.TOKEN);
+                    _tokenService.ArmazenarToken(resposta.TOKEN, requisicao.MANTER_LOGADO);
                     return RedirectToPage("../Principal");
                 }
             }
 
+            ModelState.AddModelError(string.Empty, "E-mail ou senha incorretos");
             return Page();
         }
     }

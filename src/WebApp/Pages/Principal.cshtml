@@ -1,161 +1,159 @@
 ﻿@page
 @model PrincipalModel
 @{
-	ViewData["Title"] = "Dashboard - InovarJunto";
+    ViewData["Title"] = "Dashboard - InovarJunto";
 }
 
 <div class="container-fluid py-4">
-	<!--Header do dashboard-->
-	<div class="row mb-4">
-		<div class="col">
-			<h1 class="display-5 fw-bold">
-				<i class="bi bi-house-door-fill me-2"></i>
-				Dashboard
-			</h1>
-			<p class="text-muted">Bem Vindo, <strong>@Model.Usuario.NOME.ToUpperInvariant()</strong></p>
-		</div>
-		<div class="col-auto">
-			<form method="post" asp-page-handler="Logout" class="d-inline">
-				<button type="submit" class="btn btn-outline-danger">
-					<i class="bi bi-box-arrow-right"></i> Sair
-				</button>
-			</form>
-		</div>
-	</div>
+    <!-- Header do Dashboard -->
+    <div class="row mb-4 align-items-center">
+        <div class="col">
+            <h1 class="display-5 fw-bold mb-1">
+                <i class="bi bi-house-door-fill me-2 text-primary"></i>
+                Dashboard
+            </h1>
+            <p class="text-muted mb-0">Bem-vindo, <strong>@Model.Usuario?.NOME.ToUpperInvariant()</strong></p>
+        </div>
+        <div class="col-auto">
+            <form method="post" asp-page-handler="Logout" class="d-inline">
+                <button type="submit" class="btn btn-outline-danger">
+                    <i class="bi bi-box-arrow-right me-1"></i>Sair
+                </button>
+            </form>
+        </div>
+    </div>
 
-	<!--Cards de métricas-->
-	<div class="row mb-4">
-		<div class="col-x1-3 col-md-6 mb-4">
-			<div class="card border-left-primary shadow h-100 py-2">
-				<div class="card-body">
-					<div class="row no-gutters align-items-center">
-						<div class="col mr-2">
-							<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-								Total de Produtos
-							</div>
-							<div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalProdutos</div>
-						</div>
-						<div class="col-auto">
-							<i class="fas fa-box fas-2x text-gray-300"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <!-- Cards de Métricas (TODOS dentro de UMA row) -->
+    <div class="row g-4 mb-5">
+        <!-- Card 1: Total Produtos -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-start border-primary border-5 shadow h-100">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-xs font-weight-bold text-uppercase text-primary mb-1">
+                                Total de Produtos
+                            </div>
+                            <div class="h4 mb-0 font-weight-bold">@Model.TotalProdutos</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-box fas-2x text-primary opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-	<div class="row mb-4">
-		<div class="col-x1-3 col-md-6 mb-4">
-			<div class="card card-border-left-success shadow h-100 py-2">
-				<div class="card-body">
-					<div class="row no-gutters align-items-center">
-						<div class="col mr-2">
-							<div class="text-xs font-wright-bold text-success text-uppercase mb-1">
-								Estoque Total
-							</div>
-							<div class="h5 mb-0 font-weight-bold text-gray-800">@Model.EstoqueTotal unidades</div>
-						</div>
-						<div class="col-auto">
-							<i class="fas fa-warehouse fas-2x text-gray-300"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+        <!-- Card 2: Estoque Total -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-start border-success border-5 shadow h-100">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-xs font-weight-bold text-uppercase text-success mb-1">
+                                Estoque Total
+                            </div>
+                            <div class="h4 mb-0 font-weight-bold">@Model.EstoqueTotal unidades</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-archive fas-2x text-success opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-	<div class="row mb-4">
-		<div class="col-x1-3 col-md-6 mb-4">
-			<div class="card card-border-left-info shadow h-100 py-2">
-				<div class="card-body">
-					<div class="row no-gutters align-items-center">
-						<div class="col mr-2">
-							<div class="text-xs font-wright-bold text-info text-uppercase mb-1">
-								Produtos Ativos
-							</div>
-							<div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalProdutos</div>
-						</div>
-						<div class="col-auto">
-							<i class="fas fa-check-circle fas-2x text-gray-300"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+        <!-- Card 3: Produtos Ativos -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-start border-info border-5 shadow h-100">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-xs font-weight-bold text-uppercase text-info mb-1">
+                                Produtos Ativos
+                            </div>
+                            <div class="h4 mb-0 font-weight-bold">@Model.TotalProdutos</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-check-circle-fill fas-2x text-info opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-	<div class="d-flex gap-2">
-		<div class="col-xl-3 col-md-6 mb-4">
-			<div class="card border-left-warning shadow h-100 py-2">
-				<div class="card-body">
-					<div class="row no-gutters align-items-center">
-						<div class="col mr-2">
-							<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-								Estoque Crítico (0%)
-							</div>
-							<div class="h5 mb-0 font-weight-bold text-gray-800">0 produtos</div>
-						</div>
-						<div class="col-auto">
-							<i class="fas fa-exclamation-triangle fas-2x text-gray-300"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+        <!-- Card 4: Estoque Crítico -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-start border-warning border-5 shadow h-100">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-xs font-weight-bold text-uppercase text-warning mb-1">
+                                Estoque Crítico
+                            </div>
+                            <div class="h4 mb-0 font-weight-bold">@Model.EstoqueCritico</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-exclamation-triangle-fill fas-2x text-warning opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<div class="col-xl-3 col-md-6 mb-4">
-			<div class="card border-left-success shadow h-100 py-2">
-				<div class="card-body">
-					<div class="row no-gutters align-items-center">
-						<div class="col mr-2">
-							<div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-								Valor Total do Estoque
-							</div>
-							<div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ValorTotal.ToString("C")</div>
-						</div>
-						<div class="col-auto">
-							<i class="fas fa-signal fas-2x text-gray-300"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+        <!-- Card 5: Valor Total (seu novo) -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-start border-success border-5 shadow h-100">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-xs font-weight-bold text-uppercase text-success mb-1">
+                                Valor Total Estoque
+                            </div>
+                            <div class="h4 mb-0 font-weight-bold">@(Model.ValorTotal.ToString("C") ?? "R$ 0,00")</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-currency-dollar fas-2x text-success opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<!-- Quick Actions -->
-	<div class="row">
-		<div class="col-lg-12 mb-4">
-			<h4 class="small font-weight-bold text-uppercase mb-3">
-				<i class="bi bi-lightning-charge me-2"></i>
-				Ações Rápidas
-			</h4>
-			<div class="row">
-				<div class="col-md-3 mb-3">
-					<a asp-page="/Produtos" class="btn btn-primary btn-lg w-100 h-100">
-						<i class="bi bi-list-ul"></i><br />
-						Gerenciar Estoque
-					</a>
-				</div>
-				<div class="col-md-3 mb-3">
-					<a asp-page="/ProdutoNovo" class="btn btn-success btn-lg w-100 h-100">
-						<i class="bi bi-plus-circle"></i><br />
-						Novo Produto
-					</a>
-				</div>
-				<div class="col-md-3 mb-3">
-					<a href="#" class="btn btn-info btn-lg w-100 h-100">
-						<i class="bi bi-graph-up"></i><br />
-						Relatórios
-					</a>
-				</div>
-				<div class="col-md-3 mb-3">
-					<a href="#" class="btn btn-warning btn-lg w-100 h-100">
-						<i class="bi bi-people"></i><br />
-						Funcionários
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>
-
+    <!-- Quick Actions (Corrigido) -->
+    <div class="row">
+        <div class="col-12">
+            <h4 class="mb-4 fw-bold">
+                <i class="bi bi-lightning-charge-fill text-primary me-2"></i>
+                Ações Rápidas
+            </h4>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <a asp-page="/Produtos" class="btn btn-primary btn-lg w-100 h-100 text-center py-4">
+                        <i class="bi bi-list-ul fs-1 d-block mb-2"></i>
+                        <span class="d-block fw-bold">Gerenciar Estoque</span>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a asp-page="/ProdutoNovo" class="btn btn-success btn-lg w-100 h-100 text-center py-4">
+                        <i class="bi bi-plus-circle-fill fs-1 d-block mb-2"></i>
+                        <span class="d-block fw-bold">Novo Produto</span>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" class="btn btn-info btn-lg w-100 h-100 text-center py-4">
+                        <i class="bi bi-file-earmark-bar-graph fs-1 d-block mb-2"></i>
+                        <span class="d-block fw-bold">Relatórios</span>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" class="btn btn-warning btn-lg w-100 h-100 text-center py-4">
+                        <i class="bi bi-people-fill fs-1 d-block mb-2"></i>
+                        <span class="d-block fw-bold">Funcionários</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -24,6 +24,7 @@ public class PrincipalModel : PageModel
     // cards principais
     public int TotalProdutos { get; set; }
     public int EstoqueTotal { get; set; }
+    public int EstoqueCritico { get; set; } = 0;
     public decimal ValorTotal { get; set; }
 
     public PrincipalModel(IHttpClientFactory httpClient, ITokenService tokenService, ProdutoApiService produtoApi)
@@ -84,7 +85,8 @@ public class PrincipalModel : PageModel
             var produtos = await _produtoApi.ListarAsync();
             TotalProdutos = produtos.Count;
             EstoqueTotal = produtos.Sum(p => p.EstoqueAtual);
-            ValorTotal = produtos.Sum(p => p.Preco);
+            EstoqueCritico = produtos.Where(p => p.EstoqueAtual < 5).Count();
+            ValorTotal = produtos.Sum(p => p.EstoqueAtual * p.Preco);
         }
         catch
         {
