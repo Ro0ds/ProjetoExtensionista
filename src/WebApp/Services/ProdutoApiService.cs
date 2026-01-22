@@ -20,7 +20,9 @@ public class ProdutoApiService
 
     private HttpClient AddDefaultHeaders()
     {
-        _token = _tokenService.PegarToken();
+        if(string.IsNullOrEmpty(_token))
+            _token = _tokenService.PegarToken();
+
         var client = _httpClientFactory.CreateClient("extensionistaAPI");
         client.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", _token);
@@ -30,7 +32,7 @@ public class ProdutoApiService
 
     public async Task<List<ProdutoResposta>> ListarAsync()
     {
-        var client = AddDefaultHeaders();
+        using var client = AddDefaultHeaders();
         var result = await client.GetFromJsonAsync<List<ProdutoResposta>>("Produto");
 
         return result ?? new List<ProdutoResposta>();
@@ -38,7 +40,7 @@ public class ProdutoApiService
 
     public async Task<bool> CadastrarAsync(ProdutoCadastroRequisicao requisicao)
     {
-        var client = AddDefaultHeaders();
+        using var client = AddDefaultHeaders();
 
         var response = await client.PostAsJsonAsync("Produto", requisicao);
 

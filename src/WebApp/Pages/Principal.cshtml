@@ -1,22 +1,161 @@
 ﻿@page
 @model PrincipalModel
 @{
-	ViewData["Title"] = "Principal";
+	ViewData["Title"] = "Dashboard - InovarJunto";
 }
 
-<div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
-	<h1 class="display-4">
-		Bem-vindo ao <span class="font-monospace">InovarJunto,</span> <span>
-			@{
-				if(!string.IsNullOrEmpty(Model.Token))
-				{
-					<p>@Model.Usuario.NOME.ToUpperInvariant()</p>
-				}
-				else
-				{
-					<p>não está autenticado</p>
-				}
-			}
-		</span>
-	</h1>
+<div class="container-fluid py-4">
+	<!--Header do dashboard-->
+	<div class="row mb-4">
+		<div class="col">
+			<h1 class="display-5 fw-bold">
+				<i class="bi bi-house-door-fill me-2"></i>
+				Dashboard
+			</h1>
+			<p class="text-muted">Bem Vindo, <strong>@Model.Usuario.NOME.ToUpperInvariant()</strong></p>
+		</div>
+		<div class="col-auto">
+			<form method="post" asp-page-handler="Logout" class="d-inline">
+				<button type="submit" class="btn btn-outline-danger">
+					<i class="bi bi-box-arrow-right"></i> Sair
+				</button>
+			</form>
+		</div>
+	</div>
+
+	<!--Cards de métricas-->
+	<div class="row mb-4">
+		<div class="col-x1-3 col-md-6 mb-4">
+			<div class="card border-left-primary shadow h-100 py-2">
+				<div class="card-body">
+					<div class="row no-gutters align-items-center">
+						<div class="col mr-2">
+							<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+								Total de Produtos
+							</div>
+							<div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalProdutos</div>
+						</div>
+						<div class="col-auto">
+							<i class="fas fa-box fas-2x text-gray-300"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row mb-4">
+		<div class="col-x1-3 col-md-6 mb-4">
+			<div class="card card-border-left-success shadow h-100 py-2">
+				<div class="card-body">
+					<div class="row no-gutters align-items-center">
+						<div class="col mr-2">
+							<div class="text-xs font-wright-bold text-success text-uppercase mb-1">
+								Estoque Total
+							</div>
+							<div class="h5 mb-0 font-weight-bold text-gray-800">@Model.EstoqueTotal unidades</div>
+						</div>
+						<div class="col-auto">
+							<i class="fas fa-warehouse fas-2x text-gray-300"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row mb-4">
+		<div class="col-x1-3 col-md-6 mb-4">
+			<div class="card card-border-left-info shadow h-100 py-2">
+				<div class="card-body">
+					<div class="row no-gutters align-items-center">
+						<div class="col mr-2">
+							<div class="text-xs font-wright-bold text-info text-uppercase mb-1">
+								Produtos Ativos
+							</div>
+							<div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalProdutos</div>
+						</div>
+						<div class="col-auto">
+							<i class="fas fa-check-circle fas-2x text-gray-300"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="d-flex gap-2">
+		<div class="col-xl-3 col-md-6 mb-4">
+			<div class="card border-left-warning shadow h-100 py-2">
+				<div class="card-body">
+					<div class="row no-gutters align-items-center">
+						<div class="col mr-2">
+							<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+								Estoque Crítico (0%)
+							</div>
+							<div class="h5 mb-0 font-weight-bold text-gray-800">0 produtos</div>
+						</div>
+						<div class="col-auto">
+							<i class="fas fa-exclamation-triangle fas-2x text-gray-300"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xl-3 col-md-6 mb-4">
+			<div class="card border-left-success shadow h-100 py-2">
+				<div class="card-body">
+					<div class="row no-gutters align-items-center">
+						<div class="col mr-2">
+							<div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+								Valor Total do Estoque
+							</div>
+							<div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ValorTotal.ToString("C")</div>
+						</div>
+						<div class="col-auto">
+							<i class="fas fa-signal fas-2x text-gray-300"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Quick Actions -->
+	<div class="row">
+		<div class="col-lg-12 mb-4">
+			<h4 class="small font-weight-bold text-uppercase mb-3">
+				<i class="bi bi-lightning-charge me-2"></i>
+				Ações Rápidas
+			</h4>
+			<div class="row">
+				<div class="col-md-3 mb-3">
+					<a asp-page="/Produtos" class="btn btn-primary btn-lg w-100 h-100">
+						<i class="bi bi-list-ul"></i><br />
+						Gerenciar Estoque
+					</a>
+				</div>
+				<div class="col-md-3 mb-3">
+					<a asp-page="/ProdutoNovo" class="btn btn-success btn-lg w-100 h-100">
+						<i class="bi bi-plus-circle"></i><br />
+						Novo Produto
+					</a>
+				</div>
+				<div class="col-md-3 mb-3">
+					<a href="#" class="btn btn-info btn-lg w-100 h-100">
+						<i class="bi bi-graph-up"></i><br />
+						Relatórios
+					</a>
+				</div>
+				<div class="col-md-3 mb-3">
+					<a href="#" class="btn btn-warning btn-lg w-100 h-100">
+						<i class="bi bi-people"></i><br />
+						Funcionários
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>
