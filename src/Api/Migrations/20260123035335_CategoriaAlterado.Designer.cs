@@ -4,6 +4,7 @@ using Api.Dados;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260123035335_CategoriaAlterado")]
+    partial class CategoriaAlterado
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,36 +48,6 @@ namespace Api.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("CATEGORIA");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            DATA_CRIACAO = new DateTime(2026, 1, 26, 22, 31, 38, 153, DateTimeKind.Utc).AddTicks(9448),
-                            DESCRICAO = "Produtos gerais",
-                            NOME = "Geral"
-                        },
-                        new
-                        {
-                            ID = 2,
-                            DATA_CRIACAO = new DateTime(2026, 1, 26, 22, 31, 38, 153, DateTimeKind.Utc).AddTicks(9450),
-                            DESCRICAO = "Eletrônicos e gadgets",
-                            NOME = "Eletrônicos"
-                        },
-                        new
-                        {
-                            ID = 3,
-                            DATA_CRIACAO = new DateTime(2026, 1, 26, 22, 31, 38, 153, DateTimeKind.Utc).AddTicks(9452),
-                            DESCRICAO = "Vestuário",
-                            NOME = "Roupas"
-                        },
-                        new
-                        {
-                            ID = 4,
-                            DATA_CRIACAO = new DateTime(2026, 1, 26, 22, 31, 38, 153, DateTimeKind.Utc).AddTicks(9453),
-                            DESCRICAO = "Alimentos e bebidas",
-                            NOME = "Alimentos"
-                        });
                 });
 
             modelBuilder.Entity("Common.Models.EMPRESA", b =>

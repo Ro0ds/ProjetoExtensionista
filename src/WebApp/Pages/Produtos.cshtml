@@ -1,68 +1,143 @@
 ﻿@page
 @model ProdutosModel
-
-<h3>Produtos</h3>
-
-@if(!ModelState.IsValid)
-{
-	<div class="alert alert-danger">
-		@foreach(var error in ModelState.Values.SelectMany(v => v.Errors))
-		{
-			<div>@error.ErrorMessage</div>
-		}
-	</div>
+@{
+    ViewData["Title"] = "Produtos";
 }
 
-<div>
-	<a asp-page="/ProdutoNovo" class="btn btn-primary mb-3">Novo Produto</a>
+<div class="container-fluid py-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-start mb-4 flex-wrap gap-2">
+        <div>
+            <h2 class="fw-bold mb-1 d-inline-block">
+                <i class="bi bi-box-seam me-2 text-primary"></i>
+                Produtos
+            </h2>
+            <p class="text-muted mb-0">Gerencie seu catálogo e estoque</p>
+        </div>
+        <a asp-page="/ProdutoNovo" class="btn btn-primary btn-lg">
+            <i class="bi bi-plus-circle me-2"></i>Novo Produto
+        </a>
+    </div>
+
+    <!-- Alertas -->
+    @if(!ModelState.IsValid)
+    {
+        <div class="alert alert-danger mb-4">
+            @foreach(var error in ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <div>@error.ErrorMessage</div>
+            }
+        </div>
+    }
+
+    @if(Model.Produtos == null || !Model.Produtos.Any())
+    {
+        <div class="alert alert-info d-flex align-items-center" role="alert">
+            <i class="bi bi-info-circle me-3 fs-4 flex-shrink-0"></i>
+            <span>Nenhum produto cadastrado. <a asp-page="/ProdutoNovo" class="alert-link">Clique aqui</a> para criar o primeiro.</span>
+        </div>
+    }
+    else
+    {
+        <!-- Tabela em Card -->
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0 fw-semibold">
+                    <i class="bi bi-list-ul me-2 text-primary"></i>
+                    Catálogo de Produtos
+                </h5>
+                <span class="badge bg-primary bg-opacity-75 px-3 py-2">
+                    @Model.Produtos.Count item(ns)
+                </span>
+            </div>
+
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0 align-middle">
+                        <thead class="table-light sticky-top">
+                            <tr>
+                                <th style="width: 25%; min-width: 200px;">Nome</th>
+                                <th style="width: 30%;">Descrição</th>
+                                <th style="width: 12%;" class="text-end">Preço Unit.</th>
+                                <th style="width: 10%;" class="text-end">Estoque</th>
+                                <th style="width: 13%;" class="text-end">Valor Total</th>
+                                <th style="width: 200px;" class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var p in Model.Produtos)
+                            {
+                                var valorTotal = p.Preco * p.EstoqueAtual;
+                                <tr class="align-middle">
+                                    <!-- Nome -->
+                                    <td>
+                                        <div class="fw-semibold text-truncate" style="max-width: 200px;" title="@p.Nome">
+                                            @p.Nome
+                                        </div>
+                                    </td>
+
+                                    <!-- Descrição -->
+                                    <td class="small text-muted">
+                                        <span class="d-inline-block text-truncate" style="max-width: 250px;" title="@p.Descricao">
+                                            @p.Descricao
+                                        </span>
+                                    </td>
+
+                                    <!-- Preço -->
+                                    <td class="text-end fw-semibold text-primary">
+                                        @p.Preco.ToString("C2")
+                                    </td>
+
+                                    <!-- Estoque -->
+                                    <td class="text-end">
+                                        <span class="badge @(p.EstoqueAtual > 10 ? "bg-success" : p.EstoqueAtual > 0 ? "bg-warning" : "bg-danger")">
+                                            @p.EstoqueAtual
+                                        </span>
+                                    </td>
+
+                                    <!-- Valor Total -->
+                                    <td class="text-end fw-semibold text-success">
+                                        @valorTotal.ToString("C2")
+                                    </td>
+
+                                    <!-- Ações (ALINHADAS) -->
+                                    <td class="text-center px-1">
+                                        <div class="d-flex justify-content-center gap-1">
+                                            <!-- Entrada -->
+                                            <form method="post" asp-page-handler="Movimentar" class="d-flex align-items-center">
+                                                <input type="hidden" name="ProdutoId" value="@p.Id" />
+                                                <input type="hidden" name="Entrada" value="Entrada" />
+                                                <input type="hidden" name="Descricao" value="Entrada rápida" />
+                                                <div class="input-group input-group-sm" style="width: 90px;">
+                                                    <input type="number" name="Quantidade" value="1" min="1"
+                                                           class="form-control form-control-sm px-1 text-center border-end-0" style="height: 32px;" />
+                                                    <button type="submit" class="btn btn-success btn-sm px-2 border-start-0" style="height: 32px;">
+                                                        <i class="bi bi-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+
+                                            <!-- Saída -->
+                                            <form method="post" asp-page-handler="Movimentar" class="d-flex align-items-center">
+                                                <input type="hidden" name="ProdutoId" value="@p.Id" />
+                                                <input type="hidden" name="Entrada" value="Saida" />
+                                                <input type="hidden" name="Descricao" value="Saída rápida" />
+                                                <div class="input-group input-group-sm" style="width: 90px;">
+                                                    <input type="number" name="Quantidade" value="1" min="1"
+                                                           class="form-control form-control-sm px-1 text-center border-end-0" style="height: 32px;" />
+                                                    <button type="submit" class="btn btn-danger btn-sm px-2 border-start-0" style="height: 32px;">
+                                                        <i class="bi bi-dash"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
 </div>
-
-@if(Model.Produtos == null || !Model.Produtos.Any())
-{
-	<p>Nenhum produto cadastrado</p>
-}
-else
-{
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>Nome</th>
-				<th>Descrição</th>
-				<th>Preço</th>
-				<th>Estoque Atual</th>
-				<th>Valor Total</th>
-				<th>Ações</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach(var p in Model.Produtos)
-			{
-				var valorTotal = p.Preco * p.EstoqueAtual;
-
-				<tr>
-					<td>@p.Nome</td>
-					<td>@p.Descricao</td>
-					<td>@p.Preco.ToString("C")</td>
-					<td>@p.EstoqueAtual</td>
-					<td>@valorTotal.ToString("C")</td>
-					<td>
-						<form method="post" asp-page-handler="Movimentar" class="d-inline">
-							<input type="hidden" name="ProdutoId" value="@p.Id" />
-							<input type="hidden" name="Entrada" value="1" />
-							<input type="number" name="Quantidade" value="1" class="form-control d-inline w-auto" />
-							<input type="hidden" name="Descricao" value="Entada rápida" />
-							<button type="submit" class="btn btn-sm btn-success">+1</button>
-						</form>
-						<form method="post" asp-page-handler="Movimentar" class="d-inline ms-1">
-							<input type="hidden" name="ProdutoId" value="@p.Id" />
-							<input type="hidden" name="Entrada" value="0" />
-							<input type="number" name="Quantidade" value="1" class="form-control d-inline w-auto" />
-							<input type="hidden" name="Descricao" value="Saída rápida" />
-							<button type="submit" class="btn btn-sm btn-danger">-1</button>
-						</form>
-					</td>
-				</tr>
-			}
-		</tbody>
-	</table>
-}

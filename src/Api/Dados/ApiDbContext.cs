@@ -26,6 +26,13 @@ namespace Api.Dados
             InicializacaoPermissoes permissoes = new InicializacaoPermissoes(modelBuilder);
 
             permissoes.Seed();
+
+            modelBuilder.Entity<CATEGORIA>().HasData(
+                new CATEGORIA { ID = 1, NOME = "Geral", DESCRICAO = "Produtos gerais", DATA_CRIACAO = DateTime.UtcNow },
+                new CATEGORIA { ID = 2, NOME = "Eletrônicos", DESCRICAO = "Eletrônicos e gadgets", DATA_CRIACAO = DateTime.UtcNow },
+                new CATEGORIA { ID = 3, NOME = "Roupas", DESCRICAO = "Vestuário", DATA_CRIACAO = DateTime.UtcNow },
+                new CATEGORIA { ID = 4, NOME = "Alimentos", DESCRICAO = "Alimentos e bebidas", DATA_CRIACAO = DateTime.UtcNow }
+                );
         }
     }
 }
