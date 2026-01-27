@@ -36,6 +36,7 @@ services.AddHttpContextAccessor();
 services.AddScoped<ITokenService, TokenService>();
 services.AddTransient<JwtTokenHandler>();
 services.AddScoped<ProdutoApiService>();
+services.AddScoped<EmpresaApiService>();
 
 services.AddHttpClient<PrincipalModel>()
     .AddHttpMessageHandler<JwtTokenHandler>();

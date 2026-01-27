@@ -18,6 +18,9 @@ using Api.Repositorio.Produto;
 using Api.Servicos.Produto;
 using Api.Interfaces.Funcionario;
 using Api.Repositorio.Funcionario;
+using Api.Interfaces.Empresa.Operacoes;
+using Api.Repositorio.Empresa.Operacoes;
+using Api.Servicos.Empresa.Operacoes;
 
 namespace Api.Extensoes;
 
@@ -43,5 +46,8 @@ public static class InjecoesDependencias
 
         services.AddScoped<IProdutoRepositorio, ProdutoRepositorio>();
         services.AddScoped<IProdutoServico, ProdutoServico>();
+
+        services.AddScoped<IEmpresaOperacoesRepositorio, EmpresaOperacoesRepositorio>();
+        services.AddScoped<IEmpresaOperacoesServico, EmpresaOperacoesServico>();
     }
 }

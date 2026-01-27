@@ -1,5 +1,6 @@
 ﻿using Api.Interfaces.Empresa.Cadastro;
 using Common.DTO.Requisicao.Empresa.Cadastro;
+using Common.DTO.Resposta.Empresa.Operacoes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
