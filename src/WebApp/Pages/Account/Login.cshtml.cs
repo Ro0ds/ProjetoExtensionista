@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Interfaces;
+using WebApp.JWT;
 
 namespace WebApp.Pages.Account
 {
@@ -21,9 +22,19 @@ namespace WebApp.Pages.Account
             _tokenService = tokenService;
         }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            // apenas o get da p�gina
+            var token = _tokenService.PegarToken();
+            if(!string.IsNullOrEmpty(token))
+            {
+                var dadosToken = TokenConfig.DecodificarToken(token);
+                if(DateTime.UtcNow < dadosToken.Expira)
+                {
+                    return RedirectToPage("../Principal");
+                }
+            }
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(UsuarioLoginRequisicao requisicao)

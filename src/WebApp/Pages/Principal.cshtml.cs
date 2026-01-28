@@ -43,8 +43,11 @@ public class PrincipalModel : PageModel
             return RedirectToPage("./Account/Login");
 
         var dadosToken = TokenConfig.DecodificarToken(Token);
-        if(dadosToken == null)
+        if(dadosToken == null || DateTime.UtcNow > dadosToken.Expira)
+        {
+            _tokenService.RemoverToken();
             return RedirectToPage("./Account/Login");
+        }
 
         // busca usuario
         await BuscarUsuarioAsync(dadosToken.Id);
