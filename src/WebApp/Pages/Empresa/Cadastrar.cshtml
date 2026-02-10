@@ -1,8 +1,9 @@
 ﻿@page
-@model CadastrarModel
+@model WebApp.Pages.Empresa.CadastrarModel
+
 @{
-    ViewData["Title"] = "Cadastro de Usuário";
-    Layout = "_CadastroLayout";
+	ViewData["Title"] = "Cadastro de Empresa";
+	Layout = "_CadastroLayout";
 }
 
 <div class="container py-5">
@@ -10,7 +11,7 @@
         <div class="col-lg-10 col-xl-8">
             <!-- Header -->
             <div class="text-center mb-5">
-                <h1 class="display-5 fw-bold mb-3">Criar Nova Conta</h1>
+                <h1 class="display-5 fw-bold mb-3">Cadastrar Nova Empresa</h1>
                 <p class="lead text-muted">Preencha todos os campos obrigatórios</p>
             </div>
 
@@ -41,77 +42,72 @@
                     <form method="post">
                         <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4"></div>
 
-                        <!-- Dados Pessoais (Row 1) -->
                         <div class="row">
                             <div class="col-md-6 mb-4">
                                 <div class="form-floating">
-                                    <input asp-for="Requisicao.NOME" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.NOME"]?.Errors.Any() == true ? "is-invalid" : "")" />
-                                    <label asp-for="Requisicao.NOME"></label>
-                                    <div asp-validation-for="Requisicao.NOME" class="invalid-feedback"></div>
+                                    <input asp-for="Requisicao.NomeFantasia" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.NomeFantasia"]?.Errors.Any() == true ? "is-invalid" : "")" />
+                                    <label asp-for="Requisicao.NomeFantasia"></label>
+                                    <div asp-validation-for="Requisicao.NomeFantasia" class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <div class="form-floating">
-                                    <input asp-for="Requisicao.SOBRENOME" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.SOBRENOME"]?.Errors.Any() == true ? "is-invalid" : "")" />
-                                    <label asp-for="Requisicao.SOBRENOME"></label>
-                                    <div asp-validation-for="Requisicao.SOBRENOME" class="invalid-feedback"></div>
+                                    <input asp-for="Requisicao.RazaoSocial" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.RazaoSocial"]?.Errors.Any() == true ? "is-invalid" : "")" />
+                                    <label asp-for="Requisicao.RazaoSocial"></label>
+                                    <div asp-validation-for="Requisicao.RazaoSocial" class="invalid-feedback"></div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Nome Social + CPF -->
                         <div class="row">
                             <div class="col-md-6 mb-4">
                                 <div class="form-floating">
-                                    <input asp-for="Requisicao.NOME_SOCIAL" class="form-control form-control-lg" />
-                                    <label asp-for="Requisicao.NOME_SOCIAL">Nome Social (opcional)</label>
+                                    <input asp-for="Requisicao.CNPJ" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.CNPJ"]?.Errors.Any() == true ? "is-invalid" : "")" />
+                                    <label asp-for="Requisicao.CNPJ"></label>
+                                    <div asp-validation-for="Requisicao.CNPJ" class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <div class="form-floating">
-                                    <input asp-for="Requisicao.CPF" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.CPF"]?.Errors.Any() == true ? "is-invalid" : "")" />
-                                    <label asp-for="Requisicao.CPF">CPF <span class="text-danger">*</span></label>
-                                    <div asp-validation-for="Requisicao.CPF" class="invalid-feedback"></div>
+                                    <input asp-for="Requisicao.Telefone" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.Telefone"]?.Errors.Any() == true ? "is-invalid" : "")" />
+                                    <label asp-for="Requisicao.Telefone"></label>
+                                    <div asp-validation-for="Requisicao.Telefone" class="invalid-feedback"></div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Contato -->
                         <div class="row">
                             <div class="col-md-6 mb-4">
                                 <div class="form-floating">
-                                    <input asp-for="Requisicao.TELEFONE" class="form-control form-control-lg" />
-                                    <label asp-for="Requisicao.TELEFONE">Telefone (opcional)</label>
+                                    <input asp-for="Requisicao.Email" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.Email"]?.Errors.Any() == true ? "is-invalid" : "")" />
+                                    <label asp-for="Requisicao.Email"></label>
+                                    <div asp-validation-for="Requisicao.Email" class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <div class="form-floating">
-                                    <input asp-for="Requisicao.EMAIL" type="email" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.EMAIL"]?.Errors.Any() == true ? "is-invalid" : "")" />
-                                    <label asp-for="Requisicao.EMAIL">E-mail <span class="text-danger">*</span></label>
-                                    <div asp-validation-for="Requisicao.EMAIL" class="invalid-feedback"></div>
+                                    <input asp-for="Requisicao.DataCriacaoEmpresa" type="date" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.DataCriacaoEmpresa"]?.Errors.Any() == true ? "is-invalid" : "")" />
+                                    <label asp-for="Requisicao.DataCriacaoEmpresa"></label>
+                                    <div asp-validation-for="Requisicao.DataCriacaoEmpresa" class="invalid-feedback"></div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Senha -->
                         <div class="row">
-                            <div class="col-md-6 mb-4">
+                            <div>
                                 <div class="form-floating">
-                                    <input asp-for="Requisicao.CONFIRMACAO_SENHA" type="password" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.SENHA"]?.Errors.Any() == true ? "is-invalid" : "")" />
-                                    <label asp-for="Requisicao.CONFIRMACAO_SENHA">Senha <span class="text-danger">*</span></label>
-                                    <div asp-validation-for="Requisicao.SENHA" class="invalid-feedback"></div>
+                                    <input asp-for="Requisicao.DataCriacaoCadastro" type="date" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.DataCriacaoCadastro"]?.Errors.Any() == true ? "is-invalid" : "")" />
+                                    <label asp-for="Requisicao.DataCriacaoCadastro"></label>
+                                    <div asp-validation-for="Requisicao.DataCriacaoCadastro" class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <div class="form-floating">
-                                    <input asp-for="Requisicao.CONFIRMACAO_SENHA" type="password" class="form-control form-control-lg @(ViewData.ModelState["Requisicao.CONFIRMACAO_SENHA"]?.Errors.Any() == true ? "is-invalid" : "")" />
-                                    <label asp-for="Requisicao.CONFIRMACAO_SENHA">Confirmar Senha <span class="text-danger">*</span></label>
-                                    <div asp-validation-for="Requisicao.CONFIRMACAO_SENHA" class="invalid-feedback"></div>
+                                    <input asp-for="Requisicao.EmpresaAtiva" value="true" hidden />
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Endereço (Grid 2x4) -->
                         <h5 class="fw-bold mb-4 pb-2 border-bottom">
                             <i class="bi bi-geo-alt me-2 text-primary"></i>Endereço
                         </h5>
@@ -119,20 +115,20 @@
                         <div class="row">
                             <div class="col-md-4 mb-4">
                                 <div class="form-floating">
-                                    <input asp-for="Requisicao.ENDERECO.CEP" class="form-control form-control-lg" />
-                                    <label asp-for="Requisicao.ENDERECO.CEP">CEP</label>
+                                    <input asp-for="Requisicao.Endereco.CEP" class="form-control form-control-lg" />
+                                    <label asp-for="Requisicao.Endereco.CEP">CEP</label>
                                 </div>
                             </div>
                             <div class="col-md-4 mb-4">
                                 <div class="form-floating">
-                                    <input asp-for="Requisicao.ENDERECO.RUA" class="form-control form-control-lg" />
-                                    <label asp-for="Requisicao.ENDERECO.RUA">Rua</label>
+                                    <input asp-for="Requisicao.Endereco.RUA" class="form-control form-control-lg" />
+                                    <label asp-for="Requisicao.Endereco.RUA">Rua</label>
                                 </div>
                             </div>
                             <div class="col-md-4 mb-4">
                                 <div class="form-floating">
-                                    <input asp-for="Requisicao.ENDERECO.NUMERO" class="form-control form-control-lg" />
-                                    <label asp-for="Requisicao.ENDERECO.NUMERO">Número</label>
+                                    <input asp-for="Requisicao.Endereco.NUMERO" class="form-control form-control-lg" />
+                                    <label asp-for="Requisicao.Endereco.NUMERO">Número</label>
                                 </div>
                             </div>
                         </div>
@@ -140,26 +136,26 @@
                         <div class="row">
                             <div class="col-md-4 mb-4">
                                 <div class="form-floating">
-                                    <input asp-for="Requisicao.ENDERECO.BAIRRO" class="form-control form-control-lg" />
-                                    <label asp-for="Requisicao.ENDERECO.BAIRRO">Bairro</label>
+                                    <input asp-for="Requisicao.Endereco.BAIRRO" class="form-control form-control-lg" />
+                                    <label asp-for="Requisicao.Endereco.BAIRRO">Bairro</label>
                                 </div>
                             </div>
                             <div class="col-md-4 mb-4">
                                 <div class="form-floating">
-                                    <input asp-for="Requisicao.ENDERECO.CIDADE" class="form-control form-control-lg" />
-                                    <label asp-for="Requisicao.ENDERECO.CIDADE">Cidade</label>
+                                    <input asp-for="Requisicao.Endereco.CIDADE" class="form-control form-control-lg" />
+                                    <label asp-for="Requisicao.Endereco.CIDADE">Cidade</label>
                                 </div>
                             </div>
                             <div class="col-md-2 mb-4">
                                 <div class="form-floating">
-                                    <input asp-for="Requisicao.ENDERECO.ESTADO" maxlength="2" class="form-control form-control-lg text-uppercase" />
-                                    <label asp-for="Requisicao.ENDERECO.ESTADO">UF</label>
+                                    <input asp-for="Requisicao.Endereco.ESTADO" maxlength="2" class="form-control form-control-lg text-uppercase" />
+                                    <label asp-for="Requisicao.Endereco.ESTADO">UF</label>
                                 </div>
                             </div>
                             <div class="col-md-2 mb-4">
                                 <div class="form-floating">
-                                    <input asp-for="Requisicao.ENDERECO.PAIS" class="form-control form-control-lg" />
-                                    <label asp-for="Requisicao.ENDERECO.PAIS">País</label>
+                                    <input asp-for="Requisicao.Endereco.PAIS" class="form-control form-control-lg" />
+                                    <label asp-for="Requisicao.Endereco.PAIS">País</label>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +166,7 @@
                                 <i class="bi bi-arrow-left me-2"></i>Voltar
                             </a>
                             <button type="submit" class="btn btn-primary btn-lg px-5">
-                                <i class="bi bi-check-lg me-2"></i>Cadastrar Usuário
+                                <i class="bi bi-check-lg me-2"></i>Cadastrar Empresa
                             </button>
                         </div>
                     </form>
