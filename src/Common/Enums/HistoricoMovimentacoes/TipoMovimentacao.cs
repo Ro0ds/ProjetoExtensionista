@@ -2,7 +2,7 @@
 {
     public enum TipoMovimentacao
     {
-        ENTRADA = 1,
-        SAIDA
+        SAIDA = 0,
+        ENTRADA
     }
 }

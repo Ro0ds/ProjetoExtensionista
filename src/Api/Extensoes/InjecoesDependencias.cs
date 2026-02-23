@@ -13,6 +13,14 @@ using Api.Servicos.Empresa.Cadastro;
 using Api.Interfaces.Endereco.Cadastro;
 using Api.Repositorio.Endereco.Cadastro;
 using Api.Servicos.Endereco.Cadastro;
+using Api.Interfaces.Produto;
+using Api.Repositorio.Produto;
+using Api.Servicos.Produto;
+using Api.Interfaces.Funcionario;
+using Api.Repositorio.Funcionario;
+using Api.Interfaces.Empresa.Operacoes;
+using Api.Repositorio.Empresa.Operacoes;
+using Api.Servicos.Empresa.Operacoes;
 
 namespace Api.Extensoes;
 
@@ -33,5 +41,13 @@ public static class InjecoesDependencias
 
         services.AddScoped<IEmpresaCadastroRepositorio, EmpresaCadastroRepositorio>();
         services.AddScoped<IEmpresaCadastroServico, EmpresaCadastroServico>();
+
+        services.AddScoped<IFuncionarioRepositorio, FuncionarioRepositorio>();
+
+        services.AddScoped<IProdutoRepositorio, ProdutoRepositorio>();
+        services.AddScoped<IProdutoServico, ProdutoServico>();
+
+        services.AddScoped<IEmpresaOperacoesRepositorio, EmpresaOperacoesRepositorio>();
+        services.AddScoped<IEmpresaOperacoesServico, EmpresaOperacoesServico>();
     }
 }

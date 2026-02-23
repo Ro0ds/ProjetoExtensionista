@@ -1,8 +1,114 @@
 ﻿@page
 @model AdministrativoModel
-@await Component.InvokeAsync("Sidebar")
+@{
+    Layout = "_LayoutAdmin";
+    ViewData["Title"] = "Painel Administrativo";
+}
 
-<div class="main-content">
-	<h2>Bem vindo à página Administrativa, @Model.Usuario.NOME.ToUpper()!</h2>
-	<p>Lorem</p>
+<div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Usuários Totais
+                        </div>
+                        <div class="h4 mb-0 font-weight-bold text-gray-800">12</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-users fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Empresas
+                        </div>
+                        <div class="h4 mb-0 font-weight-bold text-gray-800">3</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-building fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            Funcionários
+                        </div>
+                        <div class="h4 mb-0 font-weight-bold text-gray-800">15</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-user-tie fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Produtos
+                        </div>
+                        <div class="h4 mb-0 font-weight-bold text-gray-800">47</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-box fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-people me-2"></i>
+                    Bem-vindo à área administrativa, @Model.Usuario?.NOME.ToUpper()!
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="lead">Gerencie usuários, empresas e funcionários com total controle.</p>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <a asp-page="/Account/Cadastrar" class="btn btn-primary btn-lg w-100">
+                            <i class="bi bi-person-plus"></i> Novo Usuário
+                        </a>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <a asp-page="/Empresa/Cadastrar" class="btn btn-success btn-lg w-100">
+                            <i class="bi bi-building-add"></i> Nova Empresa
+                        </a>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <a href="#" class="btn btn-info btn-lg w-100 disabled">
+                            <i class="bi bi-person-gear"></i> Novo Funcionário (em breve)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

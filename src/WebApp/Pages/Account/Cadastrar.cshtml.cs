@@ -57,12 +57,11 @@ namespace WebApp.Pages.Account
             {
                 ShowSuccessMessage = true;
                 return Page();
-                //return RedirectToPage("/admin/Administrativo");
             }
             else
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-                ModelState.AddModelError(string.Empty, $"Erro na API: {errorContent}");
+                ModelState.AddModelError(string.Empty, $"Erro: {errorContent}");
                 return Page();
             }
         }

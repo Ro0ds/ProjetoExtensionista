@@ -40,12 +40,14 @@ namespace Api.Controllers
                 var usuarioID = await _loginServico.BuscarUsuario(requisicao.EMAIL, requisicao.SENHA);
                 var usuario = await _usuarioOperacoes.BuscarUsuarioBrutoPorID(usuarioID);
 
+                var tokenExpireInMinutes = _configuration.GetSection("JwtSettings:ExpiresInMinutes").Value;
+
                 var token = GerarTokenJWT(
                     secretKey: ChaveJWT.PegarChaveSecreta(_configuration), 
                     userId: usuarioID,
                     issuer: "InovarJuntoAPI",
                     audience: "InovarJuntoFrontend",
-                    expireInMinutes: 120,
+                    expireInMinutes: int.Parse(tokenExpireInMinutes ?? "360"),
                     permissaoId: usuario.PERMISSAOID
                     );
 

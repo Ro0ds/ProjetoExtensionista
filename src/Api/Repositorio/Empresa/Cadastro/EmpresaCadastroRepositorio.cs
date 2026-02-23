@@ -24,11 +24,19 @@ public class EmpresaCadastroRepositorio : IEmpresaCadastroRepositorio
     }
 
     public async Task<EmpresaCadastroResposta> Cadastrar(EMPRESA empresa)
-    {
+    {   
+        await _context.Database.BeginTransactionAsync();
+
         try 
         { 
+            if(empresa.ENDERECO != null)
+            {
+                _context.ENDERECO.Add(empresa.ENDERECO);
+            }
+
             _context.EMPRESA.Add(empresa);
             await _context.SaveChangesAsync();
+            await _context.Database.CommitTransactionAsync();
 
             return new EmpresaCadastroResposta
             {
@@ -38,6 +46,8 @@ public class EmpresaCadastroRepositorio : IEmpresaCadastroRepositorio
         }
         catch(Exception ex)
         {
+            await _context.Database.RollbackTransactionAsync();
+
             var resposta = new EmpresaCadastroResposta();
             resposta.AdicionarErro(ex.Message);
             resposta.Sucesso = false;

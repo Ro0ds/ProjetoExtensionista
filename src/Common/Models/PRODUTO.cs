@@ -38,6 +38,9 @@ namespace Common.Models
         [DataType(DataType.Custom, ErrorMessage = "Campo {} é obrigatório.")]
         public int ATIVO { get; set; }
 
+        [Display(Name = "Estoque Atual")]
+        public int ESTOQUE_ATUAL { get; set; } = 0;
+
         [ForeignKey(nameof(CATEGORIA))]
         public int CATEGORIAID { get; set; }
         public CATEGORIA? CATEGORIA { get; set; }

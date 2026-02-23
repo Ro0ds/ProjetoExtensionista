@@ -16,35 +16,36 @@ public class EmpresaCadastroServico : IEmpresaCadastroServico
     {
         var resposta = new EmpresaCadastroResposta();
 
+        // verifica se os dados são integros
+        requisicao.CNPJ = LimparCnpj(requisicao.CNPJ);
+
+        if(requisicao.CNPJ.Length != 14)
+        {
+            resposta.AdicionarErro("CNPJ inválido (tamanho incorreto)");
+            resposta.Sucesso = false;
+            return resposta;
+        }
+
         // procura para ver se já existe uma empresa com esse CNPJ cadastrado
         var empresaExiste = await _cadastroRepositorio.BuscarPorCNPJ(requisicao.CNPJ);
         if(empresaExiste)
         {
             resposta.AdicionarErro("Empresa já existe no cadastro");
             resposta.Sucesso = false;
+            return resposta;
         }
 
-        // verifica se os dados são integros
-        var dadosCorretos = VerificarDadosEmpresa(requisicao);
-        if(dadosCorretos.Sucesso)
-        {
-            // monta o objeto da empresa
-            var empresa = MontarEmpresa(requisicao);
+        
+        // monta o objeto da empresa
+        var empresa = MontarEmpresa(requisicao);
 
-            // realiza o cadastro
-            var cadastroResposta = await _cadastroRepositorio.Cadastrar(empresa);
-            return cadastroResposta;
-        }
-
-        resposta.Sucesso = false;
-        resposta.AdicionarErro("Dados preenchidos incorretamente, verifique e tente novamente.");
-
-        return resposta;
+        // realiza o cadastro
+        return await _cadastroRepositorio.Cadastrar(empresa);
     }
 
     private EMPRESA MontarEmpresa(EmpresaCadastroRequisicao requisicao)
     {
-        return new EMPRESA
+        var novaEmpresa = new EMPRESA
         {
             NOME_FANTASIA = requisicao.NomeFantasia,
             RAZAO_SOCIAL = requisicao.RazaoSocial,
@@ -56,19 +57,28 @@ public class EmpresaCadastroServico : IEmpresaCadastroServico
             DATA_CRIACAO_CADASTRO = requisicao.DataCriacaoCadastro,
             EMPRESA_ATIVA = 1
         };
-    }
 
-    private EmpresaCadastroResposta VerificarDadosEmpresa(EmpresaCadastroRequisicao requisicao)
-    {
-        if(requisicao.CNPJ.Contains('-') | requisicao.CNPJ.Contains('.'))
+        if(requisicao.Endereco != null)
         {
-            requisicao.CNPJ = requisicao.CNPJ.Replace('-', char.MinValue);
-            requisicao.CNPJ = requisicao.CNPJ.Replace('.', char.MinValue);
+            novaEmpresa.ENDERECO = new ENDERECO
+            {
+                CEP = requisicao.Endereco.CEP,
+                RUA = requisicao.Endereco.RUA,
+                NUMERO = requisicao.Endereco.NUMERO,
+                BAIRRO = requisicao.Endereco.BAIRRO,
+                CIDADE = requisicao.Endereco.CIDADE,
+                ESTADO = requisicao.Endereco.ESTADO,
+                PAIS = requisicao.Endereco.PAIS
+            };
         }
 
-        return new EmpresaCadastroResposta
-        {
-            Sucesso = true,
-        };
+        return novaEmpresa;
+    }
+
+    private string LimparCnpj(string cnpj)
+    {
+        if(string.IsNullOrEmpty(cnpj)) return string.Empty;
+        // Remove pontos, traços e barras
+        return cnpj.Replace(".", "").Replace("-", "").Replace("/", "").Trim();
     }
 }

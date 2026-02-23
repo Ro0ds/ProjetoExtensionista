@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using WebApp.Interfaces;
 using WebApp.JWT;
 using WebApp.Pages;
@@ -6,6 +7,15 @@ using WebApp.Services;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
+
+services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.ExpireTimeSpan = TimeSpan.FromDays(30);
+        options.SlidingExpiration = true;
+    });
 
 services.AddHttpClient("extensionistaAPI", client =>
 {
@@ -25,6 +35,8 @@ services.AddSession(opt =>
 services.AddHttpContextAccessor();
 services.AddScoped<ITokenService, TokenService>();
 services.AddTransient<JwtTokenHandler>();
+services.AddScoped<ProdutoApiService>();
+services.AddScoped<EmpresaApiService>();
 
 services.AddHttpClient<PrincipalModel>()
     .AddHttpMessageHandler<JwtTokenHandler>();

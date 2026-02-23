@@ -34,28 +34,47 @@ namespace Api.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("DESCRICAO")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
-
-                    b.Property<int>("EMPRESAID")
-                        .HasColumnType("int");
 
                     b.Property<string>("NOME")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("USUARIOID")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
 
-                    b.HasIndex("EMPRESAID");
-
-                    b.HasIndex("USUARIOID");
-
                     b.ToTable("CATEGORIA");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            DATA_CRIACAO = new DateTime(2026, 1, 26, 22, 31, 38, 153, DateTimeKind.Utc).AddTicks(9448),
+                            DESCRICAO = "Produtos gerais",
+                            NOME = "Geral"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            DATA_CRIACAO = new DateTime(2026, 1, 26, 22, 31, 38, 153, DateTimeKind.Utc).AddTicks(9450),
+                            DESCRICAO = "Eletrônicos e gadgets",
+                            NOME = "Eletrônicos"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            DATA_CRIACAO = new DateTime(2026, 1, 26, 22, 31, 38, 153, DateTimeKind.Utc).AddTicks(9452),
+                            DESCRICAO = "Vestuário",
+                            NOME = "Roupas"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            DATA_CRIACAO = new DateTime(2026, 1, 26, 22, 31, 38, 153, DateTimeKind.Utc).AddTicks(9453),
+                            DESCRICAO = "Alimentos e bebidas",
+                            NOME = "Alimentos"
+                        });
                 });
 
             modelBuilder.Entity("Common.Models.EMPRESA", b =>
@@ -153,75 +172,34 @@ namespace Api.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
 
+                    b.Property<bool>("ATIVO")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("CARGO")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<string>("CPF")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("varchar(11)");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("DATA_ADMISSAO")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("DATA_CRIADO")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime?>("DATA_DEMISSAO")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("EMAIL")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<int>("ENDERECOID")
+                    b.Property<int>("EMPRESAID")
                         .HasColumnType("int");
 
-                    b.Property<string>("FOTO")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<decimal>("SALARIO")
+                        .HasColumnType("decimal(65,30)");
 
-                    b.Property<string>("NOME")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<string>("NOME_SOCIAL")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<int>("PERMISSAOID")
+                    b.Property<int>("USUARIOID")
                         .HasColumnType("int");
-
-                    b.Property<int>("SENHAID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SOBRENOME")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<string>("TELEFONE")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("USUARIO_ATIVO")
-                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("EMAIL")
+                    b.HasIndex("EMPRESAID");
+
+                    b.HasIndex("USUARIOID")
                         .IsUnique();
-
-                    b.HasIndex("ENDERECOID");
-
-                    b.HasIndex("PERMISSAOID");
-
-                    b.HasIndex("SENHAID");
 
                     b.ToTable("FUNCIONARIO");
                 });
@@ -342,6 +320,9 @@ namespace Api.Migrations
                     b.Property<int>("EMPRESAID")
                         .HasColumnType("int");
 
+                    b.Property<int>("ESTOQUE_ATUAL")
+                        .HasColumnType("int");
+
                     b.Property<string>("NOME")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -447,32 +428,11 @@ namespace Api.Migrations
 
                     b.HasIndex("ENDERECOID");
 
-                    b.HasIndex("FUNCIONARIOID");
-
                     b.HasIndex("PERMISSAOID");
 
                     b.HasIndex("SENHAID");
 
                     b.ToTable("USUARIO");
-                });
-
-            modelBuilder.Entity("Common.Models.CATEGORIA", b =>
-                {
-                    b.HasOne("Common.Models.EMPRESA", "EMPRESA")
-                        .WithMany()
-                        .HasForeignKey("EMPRESAID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Common.Models.USUARIO", "USUARIO")
-                        .WithMany()
-                        .HasForeignKey("USUARIOID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("EMPRESA");
-
-                    b.Navigation("USUARIO");
                 });
 
             modelBuilder.Entity("Common.Models.EMPRESA", b =>
@@ -488,29 +448,21 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Common.Models.FUNCIONARIO", b =>
                 {
-                    b.HasOne("Common.Models.ENDERECO", "ENDERECO")
+                    b.HasOne("Common.Models.EMPRESA", "EMPRESA")
                         .WithMany()
-                        .HasForeignKey("ENDERECOID")
+                        .HasForeignKey("EMPRESAID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Common.Models.PERMISSAO", "PERMISSAO")
-                        .WithMany()
-                        .HasForeignKey("PERMISSAOID")
+                    b.HasOne("Common.Models.USUARIO", "USUARIO")
+                        .WithOne("FUNCIONARIO")
+                        .HasForeignKey("Common.Models.FUNCIONARIO", "USUARIOID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Common.Models.SENHA", "SENHA")
-                        .WithMany()
-                        .HasForeignKey("SENHAID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("EMPRESA");
 
-                    b.Navigation("ENDERECO");
-
-                    b.Navigation("PERMISSAO");
-
-                    b.Navigation("SENHA");
+                    b.Navigation("USUARIO");
                 });
 
             modelBuilder.Entity("Common.Models.HISTORICO_MOVIMENTACOES", b =>
@@ -575,10 +527,6 @@ namespace Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Common.Models.FUNCIONARIO", "FUNCIONARIO")
-                        .WithMany()
-                        .HasForeignKey("FUNCIONARIOID");
-
                     b.HasOne("Common.Models.PERMISSAO", "PERMISSAO")
                         .WithMany()
                         .HasForeignKey("PERMISSAOID")
@@ -593,11 +541,14 @@ namespace Api.Migrations
 
                     b.Navigation("ENDERECO");
 
-                    b.Navigation("FUNCIONARIO");
-
                     b.Navigation("PERMISSAO");
 
                     b.Navigation("SENHA");
+                });
+
+            modelBuilder.Entity("Common.Models.USUARIO", b =>
+                {
+                    b.Navigation("FUNCIONARIO");
                 });
 #pragma warning restore 612, 618
         }
