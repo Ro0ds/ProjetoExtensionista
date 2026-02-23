@@ -19,7 +19,9 @@ services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 
 services.AddHttpClient("extensionistaAPI", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7071/api/");
+    var baseUrl = Environment.GetEnvironmentVariable("ApiSettings__BaseUrl");
+
+    client.BaseAddress = new Uri($"{baseUrl}/api/");
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
