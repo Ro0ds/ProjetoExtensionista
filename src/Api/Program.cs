@@ -63,6 +63,13 @@ if (app.Environment.IsDevelopment())
     IdentityModelEventSource.LogCompleteSecurityArtifact = true;
 }
 
+// check admin acc
+using(var scope = app.Services.CreateScope())
+{
+    var svc = scope.ServiceProvider;
+    await DbSeeder.SeedAdminAsync(svc);
+}
+
 app.UseCors("AllowAll");
 //app.UseHttpsRedirection();
 app.UseStaticFiles();
