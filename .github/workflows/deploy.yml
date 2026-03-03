@@ -20,7 +20,7 @@ jobs:
 
     - name: Publish API
       run: |
-        dotnet publish ./src/api/Api.csproj -c Release -o ./src/api/publish
+        dotnet publish ./src/api/Api.csproj -c Release -o ./src/Api/publish
         
     - name: Copy files to EC2
       uses: appleboy/scp-action@master
@@ -28,7 +28,7 @@ jobs:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
-        source: "./src/api/publish/*"
+        source: "./src/Api/publish/*"
         target: "/home/ubuntu/api-backend"
         strip_components: 1
 
