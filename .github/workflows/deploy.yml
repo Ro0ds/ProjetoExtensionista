@@ -20,7 +20,7 @@ jobs:
 
     - name: Publish API
       run: |
-        dotnet publish ./src/Api/Api.csproj -c Release -o ./publish/
+        dotnet publish ./src/Api/Api.csproj -c Release -o ./publish
         
     - name: Copy files to EC2
       uses: appleboy/scp-action@master
@@ -28,8 +28,8 @@ jobs:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
-        source: "./publish/*"
-        target: "/home/ubuntu/api-backend"
+        source: "./publish"
+        target: "/home/ubuntu/api-update"
         strip_components: 1
 
     - name: Execute SSH Commands to Restart Service
@@ -40,7 +40,7 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           sudo rm -rf /var/www/api-backend/*
-          sudo cp -r /home/ubuntu/api-backend/* /var/www/api-backend/
+          sudo cp -r /home/ubuntu/api-update/* /var/www/api-backend/
           sudo chown -R www-data:www-data /var/www/api-backend
           sudo cp /home/ubuntu/api-settings/* /var/www/api-backend/
           sudo systemctl restart api-backend.service
