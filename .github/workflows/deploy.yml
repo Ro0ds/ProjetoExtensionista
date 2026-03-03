@@ -20,7 +20,7 @@ jobs:
 
     - name: Publish API
       run: |
-        dotnet publish ./src/Api/Api.csproj -c Release -o ./src/Api/publish
+        dotnet publish ./src/Api/Api.csproj -c Release -o ./publish/
         
     - name: Copy files to EC2
       uses: appleboy/scp-action@master
@@ -28,7 +28,7 @@ jobs:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
-        source: "./src/Api/publish/*"
+        source: "./publish/*"
         target: "/home/ubuntu/api-backend"
         strip_components: 1
 
@@ -42,5 +42,5 @@ jobs:
           sudo rm -rf /var/www/api-backend/*
           sudo cp -r /home/ubuntu/api-backend/* /var/www/api-backend/
           sudo chown -R www-data:www-data /var/www/api-backend
-          sudo cp /var/www/api-settings/* /var/www/api-backend/
+          sudo cp /home/ubuntu/api-settings/* /var/www/api-backend/
           sudo systemctl restart api-backend.service
