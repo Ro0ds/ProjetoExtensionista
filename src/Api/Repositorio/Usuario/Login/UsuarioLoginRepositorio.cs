@@ -27,23 +27,31 @@ namespace Api.Repositorio.Usuario.Login
 
         public async Task<UsuarioLoginResposta> Logar(UsuarioLoginRequisicao requisicao)
         {
+            Console.WriteLine($"[DEBUG-LOGIN] 1. Iniciando tentativa de Login com email: {requisicao.EMAIL}");
+
             var usuario = await BuscarUsuario(requisicao.EMAIL, requisicao.SENHA);
 
             if(usuario != null) // usuário encontrado
             {
+                Console.WriteLine($"[DEBUG-LOGIN] 2. Usuário foi encontrado, ID: {usuario.ID}");
+
                 // verificar se a senha coincide
                 Senha hashedSenha = new Senha();
                 var senhaEstaCorreta = hashedSenha.SenhaEstaCorreta(usuario, requisicao.SENHA);
 
                 if(senhaEstaCorreta)
                 {
+                    Console.WriteLine($"[DEBUG-LOGIN] 3. A senha está correta, resposta sendo montada...");
+
                     return MontarResposta
                     (
                         nome: string.IsNullOrWhiteSpace(usuario.NOME) ? usuario.NOME_SOCIAL : usuario.NOME,
                         token: ""
                     );
                 }
-                
+
+                Console.WriteLine($"[DEBUG-LOGIN] 4. A senha não está correta..");
+
                 return MontarResposta
                 (
                     manter_logado: false,
