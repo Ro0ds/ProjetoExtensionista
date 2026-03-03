@@ -6,14 +6,17 @@ namespace Api.Extensoes;
 
 public static class DbSeeder
 {
-    public static async Task SeedAdminAsync(IServiceProvider services)
+    public static async Task SeedAdminAsync(IServiceProvider services, IConfiguration configuration)
     {
         var context = services.GetRequiredService<ApiDbContext>();
 
         if(!context.USUARIO.Any(u => u.PERMISSAOID == 1))
         {
             Senha senhaHashing = new Senha();
-            string password = Environment.GetEnvironmentVariable("DEFAULT_ADMIN_PASSWORD")!;
+            string password = configuration["DEFAULT_ADMIN_PASSWORD"] ?? string.Empty;
+
+            if(string.IsNullOrEmpty(password))
+                return;
 
             byte[] saltBytes = senhaHashing.GerarSalt();
             string hashedPassword = senhaHashing.HashSenha(password, saltBytes);
@@ -23,7 +26,7 @@ public static class DbSeeder
             var admin = new USUARIO
             {
                 NOME = "Administrador",
-                EMAIL = Environment.GetEnvironmentVariable("DEFAULT_ADMIN_EMAIL")!,
+                EMAIL = configuration["DEFAULT_ADMIN_EMAIL"]!,
                 SENHA = new SENHA
                 {
                     HASH = hashedPassword,

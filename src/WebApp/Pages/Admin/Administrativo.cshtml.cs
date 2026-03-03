@@ -10,29 +10,32 @@ namespace WebApp.Pages.Admin
 {
     public class AdministrativoModel : PageModel
     {
+        private readonly IHttpClientFactory _httpClientFactory;
         private readonly ITokenService _tokenService;
-        private readonly HttpClient _httpClient;
+        private string _token;
 
         public UsuarioOperacoesConsulta? Usuario { get; set; }
 
-        public AdministrativoModel(ITokenService tokenService, HttpClient httpClient)
+        public AdministrativoModel(ITokenService tokenService, IHttpClientFactory httpClientFactory)
         {
             _tokenService = tokenService;
-            _httpClient = httpClient;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task OnGet()
         {
             var token = _tokenService.PegarToken();
-            var usuario = TokenConfig.DecodificarToken(token);
 
-            var uriBase = String.Concat(Rotas.APIRoute, Rotas.BuscarUsuarioPorID);
+            if(token != null)
+                _token = token;
 
-            var httpMessage = new HttpRequestMessage(HttpMethod.Get, uriBase + usuario.Id);
-            httpMessage.Headers.Authorization
-                = new AuthenticationHeaderValue("Bearer", token);
+            var usuario = TokenConfig.DecodificarToken(_token);
 
-            var resposta = await _httpClient.SendAsync(httpMessage);
+            var client = _httpClientFactory.CreateClient("extensionistaAPI");
+            client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", _token);
+
+            var resposta = await client.GetAsync("usuario/listarPorId/" + usuario.Id);
 
             if(resposta.IsSuccessStatusCode)
             {

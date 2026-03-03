@@ -3,13 +3,11 @@ using Api.Extensoes;
 using Api.JWT;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Api.Dados;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
-
-// var JwtSettings = configuration.GetSection("JwtSettings");
-// JwtSettings["Secret"] = ChaveJWT.GerarChaveSecreta();
 
 services.AddCors(options =>
 {
@@ -24,7 +22,7 @@ services.AddCors(options =>
 
 services.AddAuthorization();
 services.ConfiguraJWT(configuration);
-services.ConfiguraConexaoBD();
+services.ConfiguraConexaoBD(configuration);
 services.AdicionaInjecoesDependencias();
 services.AddControllers();
 services.AddEndpointsApiExplorer();
@@ -66,12 +64,15 @@ if (app.Environment.IsDevelopment())
 // check admin acc
 using(var scope = app.Services.CreateScope())
 {
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApiDbContext>();
+    dbContext.Database.EnsureCreated();
+
     var svc = scope.ServiceProvider;
-    await DbSeeder.SeedAdminAsync(svc);
+    await DbSeeder.SeedAdminAsync(svc, configuration);
 }
 
 app.UseCors("AllowAll");
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();

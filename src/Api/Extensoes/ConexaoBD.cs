@@ -5,14 +5,15 @@ namespace Api.Extensoes;
 
 public static class ConexaoBD
 {
-    public static void ConfiguraConexaoBD(this IServiceCollection services)
+    public static void ConfiguraConexaoBD(this IServiceCollection services, IConfiguration configuration)
     {
-        var stringConexao = Environment.GetEnvironmentVariable("INOVARJUNTOCONFIG", EnvironmentVariableTarget.User);
-
+        var stringConexao = configuration.GetConnectionString("DefaultConnection");
+        var serverVersion = new MySqlServerVersion(new Version(8, 0, 45));
+                
         // pegando conexão de string do appSettings.json
         services.AddDbContext<ApiDbContext>(opt =>
         {
-            opt.UseMySql(stringConexao, ServerVersion.AutoDetect(stringConexao));
+            opt.UseMySql(stringConexao, serverVersion);
         });
     }
 }

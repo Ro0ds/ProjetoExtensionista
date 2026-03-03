@@ -1,0 +1,46 @@
+name: Deploy Backend to AWS EC2
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Publish API
+      run: |
+        dotnet publish ./src/api/Api.csproj -c Release -o ./publish_output
+        
+    - name: Copy files to EC2
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        source: "./publish_output/*"
+        target: "/home/ubuntu/api-backend"
+        strip_components: 1
+
+    - name: Execute SSH Commands to Restart Service
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          sudo rm -rf /var/www/api-backend/*
+          sudo cp -r /home/ubuntu/api-backend/* /var/www/api-backend/
+          sudo chown -R www-data:www-data /var/www/api-backend
+          sudo cp /var/www/api-settings/* /var/www/api-backend/
+          sudo systemctl restart api-backend.service
