@@ -1,9 +1,11 @@
 using Common.DTO.Requisicao.Usuario.Login;
 using Common.DTO.Resposta.Usuario.Login;
 using Common.Infra;
-using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Net.Http.Headers;
 using WebApp.Interfaces;
 using WebApp.JWT;
 
@@ -13,12 +15,13 @@ namespace WebApp.Pages.Account
     {
         public UsuarioLoginRequisicao Requisicao { get; set; }
         public UsuarioLoginResposta Resposta { get; set; }
-        private readonly HttpClient _httpClient;
+        private readonly IHttpClientFactory _httpClientFactory;
         private readonly ITokenService _tokenService;
+        private string _token;
 
-        public LoginModel(HttpClient httpClient, ITokenService tokenService)
+        public LoginModel(IHttpClientFactory httpClientFactory, ITokenService tokenService)
         {
-            _httpClient = httpClient;
+            _httpClientFactory = httpClientFactory;
             _tokenService = tokenService;
         }
 
@@ -32,6 +35,8 @@ namespace WebApp.Pages.Account
                 {
                     return RedirectToPage("../Principal");
                 }
+
+                _token = token;
             }
 
             return Page();
@@ -39,9 +44,14 @@ namespace WebApp.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(UsuarioLoginRequisicao requisicao)
         {
-            var rotaApi = String.Concat(Rotas.APIRoute, Rotas.UsuarioLogin);
+            var client = _httpClientFactory.CreateClient("extensionistaAPI");
 
-            var response = await _httpClient.PostAsJsonAsync(rotaApi, requisicao);
+            client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", _token);
+
+            var payload = JsonContent.Create(requisicao);
+
+            var response = await client.PostAsync("usuario/login", payload);
             if(response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();

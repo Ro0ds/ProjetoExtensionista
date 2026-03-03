@@ -40,7 +40,7 @@ namespace Api.Controllers
                 var usuarioID = await _loginServico.BuscarUsuario(requisicao.EMAIL, requisicao.SENHA);
                 var usuario = await _usuarioOperacoes.BuscarUsuarioBrutoPorID(usuarioID);
 
-                var tokenExpireInMinutes = _configuration.GetSection("JwtSettings:ExpiresInMinutes").Value;
+                var tokenExpireInMinutes = _configuration["JwtSettings:ExpiresInMinutes"];
 
                 var token = GerarTokenJWT(
                     secretKey: ChaveJWT.PegarChaveSecreta(_configuration), 
