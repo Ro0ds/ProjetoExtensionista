@@ -27,6 +27,12 @@ namespace Api.Repositorio.Usuario.Login
 
         public async Task<UsuarioLoginResposta> Logar(UsuarioLoginRequisicao requisicao)
         {
+            requisicao.EMAIL = requisicao.EMAIL?.Trim();
+            requisicao.SENHA = requisicao.SENHA?.Trim();
+
+            Console.WriteLine($"[DEBUG] Tamanho da senha recebida: '{requisicao.SENHA?.Length}'");
+            Console.WriteLine($"[DEBUG] Senha recebida (entre aspas pra ver espacos): '{requisicao.SENHA}'");
+
             Console.WriteLine($"[DEBUG-LOGIN] 1. Iniciando tentativa de Login com email: {requisicao.EMAIL}");
 
             var usuario = await BuscarUsuario(requisicao.EMAIL, requisicao.SENHA);

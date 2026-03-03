@@ -13,7 +13,7 @@ public static class DbSeeder
         if(!context.USUARIO.Any(u => u.PERMISSAOID == 1))
         {
             Senha senhaHashing = new Senha();
-            string password = configuration["DEFAULT_ADMIN_PASSWORD"] ?? string.Empty;
+            string password = configuration["DEFAULT_ADMIN_PASSWORD"]?.Trim() ?? string.Empty;
 
             if(string.IsNullOrEmpty(password))
                 return;
