@@ -20,7 +20,7 @@ jobs:
 
     - name: Publish API
       run: |
-        dotnet publish ./src/api/Api.csproj -c Release -o ./src/Api/publish
+        dotnet publish ./src/Api/Api.csproj -c Release -o ./src/Api/publish
         
     - name: Copy files to EC2
       uses: appleboy/scp-action@master
