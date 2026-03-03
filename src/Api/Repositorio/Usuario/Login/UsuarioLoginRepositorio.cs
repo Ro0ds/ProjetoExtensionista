@@ -37,6 +37,13 @@ namespace Api.Repositorio.Usuario.Login
 
                 // verificar se a senha coincide
                 Senha hashedSenha = new Senha();
+
+                Console.WriteLine($"[DEBUG] Hash salvo no banco: {usuario.SENHA.HASH}");
+                string senhaRecalculada = new Senha().HashSenha(requisicao.SENHA, usuario.SENHA.SALT);
+                Console.WriteLine($"[DEBUG] Hash calculado agora: {senhaRecalculada}");
+                Console.WriteLine($"[DEBUG] Tamanho do Salt no banco: {usuario.SENHA.SALT.Length}");
+
+
                 var senhaEstaCorreta = hashedSenha.SenhaEstaCorreta(usuario, requisicao.SENHA);
 
                 if(senhaEstaCorreta)
