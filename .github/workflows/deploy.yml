@@ -40,7 +40,7 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           sudo rm -rf /var/www/api-backend/*
-          sudo cp -r /home/ubuntu/api-update/* /var/www/api-backend/
+          sudo cp -r /home/ubuntu/api-update/publish/* /var/www/api-backend/
           sudo chown -R www-data:www-data /var/www/api-backend
           sudo cp /home/ubuntu/api-settings/* /var/www/api-backend/
           sudo systemctl restart api-backend.service
