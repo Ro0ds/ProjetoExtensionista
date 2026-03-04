@@ -1,4 +1,4 @@
-name: Deploy Backend to AWS EC2
+name: Deploy Fullstack to AWS EC2
 
 on:
   push:
@@ -20,27 +20,49 @@ jobs:
 
     - name: Publish API
       run: |
-        dotnet publish ./src/Api/Api.csproj -c Release -o ./publish
+        dotnet publish ./src/Api/Api.csproj -c Release -o ./publish-api
         
-    - name: Copy files to EC2
+    - name: Publish Frontend
+      # ATENÇÃO: Verifique se o caminho do seu projeto front é este mesmo!
+      run: |
+        dotnet publish ./src/WebApp/WebApp.csproj -c Release -o ./publish-front
+
+    - name: Copy API files to EC2
       uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
-        source: "./publish"
+        source: "./publish-api"
         target: "/home/ubuntu/api-update"
         strip_components: 1
 
-    - name: Execute SSH Commands to Restart Service
+    - name: Copy Frontend files to EC2
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        source: "./publish-front"
+        target: "/home/ubuntu/front-update"
+        strip_components: 1
+
+    - name: Execute SSH Commands to Restart Services
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
+          # 1. ATUALIZA A API BACKEND
           sudo rm -rf /var/www/api-backend/*
-          sudo cp -r /home/ubuntu/api-update/publish/* /var/www/api-backend/
+          sudo cp -r /home/ubuntu/api-update/publish-api/* /var/www/api-backend/
           sudo chown -R www-data:www-data /var/www/api-backend
           sudo cp /home/ubuntu/api-settings/* /var/www/api-backend/
           sudo systemctl restart api-backend.service
+          
+          # 2. ATUALIZA O FRONTEND WEB
+          sudo rm -rf /var/www/web-frontend/*
+          sudo cp -r /home/ubuntu/front-update/publish-front/* /var/www/web-frontend/
+          sudo chown -R www-data:www-data /var/www/web-frontend
+          sudo systemctl restart web-frontend.service
