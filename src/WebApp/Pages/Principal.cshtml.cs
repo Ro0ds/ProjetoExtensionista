@@ -1,11 +1,14 @@
 using Common.DTO.Requisicao.Usuario.Operacoes;
 using Common.Infra;
+using Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using WebApp.Interfaces;
 using WebApp.JWT;
-using System.Net.Http.Headers;
-using Newtonsoft.Json;
 using WebApp.Services;
 
 namespace WebApp.Pages;
@@ -13,7 +16,7 @@ namespace WebApp.Pages;
 public class PrincipalModel : PageModel
 {
     private readonly ITokenService _tokenService;
-    private readonly IHttpClientFactory _httpClient;
+    private readonly IHttpClientFactory _httpClientFactory;
     private readonly ProdutoApiService _produtoApi;
 
     // dados do dashboard
@@ -27,17 +30,15 @@ public class PrincipalModel : PageModel
     public int EstoqueCritico { get; set; } = 0;
     public decimal ValorTotal { get; set; }
 
-    public PrincipalModel(IHttpClientFactory httpClient, ITokenService tokenService, ProdutoApiService produtoApi)
+    public PrincipalModel(IHttpClientFactory httpClientFactory, ITokenService tokenService, ProdutoApiService produtoApi)
     {
-        _httpClient = httpClient;
+        _httpClientFactory = httpClientFactory;
         _tokenService = tokenService;
         _produtoApi = produtoApi;
     }
 
     public async Task<IActionResult> OnGet()
     {
-        var rotaApi = String.Concat(Rotas.APIRoute, Rotas.BuscarUsuarioPorID);
-
         Token = _tokenService.PegarToken();
         if(string.IsNullOrEmpty(Token))
             return RedirectToPage("./Account/Login");
@@ -66,14 +67,12 @@ public class PrincipalModel : PageModel
 
     private async Task BuscarUsuarioAsync(int usuarioId)
     {
-        var rotaApi = String.Concat(Rotas.APIRoute, Rotas.BuscarUsuarioPorID + usuarioId);
-        
-        using var requestMessage = new HttpRequestMessage(HttpMethod.Get, rotaApi);
-        requestMessage.Headers.Authorization = new
-            AuthenticationHeaderValue("Bearer", Token);
+        var client = _httpClientFactory.CreateClient("extensionistaAPI");
 
-        using var client = _httpClient.CreateClient("extensionistaAPI");
-        var resposta = await client.SendAsync(requestMessage);
+        client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", Token);
+
+        var resposta = await client.GetAsync(Rotas.BuscarUsuarioPorID + usuarioId);
         if(resposta.IsSuccessStatusCode)
         {
             var json = await resposta.Content.ReadAsStringAsync();

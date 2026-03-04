@@ -35,7 +35,7 @@ namespace WebApp.Pages.Admin
             client.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", _token);
 
-            var resposta = await client.GetAsync("usuario/listarPorId/" + usuario.Id);
+            var resposta = await client.GetAsync(Rotas.BuscarUsuarioPorID + usuario.Id);
 
             if(resposta.IsSuccessStatusCode)
             {
