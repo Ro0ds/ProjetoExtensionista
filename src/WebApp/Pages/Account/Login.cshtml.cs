@@ -33,7 +33,7 @@ namespace WebApp.Pages.Account
                 var dadosToken = TokenConfig.DecodificarToken(token);
                 if(DateTime.UtcNow < dadosToken.Expira)
                 {
-                    return RedirectToPage("../Principal");
+                    return RedirectToPage("/Principal");
                 }
 
                 _token = token;
@@ -60,7 +60,7 @@ namespace WebApp.Pages.Account
                 if(resposta != null)
                 {
                     _tokenService.ArmazenarToken(resposta.TOKEN, requisicao.MANTER_LOGADO);
-                    return RedirectToPage("../Principal");
+                    return RedirectToPage("/Principal");
                 }
             }
 
