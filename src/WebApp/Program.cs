@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
 using WebApp.Interfaces;
 using WebApp.JWT;
 using WebApp.Pages;
@@ -45,6 +46,10 @@ services.AddScoped<EmpresaApiService>();
 
 services.AddHttpClient<PrincipalModel>()
     .AddHttpMessageHandler<JwtTokenHandler>();
+
+services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo(@"/var/www/web-frontend/keys"))
+    .SetApplicationName("InovarJuntoApp");
 
 services.AddHttpClient();
 services.AddRazorPages(opt =>
