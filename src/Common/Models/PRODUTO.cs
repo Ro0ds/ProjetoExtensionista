@@ -49,9 +49,5 @@ namespace Common.Models
         public int EMPRESAID { get; set; }
         public EMPRESA? EMPRESA { get; set; }
 
-        [ForeignKey(nameof(USUARIO))]
-        public int USUARIOID { get; set; }
-        public USUARIO? USUARIO { get; set; }
-
     }
 }

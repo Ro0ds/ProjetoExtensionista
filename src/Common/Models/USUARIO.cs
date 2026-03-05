@@ -24,7 +24,7 @@ namespace Common.Models
         public ENDERECO? ENDERECO { get; set; }
         public int PERMISSAOID { get; set; }
         public PERMISSAO? PERMISSAO { get; set; }
-        public int? FUNCIONARIOID { get; set; }
+        
         public FUNCIONARIO? FUNCIONARIO { get; set; }
     }
 }

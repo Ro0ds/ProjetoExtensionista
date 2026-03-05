@@ -22,8 +22,12 @@ public class ProdutoController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Listar()
     {
+        var usuarioId = User.FindFirst("sub")?.Value 
+                        ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value ??
+                        "0";
+
         // filtrar pela empresaId do user logado
-        var resultado = await _produtoServico.ListarTodos();
+        var resultado = await _produtoServico.ListarTodos(int.Parse(usuarioId));
 
         if(resultado.Sucesso)
             return Ok(resultado.Dados);

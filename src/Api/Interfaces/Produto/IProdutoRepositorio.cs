@@ -6,5 +6,5 @@ public interface IProdutoRepositorio
 {
     Task<BaseResposta> RealizarMovimentacao(HISTORICO_MOVIMENTACOES historico);
     Task<BaseResposta> Cadastrar(PRODUTO produto);
-    Task<List<PRODUTO>> ListarTodos();
+    Task<List<PRODUTO>> ListarTodos(int empresaId);
 }

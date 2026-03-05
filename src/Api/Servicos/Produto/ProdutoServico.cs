@@ -1,4 +1,5 @@
-﻿using Api.Interfaces.Funcionario;
+﻿using Api.Dados;
+using Api.Interfaces.Funcionario;
 using Api.Interfaces.Produto;
 using Common.DTO.Requisicao.Produto.Cadastro;
 using Common.DTO.Requisicao.Produto.Movimentacao;
@@ -6,17 +7,20 @@ using Common.DTO.Resposta.Base;
 using Common.DTO.Resposta.Produto;
 using Common.Enums.HistoricoMovimentacoes;
 using Common.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Servicos.Produto;
 public class ProdutoServico : IProdutoServico
 {
     private readonly IProdutoRepositorio _produtoRepositorio;
     private readonly IFuncionarioRepositorio _funcionarioRepositorio;
+    private readonly ApiDbContext _context;
 
-    public ProdutoServico(IProdutoRepositorio repositorio, IFuncionarioRepositorio funcionarioRepositorio)
+    public ProdutoServico(IProdutoRepositorio repositorio, IFuncionarioRepositorio funcionarioRepositorio, ApiDbContext context)
     {
         _produtoRepositorio = repositorio;
         _funcionarioRepositorio = funcionarioRepositorio;
+        _context = context;
     }
 
     public async Task<BaseResposta> Cadastrar(ProdutoCadastroRequisicao requisicao)
@@ -30,27 +34,49 @@ public class ProdutoServico : IProdutoServico
             return resp;
         }
 
+        var funcionario = await _context.FUNCIONARIO
+            .AsNoTracking()
+            .Where(u => u.USUARIOID == requisicao.UsuarioId)
+            .FirstOrDefaultAsync();
+
+        if(funcionario == null)
+        {
+            var baseResposta = new BaseResposta();
+            baseResposta.Sucesso = false;
+            baseResposta.AdicionarErro("Usuário não tem empresa!");
+
+            return baseResposta;
+        }
+
         var produto = new PRODUTO
         {
             NOME = requisicao.Nome,
             DESCRICAO = requisicao.Descricao,
             PRECO = requisicao.Preco,
             CATEGORIAID = requisicao.CategoriaId,
-            EMPRESAID = requisicao.EmpresaId,
-            USUARIOID = requisicao.UsuarioId,
+            EMPRESAID = funcionario.EMPRESAID,
 
             // padrões
             ESTOQUE_ATUAL = 0,
             DATA_CRIACAO = DateTime.UtcNow,
-            ATIVO = 1
+            ATIVO = 1,
         };
 
         return await _produtoRepositorio.Cadastrar(produto);
     }
 
-    public async Task<GenericResponse<List<ProdutoResposta>>> ListarTodos()
+    public async Task<GenericResponse<List<ProdutoResposta>>> ListarTodos(int usuarioId)
     {
-        var produtosBanco = await _produtoRepositorio.ListarTodos();
+        var funcionario = await _context.FUNCIONARIO
+            .AsNoTracking()
+            .Where(u => u.USUARIOID == usuarioId)
+            .FirstOrDefaultAsync();
+
+        if(funcionario == null)
+            return new GenericResponse<List<ProdutoResposta>> 
+            { Sucesso = false };
+            
+        var produtosBanco = await _produtoRepositorio.ListarTodos(funcionario.EMPRESAID);
 
         var listaDto = produtosBanco.Select(p => new ProdutoResposta
         {

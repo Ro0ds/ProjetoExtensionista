@@ -32,10 +32,24 @@ public class ProdutoApiService
 
     public async Task<List<ProdutoResposta>> ListarAsync()
     {
-        using var client = AddDefaultHeaders();
-        var result = await client.GetFromJsonAsync<List<ProdutoResposta>>("Produto");
+        try
+        {
+            using var client = AddDefaultHeaders();
 
-        return result ?? new List<ProdutoResposta>();
+            var response = await client.GetAsync("Produto");
+
+            if(response.IsSuccessStatusCode)
+            {
+                var lista = await response.Content.ReadFromJsonAsync<List<ProdutoResposta>>();
+                return lista ?? new List<ProdutoResposta>();
+            }
+
+            return new List<ProdutoResposta>();
+        }
+        catch(Exception)
+        {
+            return new List<ProdutoResposta>();
+        }
     }
 
     public async Task<bool> CadastrarAsync(ProdutoCadastroRequisicao requisicao)

@@ -8,5 +8,5 @@ public interface IProdutoServico
 {
     Task<BaseResposta> MovimentarEstoque(ProdutoMovimentacaoRequisicao requisicao);
     Task<BaseResposta> Cadastrar(ProdutoCadastroRequisicao requisicao);
-    Task<GenericResponse<List<ProdutoResposta>>> ListarTodos();
+    Task<GenericResponse<List<ProdutoResposta>>> ListarTodos(int usuarioId);
 }

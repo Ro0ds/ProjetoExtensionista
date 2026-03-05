@@ -16,5 +16,7 @@ namespace Common.Models
         public DateTime DATA_CRIACAO_EMPRESA { get; set; }
         public DateTime DATA_CRIACAO_CADASTRO { get; set; }
         public int EMPRESA_ATIVA { get; set; } = 0;
+
+        public ICollection<FUNCIONARIO> FUNCIONARIOS { get; set; } = new List<FUNCIONARIO>();
     }
 }

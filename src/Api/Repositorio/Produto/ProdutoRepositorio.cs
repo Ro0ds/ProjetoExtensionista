@@ -31,10 +31,11 @@ public class ProdutoRepositorio : IProdutoRepositorio
         return resposta;
     }
 
-    public async Task<List<PRODUTO>> ListarTodos()
+    public async Task<List<PRODUTO>> ListarTodos(int empresaId)
     {
         return await _context.PRODUTO
             .Include(p => p.CATEGORIA)
+            .Where(p => p.EMPRESAID == empresaId)
             .AsNoTracking()
             .ToListAsync();
     }
