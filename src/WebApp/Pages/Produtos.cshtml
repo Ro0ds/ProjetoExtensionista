@@ -1,4 +1,5 @@
 ﻿@page
+@using System.Globalization
 @model ProdutosModel
 @{
     ViewData["Title"] = "Produtos";
@@ -85,7 +86,7 @@
 
                                     <!-- Preço -->
                                     <td class="text-end fw-semibold text-primary">
-                                        @p.Preco.ToString("C2")
+                                        @p.Preco.ToString("C2", new CultureInfo("pt-BR"))
                                     </td>
 
                                     <!-- Estoque -->
@@ -97,7 +98,7 @@
 
                                     <!-- Valor Total -->
                                     <td class="text-end fw-semibold text-success">
-                                        @valorTotal.ToString("C2")
+                                        @valorTotal.ToString("C2", new CultureInfo("pt-BR"))
                                     </td>
 
                                     <!-- Ações (ALINHADAS) -->

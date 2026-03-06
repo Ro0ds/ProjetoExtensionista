@@ -48,6 +48,8 @@ public class ProdutoServico : IProdutoServico
             return baseResposta;
         }
 
+        funcionario.USUARIOID = requisicao.UsuarioId;
+
         var produto = new PRODUTO
         {
             NOME = requisicao.Nome,
