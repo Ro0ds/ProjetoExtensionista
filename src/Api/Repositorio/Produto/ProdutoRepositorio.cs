@@ -31,6 +31,40 @@ public class ProdutoRepositorio : IProdutoRepositorio
         return resposta;
     }
 
+    public async Task<BaseResposta> Deletar(PRODUTO produto)
+    {
+        var resposta = new BaseResposta();
+
+        try
+        {
+            if(produto != null)
+            {
+                _context.Remove(produto);
+                await _context.SaveChangesAsync();
+
+                resposta.Sucesso = true;
+                return resposta;
+            }
+
+            resposta.AdicionarErro("Produto não existe");
+            return resposta;
+        }
+        catch(Exception ex)
+        {
+            resposta.AdicionarErro($"Erro ao remover produto: {ex.Message}");
+        }
+
+        return resposta;
+    }
+
+    public async Task<PRODUTO> ListarPorId(int produtoId)
+    {
+        return await _context.PRODUTO
+            .Where(p => p.ID == produtoId)
+            .SingleOrDefaultAsync() 
+            ?? new PRODUTO { ID = 0 };
+    }
+
     public async Task<List<PRODUTO>> ListarTodos(int empresaId)
     {
         return await _context.PRODUTO

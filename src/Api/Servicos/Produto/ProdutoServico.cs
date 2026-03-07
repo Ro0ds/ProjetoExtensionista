@@ -67,6 +67,22 @@ public class ProdutoServico : IProdutoServico
         return await _produtoRepositorio.Cadastrar(produto);
     }
 
+    public async Task<BaseResposta> Deletar(int produtoId)
+    {
+        var resposta = new BaseResposta();
+        var produto = await _produtoRepositorio.ListarPorId(produtoId);
+        
+        if(produto.ID == 0)
+        {
+            resposta.Sucesso = false;
+            resposta.AdicionarErro("Produto não existe.");
+
+            return resposta;
+        }
+
+        return await _produtoRepositorio.Deletar(produto);
+    }
+
     public async Task<GenericResponse<List<ProdutoResposta>>> ListarTodos(int usuarioId)
     {
         var funcionario = await _context.FUNCIONARIO

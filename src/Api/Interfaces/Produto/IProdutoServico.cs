@@ -2,6 +2,7 @@
 using Common.DTO.Requisicao.Produto.Movimentacao;
 using Common.DTO.Resposta.Base;
 using Common.DTO.Resposta.Produto;
+using Common.Models;
 
 namespace Api.Interfaces.Produto;
 public interface IProdutoServico
@@ -9,4 +10,5 @@ public interface IProdutoServico
     Task<BaseResposta> MovimentarEstoque(ProdutoMovimentacaoRequisicao requisicao);
     Task<BaseResposta> Cadastrar(ProdutoCadastroRequisicao requisicao);
     Task<GenericResponse<List<ProdutoResposta>>> ListarTodos(int usuarioId);
+    Task<BaseResposta> Deletar(int produtoId);
 }

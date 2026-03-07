@@ -30,6 +30,12 @@ namespace WebApp.Pages
         [BindProperty]
         public string Descricao { get; set; } = string.Empty;
 
+        [BindProperty]
+        public bool RemoverProduto { get; set; } = false;
+
+        [BindProperty]
+        public bool ShowSuccessMessage { get; set; } = false;
+
         public async Task OnGet()
         {
             Produtos = await _produtoApi.ListarAsync();
@@ -58,6 +64,40 @@ namespace WebApp.Pages
 
             if(!ok)
                 ModelState.AddModelError(string.Empty, "Erro ao movimentar estoque.");
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostDeletarAsync()
+        {
+            if(!RemoverProduto)
+            {
+                await OnGet();
+                return Page();
+            }
+
+            var req = new ProdutoMovimentacaoRequisicao
+            {
+                ProdutoId = ProdutoId,
+                Quantidade = Quantidade,
+                Descricao = Descricao,
+                TipoMovimentacao = Entrada,
+            };
+
+            var ok = await _produtoApi.DeletarAsync(req);
+
+            await OnGet();
+
+            if(Produtos.Count == 0)
+            {
+                await OnGet();
+                return Page();
+            }
+
+            if(ok)
+                ShowSuccessMessage = true;
+            else
+                ModelState.AddModelError(string.Empty, "Erro ao deletar item do estoque.");
 
             return Page();
         }

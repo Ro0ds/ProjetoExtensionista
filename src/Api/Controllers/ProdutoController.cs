@@ -61,6 +61,16 @@ public class ProdutoController : ControllerBase
         return BadRequest(resultado);
     }
 
+    [HttpDelete("deletar/{produtoId}")]
+    public async Task<IActionResult> Deletar(int produtoId)
+    {
+        var resultado = await _produtoServico.Deletar(produtoId);
+
+        if(resultado.Sucesso)
+            return Ok(resultado);
+        return BadRequest(resultado);
+    }
+
     private int ObterUsuarioId()
     {
         var idClaim = User.Claims.FirstOrDefault(c => c.Type == "id" || c.Type == ClaimTypes.NameIdentifier);

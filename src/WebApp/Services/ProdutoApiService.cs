@@ -67,4 +67,11 @@ public class ProdutoApiService
         var response = await client.PostAsJsonAsync("Produto/movimentar", requisicao);
         return response.IsSuccessStatusCode;
     }
+
+    public async Task<bool> DeletarAsync(ProdutoMovimentacaoRequisicao requisicao)
+    {
+        var client = AddDefaultHeaders();
+        var response = await client.DeleteAsync($"Produto/deletar/{requisicao.ProdutoId}");
+        return response.IsSuccessStatusCode;
+    }
 }
