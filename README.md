@@ -15,6 +15,12 @@ Pequenas empresas e comerciantes muitas vezes controlam estoque em planilhas, o 
 - Alerta de volume crítico (baixo estoque) por produto
 - Visualização do custo bruto total do estoque
 
+## Demonstração
+
+O sistema permite autenticar usuários, cadastrar produtos, controlar quantidades e acompanhar o custo total e os níveis críticos do estoque.
+
+![Demonstração do sistema](docs/images/sistema_apr.gif)
+
 ## Arquitetura
 
 O projeto é dividido em três módulos principais:
